@@ -1,1 +1,1735 @@
-[{"id":"accounting-for-small-medium-enterprise","name":"ACCOUNTING FOR SMALL MEDIUM ENTERPRISE","semester":"6","curriculum":"OBE","leader":"RIRIN SARI DEWI","kbk":"KEUANGAN","lecturers":["RIRIN SARI DEWI","LISTIA AULIA INDY","YAYAH SYAHRIYAH"]},{"id":"ai-automation-in-accounting","name":"AI & AUTOMATION IN ACCOUNTING","semester":"7","curriculum":"OBE","leader":"AHMAD SYUHERI","kbk":"MANAJEMEN","lecturers":["AHMAD SYUHERI","MUCHAMAD RIZKY FAUZI"]}]
+{
+  "courses": [
+    {
+      "id": "accounting-for-small-medium-enterprise",
+      "name": "ACCOUNTING FOR SMALL MEDIUM ENTERPRISE",
+      "semester": "6",
+      "curriculum": "OBE",
+      "leader": "RIRIN SARI DEWI",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "RIRIN SARI DEWI",
+        "LISTIA AULIA INDY",
+        "YAYAH SYAHRIYAH"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "ai-automation-in-accounting",
+      "name": "AI & AUTOMATION IN ACCOUNTING",
+      "semester": "7",
+      "curriculum": "OBE",
+      "leader": "AHMAD SYUHERI",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "AHMAD SYUHERI",
+        "MUCHAMAD RIZKY FAUZI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "akuntansi-biaya",
+      "name": "AKUNTANSI BIAYA",
+      "semester": "3 & 4",
+      "curriculum": "KKNI &OBE",
+      "leader": "RIRIN SARI DEWI",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "IRNA MAYA SARI",
+        "LAMSAH",
+        "RIRIN SARI DEWI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "akuntansi-instrumen-keuangan",
+      "name": "AKUNTANSI INSTRUMEN KEUANGAN",
+      "semester": "4",
+      "curriculum": "OBE",
+      "leader": "LISTIA AULIA INDY",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "LISTIA AULIA INDY",
+        "RUPIANNA TAMBUNAN"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "akuntansi-internasional",
+      "name": "AKUNTANSI INTERNASIONAL",
+      "semester": "6",
+      "curriculum": "OBE",
+      "leader": "DWI FITRIANINGSIH",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "DWI FITRIANINGSIH",
+        "LAMSAH",
+        "LISTIA AULIA INDY",
+        "RIRIN SARI DEWI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "akuntansi-keprilakuan",
+      "name": "AKUNTANSI KEPRILAKUAN",
+      "semester": "5",
+      "curriculum": "OBE",
+      "leader": "IRNA MAYA SARI",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "IRNA MAYA SARI",
+        "TIYAS PUJI UTAMI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "akuntansi-keuangan-1",
+      "name": "AKUNTANSI KEUANGAN 1",
+      "semester": "3",
+      "curriculum": "KKNI",
+      "leader": "RICKA HIDAYATI",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "ARIF WAHYU NUR KHOLID",
+        "ERIMINA HALAWA",
+        "INGGA MAULANA",
+        "RICKA HIDAYATI",
+        "RUPIANNA TAMBUNAN",
+        "YAYAH SYAHRIYAH"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "akuntansi-keuangan-lanjutan",
+      "name": "AKUNTANSI KEUANGAN LANJUTAN",
+      "semester": "5",
+      "curriculum": "OBE",
+      "leader": "RISMAWATI",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "RISMAWATI",
+        "DWI FITRIANINGSIH",
+        "LAMSAH"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "akuntansi-keuangan-lanjutan-1",
+      "name": "AKUNTANSI KEUANGAN LANJUTAN 1",
+      "semester": "5",
+      "curriculum": "KKNI",
+      "leader": "LAMSAH",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "RISMAWATI",
+        "LAMSAH",
+        "DWI FITRIANINGSIH"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "akuntansi-keuangan-lanjutan-2",
+      "name": "AKUNTANSI KEUANGAN LANJUTAN 2",
+      "semester": "6",
+      "curriculum": "KKNI",
+      "leader": "RUPIANNA TAMBUNAN",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "RUPIANNA TAMBUNAN",
+        "RISMAWATI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "akuntansi-keuangan-menengah",
+      "name": "AKUNTANSI KEUANGAN MENENGAH",
+      "semester": "3",
+      "curriculum": "OBE",
+      "leader": "RISMAWATI",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "RISMAWATI",
+        "RUPIANNA TAMBUNAN",
+        "ARIF WAHYU NUR KHOLID",
+        "LAMSAH"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "akuntansi-lingkungan",
+      "name": "AKUNTANSI LINGKUNGAN",
+      "semester": "5",
+      "curriculum": "KKNI",
+      "leader": "ACHMAD KHUSNUL IMAN",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "ARIF WAHYU NUR KHOLID",
+        "ACHMAD KHUSNUL IMAN",
+        "MUCHAMAD RIZKY FAUZI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "akuntansi-manajemen",
+      "name": "AKUNTANSI MANAJEMEN",
+      "semester": "4 & 6",
+      "curriculum": "KKNI & OBE",
+      "leader": "IRNA MAYA SARI",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "RAHADIAN",
+        "IRNA MAYA SARI",
+        "AYU SEPTIANA PUTRI",
+        "ARIFATUN NASIHAH",
+        "NISTRI KUSUMAWARDANI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "akuntansi-perbankan",
+      "name": "AKUNTANSI PERBANKAN",
+      "semester": "5",
+      "curriculum": "OBE",
+      "leader": "MUCHAMAD RIZKY FAUZI",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "MUCHAMAD RIZKY FAUZI",
+        "LISTIA AULIA INDY",
+        "YAYAH SYAHRIYAH",
+        "SHALLY KHOMILAH",
+        "RISMAWATI",
+        "RICKA HIDAYATI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "akuntansi-perpajakan",
+      "name": "AKUNTANSI PERPAJAKAN",
+      "semester": "5",
+      "curriculum": "KKNI & OBE",
+      "leader": "AHMAD SYUHERI",
+      "kbk": "PAJAK",
+      "lecturers": [
+        "KARINA ELSANI",
+        "ERIMINA HALAWA",
+        "ARIFATUN NASIHAH",
+        "AHMAD SYUHERI",
+        "KAHFI FIKRIANOOR"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "akuntansi-perusahaan-jasa-dan-dagang",
+      "name": "AKUNTANSI PERUSAHAAN JASA DAN DAGANG",
+      "semester": "1",
+      "curriculum": "OBE",
+      "leader": "RUPIANNA TAMBUNAN",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "RUPIANNA TAMBUNAN",
+        "VANI VAULIYANTI",
+        "INGGA MAULANA",
+        "RICKA HIDAYATI",
+        "LISTIA AULIA INDY",
+        "RIRIN SARI DEWI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "akuntansi-perusahaan-manufaktur",
+      "name": "AKUNTANSI PERUSAHAAN MANUFAKTUR",
+      "semester": "2",
+      "curriculum": "OBE",
+      "leader": "LISTIA AULIA INDY",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "RISMAWATI",
+        "IRNA MAYA SARI",
+        "RIRIN SARI DEWI",
+        "LISTIA AULIA INDY",
+        "RICKA HIDAYATI",
+        "VANI VAULIYANTI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "akuntansi-sektor-publik",
+      "name": "AKUNTANSI SEKTOR PUBLIK",
+      "semester": "5",
+      "curriculum": "KKNI & OBE",
+      "leader": "FADLI NURYASIN",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "AYU SEPTIANA PUTRI",
+        "FADLI NURYASIN"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "analisis-keputusan-bisnis",
+      "name": "ANALISIS KEPUTUSAN BISNIS",
+      "semester": "5",
+      "curriculum": "OBE",
+      "leader": "DIDIK SETIAWAN",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "DIDIK SETIAWAN",
+        "RAHADIAN",
+        "INGGA MAULANA"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "analisis-laporan-keuangan",
+      "name": "ANALISIS LAPORAN KEUANGAN",
+      "semester": "7",
+      "curriculum": "KKNI & OBE",
+      "leader": "DWI FITRIANINGSIH",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "RIRIN SARI DEWI",
+        "LISTIA AULIA INDY",
+        "DWI FITRIANINGSIH"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "analytics-and-big-data",
+      "name": "ANALYTICS AND BIG DATA",
+      "semester": "4",
+      "curriculum": "OBE",
+      "leader": "ACHMAD KHUSNUL IMAN",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "ACHMAD KHUSNUL IMAN",
+        "RAHADIAN",
+        "AHMAD SYUHERI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "audit-internal",
+      "name": "AUDIT INTERNAL",
+      "semester": "5",
+      "curriculum": "KKNI & OBE",
+      "leader": "AKHMAD NOFIATA",
+      "kbk": "AUDIT",
+      "lecturers": [
+        "EKO PUJIYONO",
+        "INDAH KRISTIANTI",
+        "AKHMAD NOFIATA",
+        "RAHADIAN"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "audit-investigasi-dan-forensik",
+      "name": "AUDIT INVESTIGASI DAN FORENSIK",
+      "semester": "6",
+      "curriculum": "KKNI",
+      "leader": "INDAH KRISTIANTI",
+      "kbk": "AUDIT",
+      "lecturers": [
+        "INDAH KRISTIANTI",
+        "EKO PUJIYONO"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "audit-perpajakan",
+      "name": "AUDIT PERPAJAKAN",
+      "semester": "6",
+      "curriculum": "OBE",
+      "leader": "ERIMINA HALAWA",
+      "kbk": "PAJAK",
+      "lecturers": [
+        "ERIMINA HALAWA",
+        "AHMAD SYUHERI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "auditing-1",
+      "name": "AUDITING 1",
+      "semester": "3",
+      "curriculum": "KKNI",
+      "leader": "SHALLY KHOMILAH",
+      "kbk": "AUDIT",
+      "lecturers": [
+        "SHALLY KHOMILAH",
+        "YUDHA EKA FEBRIAN",
+        "FADLI NURYASIN",
+        "EKO PUJIYONO",
+        "INDAH KRISTIANTI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "auditing-2",
+      "name": "AUDITING 2",
+      "semester": "4",
+      "curriculum": "KKNI",
+      "leader": "SHALLY KHOMILAH",
+      "kbk": "AUDIT",
+      "lecturers": [
+        "SHALLY KHOMILAH",
+        "AKHMAD NOFIATA",
+        "YUDHA EKA FEBRIAN",
+        "EKO PUJIYONO",
+        "INDAH KRISTIANTI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "auditing-dasar",
+      "name": "AUDITING DASAR",
+      "semester": "3",
+      "curriculum": "OBE",
+      "leader": "YUDHA EKA FEBRIAN",
+      "kbk": "AUDIT",
+      "lecturers": [
+        "YUDHA EKA FEBRIAN",
+        "INDAH KRISTIANTI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "auditing-lanjutan",
+      "name": "AUDITING LANJUTAN",
+      "semester": "4",
+      "curriculum": "OBE",
+      "leader": "INDAH KRISTIANTI",
+      "kbk": "AUDIT",
+      "lecturers": [
+        "EKO PUJIYONO",
+        "INDAH KRISTIANTI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "bank-dan-lembaga-keuangan-lainnya",
+      "name": "BANK DAN LEMBAGA KEUANGAN LAINNYA",
+      "semester": "6",
+      "curriculum": "KKNI",
+      "leader": "DIDIK SETIAWAN",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "DIDIK SETIAWAN",
+        "MUCHAMAD RIZKY FAUZI",
+        "YAYAH SYAHRIYAH"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "budgeting-forecasting-financial-modelling",
+      "name": "BUDGETING, FORECASTING & FINANCIAL MODELLING",
+      "semester": "7",
+      "curriculum": "OBE",
+      "leader": "TIYAS PUJI UTAMI",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "TIYAS PUJI UTAMI",
+        "INGGA MAULANA",
+        "NISTRI KUSUMAWARDANI",
+        "ARIF WAHYU NUR KHOLID"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "corporate-governance",
+      "name": "CORPORATE GOVERNANCE",
+      "semester": "8",
+      "curriculum": "KKNI",
+      "leader": "ACHMAD KHUSNUL IMAN",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "RUPIANNA TAMBUNAN",
+        "ACHMAD KHUSNUL IMAN"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "corporate-sosial-responsibility",
+      "name": "CORPORATE SOSIAL RESPONSIBILITY",
+      "semester": "7",
+      "curriculum": "KKNI & OBE",
+      "leader": "INGGA MAULANA",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "INGGA MAULANA",
+        "ACHMAD KHUSNUL IMAN"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "digital-business",
+      "name": "DIGITAL BUSINESS",
+      "semester": "2",
+      "curriculum": "OBE",
+      "leader": "AKHMAD NOFIATA",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "AKHMAD NOFIATA",
+        "MUCHAMAD RIZKY FAUZI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "economics",
+      "name": "ECONOMICS",
+      "semester": "1",
+      "curriculum": "OBE",
+      "leader": "ERIMINA HALAWA",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "YAYAH SYAHRIYAH",
+        "SHALLY KHOMILAH",
+        "ERIMINA HALAWA",
+        "VANI VAULIYANTI",
+        "AYU SEPTIANA PUTRI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "edp-audit",
+      "name": "EDP AUDIT",
+      "semester": "7 & 5",
+      "curriculum": "KKNI & OBE",
+      "leader": "SHALLY KHOMILAH",
+      "kbk": "AUDIT",
+      "lecturers": [
+        "SHALLY KHOMILAH",
+        "RAHADIAN",
+        "EKO PUJIYONO"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "ekonomi-syariah",
+      "name": "EKONOMI SYARIAH",
+      "semester": "4",
+      "curriculum": "KKNI",
+      "leader": "MUCHAMAD RIZKY FAUZI",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "MUCHAMAD RIZKY FAUZI",
+        "ACHMAD KHUSNUL IMAN"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "etika-bisnis-dan-profesi",
+      "name": "ETIKA BISNIS DAN PROFESI",
+      "semester": "6",
+      "curriculum": "KKNI",
+      "leader": "YUDHA EKA FEBRIAN",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "YUDHA EKA FEBRIAN",
+        "RAHADIAN"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "etika-profesi-akuntan",
+      "name": "ETIKA PROFESI AKUNTAN",
+      "semester": "8",
+      "curriculum": "OBE",
+      "leader": "AYU SEPTIANA PUTRI",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "AYU SEPTIANA PUTRI",
+        "RAHADIAN"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "hukum-bisnis-dan-regulasi",
+      "name": "HUKUM BISNIS DAN REGULASI",
+      "semester": "2",
+      "curriculum": "KKNI & OBE",
+      "leader": "INGGA MAULANA",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "YAYAH SYAHRIYAH",
+        "DIDIK SETIAWAN",
+        "INGGA MAULANA"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "humanisme-dan-konstruksi-etika-diri",
+      "name": "HUMANISME DAN KONSTRUKSI ETIKA DIRI",
+      "semester": "4",
+      "curriculum": "OBE",
+      "leader": "KARINA ELSANI",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "KARINA ELSANI",
+        "RAHADIAN"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "kewirausahaan",
+      "name": "KEWIRAUSAHAAN",
+      "semester": "5",
+      "curriculum": "OBE",
+      "leader": "FADLI NURYASIN",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "AKHMAD NOFIATA",
+        "FADLI NURYASIN",
+        "VANI VAULIYANTI",
+        "AHMAD SYUHERI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "komputer-akuntansi",
+      "name": "KOMPUTER AKUNTANSI",
+      "semester": "7 & 6",
+      "curriculum": "KKNI & OBE",
+      "leader": "YAYAH SYAHRIYAH",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "YAYAH SYAHRIYAH",
+        "RIRIN SARI DEWI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "komunikasi-bisnis",
+      "name": "KOMUNIKASI BISNIS",
+      "semester": "5",
+      "curriculum": "KKNI & OBE",
+      "leader": "YAYAH SYAHRIYAH",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "YUDHA EKA FEBRIAN",
+        "NISTRI KUSUMAWARDANI",
+        "YAYAH SYAHRIYAH"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "manajemen-biaya",
+      "name": "MANAJEMEN BIAYA",
+      "semester": "7",
+      "curriculum": "OBE",
+      "leader": "IRNA MAYA SARI",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "IRNA MAYA SARI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "manajemen-investasi",
+      "name": "MANAJEMEN INVESTASI",
+      "semester": "7 & 4",
+      "curriculum": "KKNI & OBE",
+      "leader": "MUCHAMAD RIZKY FAUZI",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "MUCHAMAD RIZKY FAUZI",
+        "ARIF WAHYU NUR KHOLID",
+        "YAYAH SYAHRIYAH"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "manajemen-keuangan",
+      "name": "MANAJEMEN KEUANGAN",
+      "semester": "6 & 3",
+      "curriculum": "KKNI & OBE",
+      "leader": "RICKA HIDAYATI",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "RIRIN SARI DEWI",
+        "KARINA ELSANI",
+        "DIDIK SETIAWAN",
+        "RICKA HIDAYATI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "manajemen-pajak",
+      "name": "MANAJEMEN PAJAK",
+      "semester": "5",
+      "curriculum": "OBE",
+      "leader": "KAHFI FIKRIANOOR",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "AHMAD SYUHERI",
+        "KAHFI FIKRIANOOR"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "manajemen-pemasaran",
+      "name": "MANAJEMEN PEMASARAN",
+      "semester": "3",
+      "curriculum": "KKNI & OBE",
+      "leader": "YUDHA EKA FEBRIAN",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "MUCHAMAD RIZKY FAUZI",
+        "AKHMAD NOFIATA",
+        "SHALLY KHOMILAH",
+        "YUDHA EKA FEBRIAN",
+        "FADLI NURYASIN"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "manajemen-risiko",
+      "name": "MANAJEMEN RISIKO",
+      "semester": "7",
+      "curriculum": "KKNI & OBE",
+      "leader": "RAHADIAN",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "ACHMAD KHUSNUL IMAN",
+        "KAHFI FIKRIANOOR",
+        "RAHADIAN"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "manajemen-stratejik",
+      "name": "MANAJEMEN STRATEJIK",
+      "semester": "7 & 6",
+      "curriculum": "KKNI & OBE",
+      "leader": "TIYAS PUJI UTAMI",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "TIYAS PUJI UTAMI",
+        "EKO PUJIYONO",
+        "YUDHA EKA FEBRIAN",
+        "RAHADIAN"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "matematika-ekonomi-dan-bisnis",
+      "name": "MATEMATIKA EKONOMI DAN BISNIS",
+      "semester": "1",
+      "curriculum": "KKNI & OBE",
+      "leader": "RISMAWATI",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "RISMAWATI",
+        "RAHADIAN"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "metodologi-penelitian",
+      "name": "METODOLOGI PENELITIAN",
+      "semester": "6 & 5",
+      "curriculum": "KKNI & OBE",
+      "leader": "TIYAS PUJI UTAMI",
+      "kbk": "ALL",
+      "lecturers": [
+        "TIYAS PUJI UTAMI",
+        "INGGA MAULANA",
+        "KAHFI FIKRIANOOR",
+        "DWI FITRIANINGSIH"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "pajak-dan-restribusi-daerah",
+      "name": "PAJAK DAN RESTRIBUSI DAERAH",
+      "semester": "6",
+      "curriculum": "KKNI",
+      "leader": "AHMAD SYUHERI",
+      "kbk": "PAJAK",
+      "lecturers": [],
+      "dataStatus": "Belum ada rincian dosen pada tab Data Dosen Pengampu",
+      "source": "Data KMK"
+    },
+    {
+      "id": "pelaporan-korporat",
+      "name": "PELAPORAN KORPORAT",
+      "semester": "6",
+      "curriculum": "OBE",
+      "leader": "RUPIANNA TAMBUNAN",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "RUPIANNA TAMBUNAN",
+        "KAHFI FIKRIANOOR"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "pengukuran-kinerja-strategi-dan-pengukuran-kinerja",
+      "name": "PENGUKURAN KINERJA/  STRATEGI DAN PENGUKURAN KINERJA",
+      "semester": "6 & 7",
+      "curriculum": "KKNI & OBE",
+      "leader": "IRNA MAYA SARI",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "IRNA MAYA SARI",
+        "TIYAS PUJI UTAMI",
+        "ARIFATUN NASIHAH",
+        "KAHFI FIKRIANOOR"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "perekonomian-indonesia",
+      "name": "PEREKONOMIAN INDONESIA",
+      "semester": "3",
+      "curriculum": "KKNI",
+      "leader": "AKHMAD NOFIATA",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "AKHMAD NOFIATA",
+        "FADLI NURYASIN"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "perilaku-organisasional",
+      "name": "PERILAKU ORGANISASIONAL",
+      "semester": "4",
+      "curriculum": "KKNI",
+      "leader": "RAHADIAN",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "VANI VAULIYANTI",
+        "RAHADIAN"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "perpajakan-1",
+      "name": "PERPAJAKAN 1",
+      "semester": "3",
+      "curriculum": "KKNI",
+      "leader": "ARIFATUN NASIHAH",
+      "kbk": "PAJAK",
+      "lecturers": [
+        "KARINA ELSANI",
+        "ERIMINA HALAWA",
+        "ARIFATUN NASIHAH",
+        "AHMAD SYUHERI",
+        "LISTIA AULIA INDY"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "perpajakan-2",
+      "name": "PERPAJAKAN 2",
+      "semester": "4",
+      "curriculum": "KKNI",
+      "leader": "KARINA ELSANI",
+      "kbk": "PAJAK",
+      "lecturers": [
+        "KARINA ELSANI",
+        "LISTIA AULIA INDY"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "perpajakan-dasar",
+      "name": "PERPAJAKAN DASAR",
+      "semester": "2",
+      "curriculum": "OBE",
+      "leader": "DIDIK SETIAWAN",
+      "kbk": "PAJAK",
+      "lecturers": [
+        "DIDIK SETIAWAN",
+        "KARINA ELSANI",
+        "ERIMINA HALAWA",
+        "AYU SEPTIANA PUTRI",
+        "AHMAD SYUHERI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "perpajakan-lanjutan",
+      "name": "PERPAJAKAN LANJUTAN",
+      "semester": "3",
+      "curriculum": "OBE",
+      "leader": "AYU SEPTIANA PUTRI",
+      "kbk": "PAJAK",
+      "lecturers": [
+        "DIDIK SETIAWAN",
+        "AYU SEPTIANA PUTRI",
+        "ARIFATUN NASIHAH",
+        "AHMAD SYUHERI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "praktik-pemeriksaan-akuntansi",
+      "name": "PRAKTIK PEMERIKSAAN AKUNTANSI",
+      "semester": "8",
+      "curriculum": "KKNI",
+      "leader": "EKO PUJIYONO",
+      "kbk": "AUDIT",
+      "lecturers": [
+        "EKO PUJIYONO",
+        "INDAH KRISTIANTI",
+        "SHALLY KHOMILAH"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "praktikum-audit-berbasis-teknologi-informasi",
+      "name": "PRAKTIKUM AUDIT BERBASIS TEKNOLOGI INFORMASI",
+      "semester": "7",
+      "curriculum": "OBE",
+      "leader": "EKO PUJIYONO",
+      "kbk": "AUDIT",
+      "lecturers": [
+        "EKO PUJIYONO",
+        "INDAH KRISTIANTI",
+        "SHALLY KHOMILAH"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "praktikum-perpajakan",
+      "name": "PRAKTIKUM PERPAJAKAN",
+      "semester": "7",
+      "curriculum": "OBE",
+      "leader": "ARIFATUN NASIHAH",
+      "kbk": "PAJAK",
+      "lecturers": [
+        "ARIFATUN NASIHAH",
+        "AYU SEPTIANA PUTRI",
+        "AHMAD SYUHERI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "principles-of-management-and-business",
+      "name": "PRINCIPLES OF MANAGEMENT AND BUSINESS",
+      "semester": "1",
+      "curriculum": "OBE",
+      "leader": "NISTRI KUSUMAWARDANI",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "AKHMAD NOFIATA",
+        "NISTRI KUSUMAWARDANI",
+        "SHALLY KHOMILAH",
+        "VANI VAULIYANTI",
+        "FADLI NURYASIN",
+        "LAMSAH"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "seminar-akuntansi-keuangan",
+      "name": "SEMINAR AKUNTANSI KEUANGAN",
+      "semester": "8",
+      "curriculum": "KKNI",
+      "leader": "ARIF WAHYU NUR KHOLID",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "ARIF WAHYU NUR KHOLID",
+        "DWI FITRIANINGSIH"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "seminar-pemeriksaan-akuntansi",
+      "name": "SEMINAR PEMERIKSAAN AKUNTANSI",
+      "semester": "8",
+      "curriculum": "KKNI",
+      "leader": "EKO PUJIYONO",
+      "kbk": "AUDIT",
+      "lecturers": [
+        "EKO PUJIYONO",
+        "SHALLY KHOMILAH"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "seminar-perpajakan",
+      "name": "SEMINAR PERPAJAKAN",
+      "semester": "8",
+      "curriculum": "KKNI",
+      "leader": "KAHFI FIKRIANOOR",
+      "kbk": "PAJAK",
+      "lecturers": [
+        "KAHFI FIKRIANOOR",
+        "AHMAD SYUHERI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "sistem-informasi-akuntansi",
+      "name": "SISTEM INFORMASI AKUNTANSI",
+      "semester": "3",
+      "curriculum": "KKNI & OBE",
+      "leader": "VANI VAULIYANTI",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "ACHMAD KHUSNUL IMAN",
+        "RIRIN SARI DEWI",
+        "VANI VAULIYANTI",
+        "DIDIK SETIAWAN",
+        "NISTRI KUSUMAWARDANI",
+        "DWI FITRIANINGSIH"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "sistem-pengendalian-manajemen",
+      "name": "SISTEM PENGENDALIAN MANAJEMEN",
+      "semester": "6",
+      "curriculum": "KKNI",
+      "leader": "NISTRI KUSUMAWARDANI",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "LAMSAH",
+        "ACHMAD KHUSNUL IMAN",
+        "FADLI NURYASIN",
+        "NISTRI KUSUMAWARDANI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "standar-akuntansi-keuangan",
+      "name": "STANDAR AKUNTANSI KEUANGAN",
+      "semester": "5",
+      "curriculum": "OBE",
+      "leader": "LAMSAH",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "ARIF WAHYU NUR KHOLID",
+        "RUPIANNA TAMBUNAN"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "statistik-deskriptif",
+      "name": "STATISTIK DESKRIPTIF",
+      "semester": "4",
+      "curriculum": "KKNI",
+      "leader": "ARIF WAHYU NUR KHOLID",
+      "kbk": "ALL",
+      "lecturers": [
+        "TIYAS PUJI UTAMI",
+        "ARIF WAHYU NUR KHOLID"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "statistik-inferensial",
+      "name": "STATISTIK INFERENSIAL",
+      "semester": "5",
+      "curriculum": "KKNI",
+      "leader": "INGGA MAULANA",
+      "kbk": "ALL",
+      "lecturers": [
+        "TIYAS PUJI UTAMI",
+        "INGGA MAULANA",
+        "ARIF WAHYU NUR KHOLID"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "statistika-bisnis",
+      "name": "STATISTIKA BISNIS",
+      "semester": "3",
+      "curriculum": "OBE",
+      "leader": "ARIF WAHYU NUR KHOLID",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "AYU SEPTIANA PUTRI",
+        "ARIF WAHYU NUR KHOLID"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "sustainability-accounting",
+      "name": "SUSTAINABILITY ACCOUNTING",
+      "semester": "7",
+      "curriculum": "KKNI & OBE",
+      "leader": "RUPIANNA TAMBUNAN",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "ARIF WAHYU NUR KHOLID",
+        "RUPIANNA TAMBUNAN"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "tata-kelola-risiko-dan-kepatuhan",
+      "name": "TATA KELOLA RISIKO DAN KEPATUHAN",
+      "semester": "6",
+      "curriculum": "OBE",
+      "leader": "INDAH KRISTIANTI",
+      "kbk": "AUDIT",
+      "lecturers": [
+        "INDAH KRISTIANTI",
+        "RAHADIAN"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "tax-planning",
+      "name": "TAX PLANNING",
+      "semester": "7",
+      "curriculum": "KKNI",
+      "leader": "ARIFATUN NASIHAH",
+      "kbk": "PAJAK",
+      "lecturers": [
+        "ARIFATUN NASIHAH",
+        "AHMAD SYUHERI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "teknologi-informasi-dasar",
+      "name": "TEKNOLOGI INFORMASI DASAR",
+      "semester": "1",
+      "curriculum": "OBE",
+      "leader": "VANI VAULIYANTI",
+      "kbk": "ALL",
+      "lecturers": [
+        "VANI VAULIYANTI",
+        "KARINA ELSANI",
+        "RICKA HIDAYATI",
+        "ERIMINA HALAWA"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "teori-akuntansi",
+      "name": "TEORI AKUNTANSI",
+      "semester": "5 & 4",
+      "curriculum": "KKNI & OBE",
+      "leader": "YAYAH SYAHRIYAH",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "YAYAH SYAHRIYAH",
+        "VANI VAULIYANTI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "teori-portofolio-dan-analisis-investasi",
+      "name": "TEORI PORTOFOLIO DAN ANALISIS INVESTASI",
+      "semester": "6",
+      "curriculum": "OBE",
+      "leader": "MUCHAMAD RIZKY FAUZI",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "MUCHAMAD RIZKY FAUZI",
+        "ARIF WAHYU NUR KHOLID"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "sistem-informasi-manajemen",
+      "name": "SISTEM INFORMASI MANAJEMEN",
+      "semester": "5 & 7",
+      "curriculum": "KKNI & OBE",
+      "leader": "FADLI NURYASIN",
+      "kbk": "MANAJEMEN",
+      "lecturers": [
+        "ACHMAD KHUSNUL IMAN",
+        "SHALLY KHOMILAH",
+        "FADLI NURYASIN",
+        "NISTRI KUSUMAWARDANI"
+      ],
+      "dataStatus": "Lengkap pada mapping dosen",
+      "source": "Data KMK + Data Dosen Pengampu"
+    },
+    {
+      "id": "akuntansi-keuangan-2",
+      "name": "AKUNTANSI KEUANGAN 2",
+      "semester": "4",
+      "curriculum": "KKNI",
+      "leader": "RISMAWATI",
+      "kbk": "KEUANGAN",
+      "lecturers": [
+        "RISMAWATI",
+        "RICKA HIDAYATI"
+      ],
+      "dataStatus": "Entri tambahan pada tab Data Dosen Pengampu; perlu verifikasi",
+      "source": "Data Dosen Pengampu (entri tambahan)"
+    },
+    {
+      "id": "pajak-dan-retribusi-daerah",
+      "name": "PAJAK DAN RETRIBUSI DAERAH",
+      "semester": "6",
+      "curriculum": "KKNI",
+      "leader": "AHMAD SYUHERI",
+      "kbk": "PAJAK",
+      "lecturers": [
+        "AHMAD SYUHERI",
+        "AYU SEPTIANA PUTRI"
+      ],
+      "dataStatus": "Entri tambahan pada tab Data Dosen Pengampu; perlu verifikasi",
+      "source": "Data Dosen Pengampu (entri tambahan)"
+    }
+  ],
+  "lecturers": [
+    {
+      "id": "achmad-khusnul-iman",
+      "name": "ACHMAD KHUSNUL IMAN",
+      "courseIds": [
+        "akuntansi-lingkungan",
+        "analytics-and-big-data",
+        "corporate-governance",
+        "corporate-sosial-responsibility",
+        "ekonomi-syariah",
+        "manajemen-risiko",
+        "sistem-informasi-akuntansi",
+        "sistem-pengendalian-manajemen",
+        "sistem-informasi-manajemen"
+      ],
+      "courseCount": 9
+    },
+    {
+      "id": "ahmad-syuheri",
+      "name": "AHMAD SYUHERI",
+      "courseIds": [
+        "ai-automation-in-accounting",
+        "akuntansi-perpajakan",
+        "analytics-and-big-data",
+        "audit-perpajakan",
+        "kewirausahaan",
+        "manajemen-pajak",
+        "perpajakan-1",
+        "perpajakan-dasar",
+        "perpajakan-lanjutan",
+        "praktikum-perpajakan",
+        "seminar-perpajakan",
+        "tax-planning",
+        "pajak-dan-retribusi-daerah"
+      ],
+      "courseCount": 13
+    },
+    {
+      "id": "akhmad-nofiata",
+      "name": "AKHMAD NOFIATA",
+      "courseIds": [
+        "audit-internal",
+        "auditing-2",
+        "digital-business",
+        "kewirausahaan",
+        "manajemen-pemasaran",
+        "perekonomian-indonesia",
+        "principles-of-management-and-business"
+      ],
+      "courseCount": 7
+    },
+    {
+      "id": "arif-wahyu-nur-kholid",
+      "name": "ARIF WAHYU NUR KHOLID",
+      "courseIds": [
+        "akuntansi-keuangan-1",
+        "akuntansi-keuangan-menengah",
+        "akuntansi-lingkungan",
+        "budgeting-forecasting-financial-modelling",
+        "manajemen-investasi",
+        "seminar-akuntansi-keuangan",
+        "standar-akuntansi-keuangan",
+        "statistik-deskriptif",
+        "statistik-inferensial",
+        "statistika-bisnis",
+        "sustainability-accounting",
+        "teori-portofolio-dan-analisis-investasi"
+      ],
+      "courseCount": 12
+    },
+    {
+      "id": "arifatun-nasihah",
+      "name": "ARIFATUN NASIHAH",
+      "courseIds": [
+        "akuntansi-manajemen",
+        "akuntansi-perpajakan",
+        "pengukuran-kinerja-strategi-dan-pengukuran-kinerja",
+        "perpajakan-1",
+        "perpajakan-lanjutan",
+        "praktikum-perpajakan",
+        "tax-planning"
+      ],
+      "courseCount": 7
+    },
+    {
+      "id": "ayu-septiana-putri",
+      "name": "AYU SEPTIANA PUTRI",
+      "courseIds": [
+        "akuntansi-manajemen",
+        "akuntansi-sektor-publik",
+        "economics",
+        "etika-profesi-akuntan",
+        "perpajakan-dasar",
+        "perpajakan-lanjutan",
+        "praktikum-perpajakan",
+        "statistika-bisnis",
+        "pajak-dan-retribusi-daerah"
+      ],
+      "courseCount": 9
+    },
+    {
+      "id": "didik-setiawan",
+      "name": "DIDIK SETIAWAN",
+      "courseIds": [
+        "analisis-keputusan-bisnis",
+        "bank-dan-lembaga-keuangan-lainnya",
+        "hukum-bisnis-dan-regulasi",
+        "manajemen-keuangan",
+        "perpajakan-dasar",
+        "perpajakan-lanjutan",
+        "sistem-informasi-akuntansi"
+      ],
+      "courseCount": 7
+    },
+    {
+      "id": "dwi-fitrianingsih",
+      "name": "DWI FITRIANINGSIH",
+      "courseIds": [
+        "akuntansi-internasional",
+        "akuntansi-keuangan-lanjutan",
+        "akuntansi-keuangan-lanjutan-1",
+        "analisis-laporan-keuangan",
+        "metodologi-penelitian",
+        "seminar-akuntansi-keuangan",
+        "sistem-informasi-akuntansi"
+      ],
+      "courseCount": 7
+    },
+    {
+      "id": "eko-pujiyono",
+      "name": "EKO PUJIYONO",
+      "courseIds": [
+        "audit-internal",
+        "audit-investigasi-dan-forensik",
+        "auditing-1",
+        "auditing-2",
+        "auditing-lanjutan",
+        "edp-audit",
+        "manajemen-stratejik",
+        "praktik-pemeriksaan-akuntansi",
+        "praktikum-audit-berbasis-teknologi-informasi",
+        "seminar-pemeriksaan-akuntansi"
+      ],
+      "courseCount": 10
+    },
+    {
+      "id": "erimina-halawa",
+      "name": "ERIMINA HALAWA",
+      "courseIds": [
+        "akuntansi-keuangan-1",
+        "akuntansi-perpajakan",
+        "audit-perpajakan",
+        "economics",
+        "perpajakan-1",
+        "perpajakan-dasar",
+        "teknologi-informasi-dasar"
+      ],
+      "courseCount": 7
+    },
+    {
+      "id": "fadli-nuryasin",
+      "name": "FADLI NURYASIN",
+      "courseIds": [
+        "akuntansi-sektor-publik",
+        "auditing-1",
+        "kewirausahaan",
+        "manajemen-pemasaran",
+        "perekonomian-indonesia",
+        "principles-of-management-and-business",
+        "sistem-pengendalian-manajemen",
+        "sistem-informasi-manajemen"
+      ],
+      "courseCount": 8
+    },
+    {
+      "id": "indah-kristianti",
+      "name": "INDAH KRISTIANTI",
+      "courseIds": [
+        "audit-internal",
+        "audit-investigasi-dan-forensik",
+        "auditing-1",
+        "auditing-2",
+        "auditing-dasar",
+        "auditing-lanjutan",
+        "praktik-pemeriksaan-akuntansi",
+        "praktikum-audit-berbasis-teknologi-informasi",
+        "tata-kelola-risiko-dan-kepatuhan"
+      ],
+      "courseCount": 9
+    },
+    {
+      "id": "ingga-maulana",
+      "name": "INGGA MAULANA",
+      "courseIds": [
+        "akuntansi-keuangan-1",
+        "akuntansi-perusahaan-jasa-dan-dagang",
+        "analisis-keputusan-bisnis",
+        "budgeting-forecasting-financial-modelling",
+        "corporate-sosial-responsibility",
+        "hukum-bisnis-dan-regulasi",
+        "metodologi-penelitian",
+        "statistik-inferensial"
+      ],
+      "courseCount": 8
+    },
+    {
+      "id": "irna-maya-sari",
+      "name": "IRNA MAYA SARI",
+      "courseIds": [
+        "akuntansi-biaya",
+        "akuntansi-keprilakuan",
+        "akuntansi-manajemen",
+        "akuntansi-perusahaan-manufaktur",
+        "manajemen-biaya",
+        "pengukuran-kinerja-strategi-dan-pengukuran-kinerja"
+      ],
+      "courseCount": 6
+    },
+    {
+      "id": "kahfi-fikrianoor",
+      "name": "KAHFI FIKRIANOOR",
+      "courseIds": [
+        "akuntansi-perpajakan",
+        "manajemen-pajak",
+        "manajemen-risiko",
+        "metodologi-penelitian",
+        "pelaporan-korporat",
+        "pengukuran-kinerja-strategi-dan-pengukuran-kinerja",
+        "seminar-perpajakan"
+      ],
+      "courseCount": 7
+    },
+    {
+      "id": "karina-elsani",
+      "name": "KARINA ELSANI",
+      "courseIds": [
+        "akuntansi-perpajakan",
+        "humanisme-dan-konstruksi-etika-diri",
+        "manajemen-keuangan",
+        "perpajakan-1",
+        "perpajakan-2",
+        "perpajakan-dasar",
+        "teknologi-informasi-dasar"
+      ],
+      "courseCount": 7
+    },
+    {
+      "id": "lamsah",
+      "name": "LAMSAH",
+      "courseIds": [
+        "akuntansi-biaya",
+        "akuntansi-internasional",
+        "akuntansi-keuangan-lanjutan",
+        "akuntansi-keuangan-lanjutan-1",
+        "akuntansi-keuangan-menengah",
+        "principles-of-management-and-business",
+        "sistem-pengendalian-manajemen"
+      ],
+      "courseCount": 7
+    },
+    {
+      "id": "listia-aulia-indy",
+      "name": "LISTIA AULIA INDY",
+      "courseIds": [
+        "accounting-for-small-medium-enterprise",
+        "akuntansi-instrumen-keuangan",
+        "akuntansi-internasional",
+        "akuntansi-perbankan",
+        "akuntansi-perusahaan-jasa-dan-dagang",
+        "akuntansi-perusahaan-manufaktur",
+        "analisis-laporan-keuangan",
+        "perpajakan-1",
+        "perpajakan-2"
+      ],
+      "courseCount": 9
+    },
+    {
+      "id": "muchamad-rizky-fauzi",
+      "name": "MUCHAMAD RIZKY FAUZI",
+      "courseIds": [
+        "ai-automation-in-accounting",
+        "akuntansi-lingkungan",
+        "akuntansi-perbankan",
+        "bank-dan-lembaga-keuangan-lainnya",
+        "digital-business",
+        "ekonomi-syariah",
+        "manajemen-investasi",
+        "manajemen-pemasaran",
+        "teori-portofolio-dan-analisis-investasi"
+      ],
+      "courseCount": 9
+    },
+    {
+      "id": "nistri-kusumawardani",
+      "name": "NISTRI KUSUMAWARDANI",
+      "courseIds": [
+        "akuntansi-manajemen",
+        "budgeting-forecasting-financial-modelling",
+        "komunikasi-bisnis",
+        "principles-of-management-and-business",
+        "sistem-informasi-akuntansi",
+        "sistem-pengendalian-manajemen",
+        "sistem-informasi-manajemen"
+      ],
+      "courseCount": 7
+    },
+    {
+      "id": "rahadian",
+      "name": "RAHADIAN",
+      "courseIds": [
+        "akuntansi-manajemen",
+        "analisis-keputusan-bisnis",
+        "analytics-and-big-data",
+        "audit-internal",
+        "edp-audit",
+        "etika-bisnis-dan-profesi",
+        "etika-profesi-akuntan",
+        "humanisme-dan-konstruksi-etika-diri",
+        "manajemen-risiko",
+        "manajemen-stratejik",
+        "matematika-ekonomi-dan-bisnis",
+        "perilaku-organisasional",
+        "tata-kelola-risiko-dan-kepatuhan"
+      ],
+      "courseCount": 13
+    },
+    {
+      "id": "ricka-hidayati",
+      "name": "RICKA HIDAYATI",
+      "courseIds": [
+        "akuntansi-keuangan-1",
+        "akuntansi-perbankan",
+        "akuntansi-perusahaan-jasa-dan-dagang",
+        "akuntansi-perusahaan-manufaktur",
+        "manajemen-keuangan",
+        "teknologi-informasi-dasar",
+        "akuntansi-keuangan-2"
+      ],
+      "courseCount": 7
+    },
+    {
+      "id": "ririn-sari-dewi",
+      "name": "RIRIN SARI DEWI",
+      "courseIds": [
+        "accounting-for-small-medium-enterprise",
+        "akuntansi-biaya",
+        "akuntansi-internasional",
+        "akuntansi-perusahaan-jasa-dan-dagang",
+        "akuntansi-perusahaan-manufaktur",
+        "analisis-laporan-keuangan",
+        "komputer-akuntansi",
+        "manajemen-keuangan",
+        "sistem-informasi-akuntansi"
+      ],
+      "courseCount": 9
+    },
+    {
+      "id": "rismawati",
+      "name": "RISMAWATI",
+      "courseIds": [
+        "akuntansi-keuangan-lanjutan",
+        "akuntansi-keuangan-lanjutan-1",
+        "akuntansi-keuangan-lanjutan-2",
+        "akuntansi-keuangan-menengah",
+        "akuntansi-perbankan",
+        "akuntansi-perusahaan-manufaktur",
+        "matematika-ekonomi-dan-bisnis",
+        "akuntansi-keuangan-2"
+      ],
+      "courseCount": 8
+    },
+    {
+      "id": "rupianna-tambunan",
+      "name": "RUPIANNA TAMBUNAN",
+      "courseIds": [
+        "akuntansi-instrumen-keuangan",
+        "akuntansi-keuangan-1",
+        "akuntansi-keuangan-lanjutan-2",
+        "akuntansi-keuangan-menengah",
+        "akuntansi-perusahaan-jasa-dan-dagang",
+        "corporate-governance",
+        "pelaporan-korporat",
+        "standar-akuntansi-keuangan",
+        "sustainability-accounting"
+      ],
+      "courseCount": 9
+    },
+    {
+      "id": "shally-khomilah",
+      "name": "SHALLY KHOMILAH",
+      "courseIds": [
+        "akuntansi-perbankan",
+        "auditing-1",
+        "auditing-2",
+        "economics",
+        "edp-audit",
+        "manajemen-pemasaran",
+        "praktik-pemeriksaan-akuntansi",
+        "praktikum-audit-berbasis-teknologi-informasi",
+        "principles-of-management-and-business",
+        "seminar-pemeriksaan-akuntansi",
+        "sistem-informasi-manajemen"
+      ],
+      "courseCount": 11
+    },
+    {
+      "id": "tiyas-puji-utami",
+      "name": "TIYAS PUJI UTAMI",
+      "courseIds": [
+        "akuntansi-keprilakuan",
+        "budgeting-forecasting-financial-modelling",
+        "manajemen-stratejik",
+        "metodologi-penelitian",
+        "pengukuran-kinerja-strategi-dan-pengukuran-kinerja",
+        "statistik-deskriptif",
+        "statistik-inferensial"
+      ],
+      "courseCount": 7
+    },
+    {
+      "id": "vani-vauliyanti",
+      "name": "VANI VAULIYANTI",
+      "courseIds": [
+        "akuntansi-perusahaan-jasa-dan-dagang",
+        "akuntansi-perusahaan-manufaktur",
+        "economics",
+        "kewirausahaan",
+        "perilaku-organisasional",
+        "principles-of-management-and-business",
+        "sistem-informasi-akuntansi",
+        "teknologi-informasi-dasar",
+        "teori-akuntansi"
+      ],
+      "courseCount": 9
+    },
+    {
+      "id": "yayah-syahriyah",
+      "name": "YAYAH SYAHRIYAH",
+      "courseIds": [
+        "accounting-for-small-medium-enterprise",
+        "akuntansi-keuangan-1",
+        "akuntansi-perbankan",
+        "bank-dan-lembaga-keuangan-lainnya",
+        "economics",
+        "hukum-bisnis-dan-regulasi",
+        "komputer-akuntansi",
+        "komunikasi-bisnis",
+        "manajemen-investasi",
+        "teori-akuntansi"
+      ],
+      "courseCount": 10
+    },
+    {
+      "id": "yudha-eka-febrian",
+      "name": "YUDHA EKA FEBRIAN",
+      "courseIds": [
+        "auditing-1",
+        "auditing-2",
+        "auditing-dasar",
+        "etika-bisnis-dan-profesi",
+        "komunikasi-bisnis",
+        "manajemen-pemasaran",
+        "manajemen-stratejik"
+      ],
+      "courseCount": 7
+    }
+  ],
+  "meta": {
+    "mainCourses": 81,
+    "lecturerSheetEntries": 83,
+    "combinedCourses": 83,
+    "lecturerCount": 30,
+    "additionalCourses": [
+      "AKUNTANSI KEUANGAN 2",
+      "PAJAK DAN RETRIBUSI DAERAH"
+    ],
+    "coursesWithoutLecturerRows": [
+      "PAJAK DAN RESTRIBUSI DAERAH"
+    ],
+    "importantNote": "Data awal belum final. Data KMK dipakai untuk ketua, KBK, semester, dan kurikulum pada daftar utama; Data Dosen Pengampu dipakai untuk hubungan dosen dan mata kuliah. Entri tambahan dipertahankan untuk verifikasi."
+  }
+}
