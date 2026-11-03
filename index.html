@@ -1,4 +1,1430 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Academic Curriculum Center</title><style>body{margin:0;background:#f3f6fa;color:#172b3e;font:14px/1.5 system-ui}.layout{display:grid;grid-template-columns:245px 1fr;min-height:100vh}.side{background:#10243a;color:white;padding:22px}.side button{display:block;width:100%;padding:12px;text-align:left;border:0;background:transparent;color:#dce5ed;cursor:pointer;border-radius:8px}.side button.active,.side button:hover{background:#ffffff20}.main{min-width:0}.top{background:white;padding:18px 28px;border-bottom:1px solid #e4eaf0}.content{padding:28px;max-width:1250px;margin:auto}.eyebrow{color:#0e8a83;font-size:10px;letter-spacing:2px;font-weight:bold}.hero{display:flex;justify-content:space-between}.hero h1{font-size:27px;margin:5px 0}.muted{color:#6e7e8d}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.stat,.panel{background:white;border:1px solid #e4eaf0;border-radius:12px;padding:17px}.stat strong{display:block;font-size:25px;margin:8px 0}.tag{background:#eaf5f3;color:#08746e;padding:5px 10px;border-radius:20px;font-size:10px;font-weight:bold}.grid{display:grid;grid-template-columns:1.2fr 1fr;gap:14px}.row{display:grid;grid-template-columns:100px 1fr 24px;gap:10px;margin:14px 0;align-items:center}.bar{height:8px;background:#edf1f5;border-radius:8px}.bar span{display:block;background:#0e8a83;height:8px;border-radius:8px}.quick{display:grid;grid-template-columns:1fr 1fr;gap:8px}.quick button{padding:13px;text-align:left;background:#f7f9fb;border:1px solid #e4eaf0;border-radius:9px;cursor:pointer}.quick b{display:block;margin-top:5px}.toolbar{display:flex;gap:8px;margin:15px 0}.field,.btn{padding:9px 11px;border:1px solid #e4eaf0;border-radius:8px;background:white}.search{flex:1;min-width:160px}.btn{cursor:pointer;font-weight:bold;font-size:12px}.primary{background:#0e8a83;color:white}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:650px}.table th,.table td{text-align:left;padding:12px;border-bottom:1px solid #edf1f5;font-size:12px}.table th{font-size:10px;color:#708293;background:#f8fafb}.table td b{display:block}.sub{font-size:10px;color:#6e7e8d}.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card p{color:#6e7e8d;font-size:12px}.progress{height:7px;background:#eef1f5;border-radius:8px;margin:10px 0}.progress span{display:block;height:7px;background:#0e8a83;border-radius:8px}.modalbg{display:none;position:fixed;inset:0;background:#001526bb;align-items:center;justify-content:center;padding:15px}.modalbg.show{display:flex}.modal{background:white;border-radius:12px;width:min(600px,100%);padding:20px}.form{display:grid;grid-template-columns:1fr 1fr;gap:10px}.form label{font-size:11px;font-weight:bold}.form input,.form select,.form textarea{box-sizing:border-box;width:100%;padding:9px;border:1px solid #e4eaf0;border-radius:8px}.full{grid-column:1/-1}.toast{display:none;position:fixed;bottom:20px;right:20px;padding:12px;background:#10243a;color:white;border-radius:8px}.toast.show{display:block}@media(max-width:800px){.layout{display:block}.side{padding:12px}.content{padding:18px}.stats{grid-template-columns:1fr 1fr}.grid,.cards{grid-template-columns:1fr}.hero{display:block}.form{grid-template-columns:1fr}.full{grid-column:auto}.toolbar{flex-wrap:wrap}}</style></head><body><div class="layout"><aside class="side"><b>AC · ACADEMIC CURRICULUM</b><p class="muted" style="color:#b5c4d0">Center · Accounting Program</p><p class="eyebrow" style="color:#93aabc">WORKSPACE</p><button data-page="dashboard" class="active">⌂ Dashboard</button><p class="eyebrow" style="color:#93aabc">MANAJEMEN KURIKULUM</p><button data-page="kbk">▦ Kelompok Bidang Keahlian</button><button data-page="courses">▤ Kelompok Mata Kuliah</button><button data-page="rps">▧ RPS Development</button><p style="margin-top:38px;color:#aabac8;font-size:11px">Program Studi Akuntansi<br>Universitas Pamulang · Serang</p></aside><main class="main"><div class="top" id="crumb">Workspace / Dashboard</div><section class="content" id="content"></section></main></div><div id="modalbg" class="modalbg"><div class="modal"><h3 id="mtitle"></h3><div id="mbody"></div><div id="mfoot" style="margin-top:15px;text-align:right"></div></div></div><div id="toast" class="toast"></div>
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10243a"><title>Akademik Curriculum Center | Prodi Akuntansi</title>
+<style>
+:root{--navy:#10243a;--navy2:#183954;--teal:#0e8a83;--gold:#e0b85c;--bg:#f3f6fa;--ink:#172b3e;--muted:#6e7e8d;--line:#e4eaf0;--white:#fff;--shadow:0 12px 32px #10243a0d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0} .app{min-height:100vh;display:grid;grid-template-columns:258px 1fr}
+.sidebar{background:linear-gradient(180deg,var(--navy),#0b1c2d);color:#fff;padding:24px 16px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:12px;padding:0 10px 26px;border-bottom:1px solid #ffffff1b}.brand-icon{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--gold),#f1d68d);display:grid;place-items:center;color:var(--navy);font-weight:900;font-size:19px}.brand strong{display:block;font-size:14px;letter-spacing:.02em}.brand small{color:#a9bbc9;font-size:11px}
+.nav-label{color:#8198aa;font-size:10px;letter-spacing:.14em;font-weight:800;padding:24px 12px 9px}.nav{display:grid;gap:5px}.nav button{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:10px;background:transparent;color:#c1cfda;text-align:left;font-weight:600}.nav button:hover,.nav button.active{background:#ffffff16;color:#fff}.nav button.active{box-shadow:inset 3px 0 var(--gold)}.ico{width:20px;text-align:center;font-size:16px}.sidebar-footer{margin-top:auto;border-top:1px solid #ffffff1b;padding:16px 10px 0;color:#a9bbc9;font-size:11px}
+.main{min-width:0}.topbar{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 32px;position:sticky;top:0;z-index:5}.crumb{color:var(--muted);font-size:12px}.crumb b{color:var(--ink)}.top-right{display:flex;align-items:center;gap:12px}.pill{border-radius:20px;background:#eaf5f3;color:#08746e;font-size:11px;padding:6px 11px;font-weight:800}.avatar{width:34px;height:34px;border-radius:50%;background:#e8edf3;color:var(--navy);display:grid;place-items:center;font-weight:800}
+.content{max-width:1440px;margin:0 auto;padding:30px 32px 54px}.welcome{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:24px}.eyebrow{text-transform:uppercase;letter-spacing:.15em;color:var(--teal);font-size:10px;font-weight:900}.welcome h1{margin:5px 0 4px;font-size:27px;line-height:1.25;letter-spacing:-.03em}.welcome p{margin:0;color:var(--muted)}.actions{display:flex;gap:9px;flex-wrap:wrap}
+.btn{padding:9px 14px;border-radius:9px;font-weight:750;font-size:12px;background:#fff;color:var(--ink);border:1px solid var(--line)}.btn:hover{border-color:#aebdca}.btn.primary{background:var(--teal);color:#fff;border-color:var(--teal)}.btn.dark{background:var(--navy);color:white;border-color:var(--navy)}.btn.gold{background:#fff8e7;color:#88651b;border-color:#f0dfb7}.btn.danger{color:#b53a3a;border-color:#f0d0d0}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:21px}.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:17px 18px;box-shadow:var(--shadow)}.stat-top{display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:11px;font-weight:700}.stat-icon{width:33px;height:33px;display:grid;place-items:center;border-radius:10px;background:#edf6f5;color:var(--teal);font-size:16px}.stat strong{display:block;font-size:26px;letter-spacing:-.04em;margin-top:6px}.stat small{color:var(--muted);font-size:10px}
+.grid2{display:grid;grid-template-columns:1.3fr 1fr;gap:16px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);min-width:0}.panel-head{padding:18px 20px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);gap:10px}.panel-head h3{font-size:14px;margin:0}.panel-head p{font-size:11px;margin:3px 0 0;color:var(--muted)}.panel-body{padding:18px 20px}.kbk-list{display:grid;gap:13px}.kbk-row{display:grid;grid-template-columns:105px 1fr 30px;align-items:center;gap:10px;font-size:12px}.bar{height:8px;border-radius:9px;background:#edf1f5;overflow:hidden}.bar span{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--teal),#58b8aa)}.kbk-row b{text-align:right}.quick{display:grid;grid-template-columns:1fr 1fr;gap:9px}.quick button{background:#f7f9fb;border:1px solid var(--line);border-radius:10px;padding:14px;text-align:left}.quick button:hover{border-color:#9dcac5;background:#f2faf8}.quick .qicon{font-size:20px}.quick b{display:block;margin-top:8px;font-size:12px}.quick small{color:var(--muted);font-size:10px}
+.page-title{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;gap:12px}.page-title h2{margin:0;font-size:22px;letter-spacing:-.02em}.page-title p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}.field{border:1px solid var(--line);border-radius:9px;background:#fff;padding:9px 11px;color:var(--ink);outline:none;min-width:0}.field:focus{border-color:var(--teal);box-shadow:0 0 0 3px #0e8a8314}.search{flex:1;min-width:190px}.table-wrap{overflow:auto}.data-table{width:100%;border-collapse:collapse;min-width:760px}.data-table th{text-align:left;color:#758697;font-size:10px;text-transform:uppercase;letter-spacing:.08em;background:#f8fafc;padding:12px 15px;border-bottom:1px solid var(--line);white-space:nowrap}.data-table td{padding:13px 15px;border-bottom:1px solid #edf1f5;font-size:12px;vertical-align:middle}.data-table tr:last-child td{border-bottom:0}.data-table tbody tr:hover{background:#fbfcfd}.sub{display:block;color:var(--muted);font-size:10px;margin-top:3px}.tag{display:inline-block;border-radius:20px;background:#edf6f5;color:#08766f;padding:4px 8px;font-size:10px;font-weight:800;white-space:nowrap}.tag.gold{background:#fff5dc;color:#8b6717}.tag.blue{background:#edf3fb;color:#3b6392}.tag.gray{background:#f0f2f5;color:#647382}
+.card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.kbk-card{padding:18px}.kbk-card-top{display:flex;justify-content:space-between;align-items:center}.kbk-card h3{margin:12px 0 4px;font-size:16px}.kbk-card p{margin:0;color:var(--muted);font-size:11px}.kbk-meta{display:flex;gap:7px;margin-top:15px;flex-wrap:wrap}.person{display:flex;align-items:center;gap:9px}.person-dot{width:31px;height:31px;display:grid;place-items:center;border-radius:50%;background:#edf3f7;color:#29475e;font-weight:800;font-size:10px}.person b{display:block;font-size:11px}.person small{display:block;color:var(--muted);font-size:10px}
+.empty{padding:38px;text-align:center;color:var(--muted)}.empty strong{display:block;color:var(--ink);margin-bottom:4px}
+.modal-backdrop{position:fixed;inset:0;background:#0c1d2dcc;z-index:20;display:none;align-items:center;justify-content:center;padding:18px}.modal-backdrop.show{display:flex}.modal{background:#fff;border-radius:16px;width:min(650px,100%);max-height:92vh;overflow:auto;box-shadow:0 24px 80px #0003}.modal-head{padding:19px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modal-head h3{margin:0;font-size:16px}.close{background:#f0f3f6;border-radius:8px;width:30px;height:30px}.modal-body{padding:20px 22px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.form-group{display:grid;gap:6px}.form-group.full{grid-column:1/-1}.form-group label{font-size:11px;font-weight:800;color:#536779}.form-group input,.form-group select,.form-group textarea{width:100%}.form-group textarea{min-height:80px;resize:vertical}.modal-foot{display:flex;justify-content:flex-end;gap:8px;padding:15px 22px;border-top:1px solid var(--line)}
+.rps-progress{height:7px;background:#edf1f5;border-radius:9px;overflow:hidden;margin-top:8px}.rps-progress span{display:block;height:100%;background:var(--teal)}.rps-card{padding:16px 18px}.rps-card h4{margin:0;font-size:13px}.rps-card .muted{color:var(--muted);font-size:10px}.rps-card-top{display:flex;justify-content:space-between;gap:12px;align-items:start}.rps-fields{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.toast{position:fixed;right:22px;bottom:22px;background:#10243a;color:#fff;padding:12px 17px;border-radius:10px;box-shadow:var(--shadow);z-index:40;display:none;font-size:12px}.toast.show{display:block}
+.mobile-menu{display:none;background:transparent;font-size:20px;color:var(--navy)}
+@media(max-width:1050px){.stats{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
+@media(max-width:760px){.app{display:block}.sidebar{position:fixed;left:-270px;z-index:15;width:258px;transition:left .2s}.sidebar.open{left:0}.topbar{padding:0 16px}.mobile-menu{display:block}.content{padding:22px 16px 40px}.welcome{display:block}.welcome .actions{margin-top:14px}.card-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.form-group.full{grid-column:auto}.stats{gap:9px}.stat{padding:13px}.stat strong{font-size:22px}.topbar .crumb{display:none}}
+
+.textlink{border:0;background:transparent;color:#0e817a;padding:0;text-align:left;font-weight:700;cursor:pointer}.textlink:hover{text-decoration:underline}.textlink.strong{font-size:12px}.detail-title{font-size:17px;font-weight:850;margin-bottom:12px}.detail-meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:15px}.detail-section{border-top:1px solid var(--line);padding:13px 0}.detail-section>small{display:block;color:var(--muted);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px}.detail-row{display:flex;width:100%;justify-content:space-between;align-items:center;gap:12px;padding:11px 10px;text-align:left;border:1px solid var(--line);border-radius:9px;background:#fff;margin:5px 0;color:var(--ink)}.detail-row:hover{background:#f7fafb;border-color:#b6d6d2}.detail-row small{display:block;color:var(--muted);font-size:10px;margin-top:2px}.detail-row>span:last-child{font-size:10px;color:var(--teal);white-space:nowrap}.data-note{padding:11px 13px;border:1px solid #f1dfb2;background:#fff9e9;color:#775b1c;border-radius:9px;font-size:11px;margin-bottom:13px}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+ <div class="brand"><div class="brand-icon">AC</div><div><strong>ACADEMIC CURRICULUM</strong><small>Center · Accounting Program</small></div></div>
+ <div class="nav-label">WORKSPACE</div>
+ <nav class="nav">
+  <button class="active" data-page="dashboard"><span class="ico">⌂</span>Dashboard</button>
+ </nav>
+ <div class="nav-label">MANAJEMEN KURIKULUM</div>
+ <nav class="nav">
+  <button data-page="kbk"><span class="ico">▦</span>Kelompok Bidang Keahlian</button>
+  <button data-page="courses"><span class="ico">▤</span>Kelompok Mata Kuliah</button>
+  <button data-page="lecturers"><span class="ico">♙</span>Data Dosen</button>
+  <button data-page="rps"><span class="ico">▧</span>RPS Development</button>
+ </nav>
+ <div class="nav-label">PREFERENSI</div>
+ <nav class="nav">
+  <button data-page="about"><span class="ico">ⓘ</span>Panduan Sistem</button>
+ </nav>
+ <div class="sidebar-footer">Program Studi Akuntansi<br><b>Universitas Pamulang · Serang</b><br><span style="opacity:.7">Academic Curriculum Center v1.0</span></div>
+</aside>
+<main class="main">
+ <header class="topbar"><div style="display:flex;align-items:center;gap:12px"><button class="mobile-menu" id="mobileMenu">☰</button><div class="crumb">Workspace / <b id="crumb">Dashboard</b></div></div><div class="top-right"><span class="pill">CURRICULUM MANAGEMENT</span><div class="avatar">AC</div></div></header>
+ <section class="content" id="content"></section>
+</main>
+</div>
+<div class="modal-backdrop" id="modalBackdrop"><div class="modal"><div class="modal-head"><h3 id="modalTitle">Form</h3><button class="close" id="modalClose">✕</button></div><div class="modal-body" id="modalBody"></div><div class="modal-foot" id="modalFoot"></div></div></div>
+<div class="toast" id="toast"></div>
 <script>
-const seed=[{"id":"accounting-for-small-medium-enterprise","name":"ACCOUNTING FOR SMALL MEDIUM ENTERPRISE","semester":"6","curriculum":"OBE","leader":"RIRIN SARI DEWI","kbk":"KEUANGAN","lecturers":["RIRIN SARI DEWI","LISTIA AULIA INDY","YAYAH SYAHRIYAH"]},{"id":"ai-automation-in-accounting","name":"AI & AUTOMATION IN ACCOUNTING","semester":"7","curriculum":"OBE","leader":"AHMAD SYUHERI","kbk":"MANAJEMEN","lecturers":["AHMAD SYUHERI","MUCHAMAD RIZKY FAUZI"]}];let courses=JSON.parse(localStorage.getItem('acc_courses')||'null')||seed,rps=JSON.parse(localStorage.getItem('acc_rps')||'{}'),page='dashboard',flt={q:'',kbk:'',sem:'',status:''};const KBK=['KEUANGAN','MANAJEMEN','PAJAK','AUDIT'];const $=x=>document.getElementById(x);function esc(x){return String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function save(){localStorage.setItem('acc_courses',JSON.stringify(courses));localStorage.setItem('acc_rps',JSON.stringify(rps))}function toast(x){$('toast').textContent=x;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),2200)}document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>go(b.dataset.page));function go(x){page=x;document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===x));render()}function hero(k,t,d,a=''){return '<div class="hero"><div><div class="eyebrow">'+k+'</div><h1>'+t+'</h1><p class="muted">'+d+'</p></div>'+a+'</div>'}function stat(k,v,d){return '<div class="stat"><small>'+k+'</small><strong>'+v+'</strong><small class="muted">'+d+'</small></div>'}function render(){let label={dashboard:'Dashboard',kbk:'Kelompok Bidang Keahlian',courses:'Kelompok Mata Kuliah',rps:'RPS Development'};$('crumb').textContent='Workspace / '+label[page];$('content').innerHTML=({dashboard,kbk:kbkPage,courses:coursePage,rps:rpsPage}[page])()}function dashboard(){let counts=KBK.map(k=>[k,courses.filter(c=>c.kbk===k).length]),all=courses.filter(c=>c.kbk==='ALL').length;return hero('ACADEMIC CURRICULUM CENTER','Dashboard','Pusat pengelolaan bidang keahlian, kelompok mata kuliah, ketua KMK, dan RPS.')+'<div class="stats">'+stat('TOTAL MATA KULIAH',courses.length,'Data mapping KMK')+stat('KELOMPOK BIDANG KEAHLIAN',4,'Keuangan · Manajemen · Pajak · Audit')+stat('MATA KULIAH LINTAS BIDANG',all,'Kode KBK ALL')+stat('RPS SELESAI',Object.values(rps).filter(x=>x.status==='Selesai').length,'Dokumen selesai')+'</div><div class="grid"><div class="panel"><b>Distribusi Mata Kuliah per KBK</b>'+counts.map(([k,n])=>'<div class="row"><span>'+k+'</span><div class="bar"><span style="width:'+n/Math.max(...counts.map(a=>a[1]))*100+'%"></span></div>'+n+'</div>').join('')+'</div><div class="panel"><b>Akses Cepat</b><div class="quick"><button onclick="go(\'kbk\')">▦<b>Bidang Keahlian</b><small>Empat KBK</small></button><button onclick="go(\'courses\')">▤<b>Kelompok MK</b><small>Daftar dan ketua KMK</small></button><button onclick="go(\'rps\')">▧<b>RPS Development</b><small>Monitoring RPS</small></button><button onclick="backup()">⇩<b>Backup Data</b><small>Ekspor JSON</small></button></div></div></div>'}function kbkPage(){let desc=['Akuntansi keuangan, pelaporan, dan investasi.','Akuntansi manajemen, tata kelola, dan keputusan.','Perpajakan dan perencanaan pajak.','Pemeriksaan, audit, assurance, dan forensik.'];return hero('STRUKTUR AKADEMIK','Kelompok Bidang Keahlian','Empat bidang utama pengelolaan kurikulum.')+'<div class="cards">'+KBK.map((k,i)=>'<div class="panel card"><span class="tag">0'+(i+1)+' · KBK</span><h3>'+k+'</h3><p>'+desc[i]+'</p><span class="tag">'+courses.filter(c=>c.kbk===k).length+' Mata Kuliah</span><p><button class="btn" onclick="filterKBK(\''+k+'\')">Lihat Mata Kuliah →</button></p></div>').join('')+'</div><div class="panel" style="margin-top:14px"><b>Mata Kuliah Lintas Bidang (ALL)</b><p>'+courses.filter(c=>c.kbk==='ALL').map(c=>'<span class="tag">'+esc(c.name)+'</span>').join(' ')+'</p></div>'}function filtered(){return courses.filter(c=>(!flt.q||(c.name+' '+c.leader).toLowerCase().includes(flt.q.toLowerCase()))&&(!flt.kbk||c.kbk===flt.kbk)&&(!flt.sem||c.semester.split(/[&,]/).map(x=>x.trim()).includes(flt.sem)))}function coursePage(){return hero('DATABASE KURIKULUM','Kelompok Mata Kuliah','Mata kuliah, semester, kurikulum, KBK, ketua KMK, dan dosen pengampu.','<button class="btn primary" onclick="editCourse()">＋ Tambah Mata Kuliah</button>')+'<div class="toolbar"><input class="field search" placeholder="Cari mata kuliah / ketua KMK" oninput="flt.q=this.value;refreshCourses()"><select class="field" id="kf" onchange="flt.kbk=this.value;refreshCourses()"><option value="">Semua KBK</option>'+KBK.map(k=>'<option>'+k+'</option>').join('')+'<option value="ALL">Lintas Bidang</option></select><select class="field" onchange="flt.sem=this.value;refreshCourses()"><option value="">Semua Semester</option>'+[1,2,3,4,5,6,7,8].map(x=>'<option>'+x+'</option>').join('')+'</select></div><div class="panel"><div class="tablewrap" id="ct">'+courseRows(filtered())+'</div></div>'}function courseRows(list){return '<table class="table"><thead><tr><th>Mata Kuliah</th><th>Semester</th><th>Kurikulum</th><th>KBK</th><th>Ketua KMK</th><th>Dosen</th><th></th></tr></thead><tbody>'+list.map(c=>'<tr><td><b>'+esc(c.name)+'</b><span class="sub">'+esc(c.id)+'</span></td><td>'+esc(c.semester)+'</td><td>'+esc(c.curriculum)+'</td><td><span class="tag">'+esc(c.kbk==='ALL'?'Lintas Bidang':c.kbk)+'</span></td><td>'+esc(c.leader)+'</td><td>'+(c.lecturers||[]).length+' dosen<span class="sub">'+esc((c.lecturers||[]).slice(0,2).join(', '))+'</span></td><td><button class="btn" onclick="editCourse(\''+c.id+'\')">Edit</button></td></tr>').join('')+'</tbody></table>'}function refreshCourses(){$('ct').innerHTML=courseRows(filtered())}function filterKBK(k){go('courses');flt.kbk=k;setTimeout(()=>{$('kf').value=k;refreshCourses()},10)}function modal(t,b,foot){$('mtitle').textContent=t;$('mbody').innerHTML=b;$('mfoot').innerHTML=foot;$('modalbg').classList.add('show')}function closeModal(){$('modalbg').classList.remove('show')}function editCourse(id=''){let c=courses.find(x=>x.id===id)||{name:'',semester:'',curriculum:'OBE',kbk:'KEUANGAN',leader:'',lecturers:[]};modal(id?'Edit Mata Kuliah':'Tambah Mata Kuliah','<form id="cf" class="form"><div class="fg full"><label>Nama Mata Kuliah</label><input required name="name" value="'+esc(c.name)+'"></div><div class="fg"><label>KBK</label><select name="kbk">'+[...KBK,'ALL'].map(k=>'<option '+(k===c.kbk?'selected':'')+'>'+k+'</option>').join('')+'</select></div><div class="fg"><label>Semester</label><input name="semester" value="'+esc(c.semester)+'"></div><div class="fg"><label>Kurikulum</label><input name="curriculum" value="'+esc(c.curriculum)+'"></div><div class="fg"><label>Ketua KMK</label><input required name="leader" value="'+esc(c.leader)+'"></div><div class="fg full"><label>Dosen Pengampu (pisahkan koma)</label><textarea name="lecturers">'+esc((c.lecturers||[]).join(', '))+'</textarea></div></form>',(id?'<button class="btn" onclick="deleteCourse(\''+id+'\')">Hapus</button>':'')+'<button class="btn" onclick="closeModal()">Batal</button><button class="btn primary" onclick="saveCourse(\''+id+'\')">Simpan</button>')}function saveCourse(id){let form=$('cf');if(!form.reportValidity())return;let d=new FormData(form),name=d.get('name').trim(),slug=name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''),v={id:slug,name,semester:d.get('semester'),curriculum:d.get('curriculum'),kbk:d.get('kbk'),leader:d.get('leader'),lecturers:d.get('lecturers').split(',').map(x=>x.trim()).filter(Boolean)};if(id)courses=courses.map(c=>c.id===id?v:c);else{if(courses.some(c=>c.id===slug)){toast('Mata kuliah sudah ada');return}courses.push(v)}save();closeModal();render()}function deleteCourse(id){if(!confirm('Hapus mata kuliah?'))return;courses=courses.filter(c=>c.id!==id);save();closeModal();render()}function rpsPage(){let list=filtered();return hero('PENGEMBANGAN PEMBELAJARAN','RPS Development','Pantau proses penyusunan Rencana Pembelajaran Semester.')+'<div class="stats">'+stat('TOTAL MK',courses.length,'Target RPS')+stat('BELUM DIMULAI',courses.filter(c=>!rps[c.id]||rps[c.id].status==='Belum Dimulai').length,'Menunggu')+stat('DALAM PROSES',Object.values(rps).filter(x=>x.status==='Dalam Proses').length,'Sedang dikembangkan')+stat('SELESAI',Object.values(rps).filter(x=>x.status==='Selesai').length,'Tuntas')+'</div><div class="toolbar"><input class="field search" placeholder="Cari mata kuliah" oninput="flt.q=this.value;refreshRps()"><select class="field" onchange="flt.status=this.value;refreshRps()"><option value="">Semua Status</option>'+['Belum Dimulai','Dalam Proses','Review','Selesai'].map(s=>'<option>'+s+'</option>').join('')+'</select></div><div class="panel" id="rl">'+rpsRows(list)+'</div>'}function rpsRows(list){return list.filter(c=>!flt.status||(rps[c.id]?.status||'Belum Dimulai')===flt.status).map(c=>{let x=rps[c.id]||{status:'Belum Dimulai',progress:0,link:''};return '<div class="rps"><b>'+esc(c.name)+'</b><p class="muted">'+esc(c.kbk)+' · Semester '+esc(c.semester)+' · Ketua KMK: '+esc(c.leader)+'</p><span class="tag">'+x.status+'</span><div class="progress"><span style="width:'+Number(x.progress)+'%"></span></div><small>Progress '+Number(x.progress)+'% '+(x.link?'<a target="_blank" href="'+esc(x.link)+'">Buka RPS</a>':'')+'</small> <button class="btn" onclick="rpsEdit(\''+c.id+'\')">Kelola RPS</button></div>'}).join('')}function refreshRps(){$('rl').innerHTML=rpsRows(filtered())}function rpsEdit(id){let x=rps[id]||{status:'Belum Dimulai',progress:0,link:'',notes:''},c=courses.find(c=>c.id===id);modal('Pengembangan RPS','<p><b>'+esc(c.name)+'</b><br>Ketua KMK: '+esc(c.leader)+'</p><form id="rf" class="form"><div class="fg"><label>Status</label><select name="status">'+['Belum Dimulai','Dalam Proses','Review','Selesai'].map(s=>'<option '+(x.status===s?'selected':'')+'>'+s+'</option>').join('')+'</select></div><div class="fg"><label>Progress (%)</label><input type="number" min="0" max="100" name="progress" value="'+x.progress+'"></div><div class="fg full"><label>Link dokumen RPS</label><input type="url" name="link" value="'+esc(x.link)+'"></div><div class="fg full"><label>Catatan</label><textarea name="notes">'+esc(x.notes)+'</textarea></div></form>','<button class="btn" onclick="closeModal()">Batal</button><button class="btn primary" onclick="saveRps(\''+id+'\')">Simpan</button>')}function saveRps(id){let d=new FormData($('rf')),status=d.get('status'),progress=Math.max(0,Math.min(100,Number(d.get('progress'))||0));if(status==='Selesai')progress=100;rps[id]={status,progress,link:d.get('link'),notes:d.get('notes'),updated:new Date().toISOString()};save();closeModal();render()}function backup(){let a=document.createElement('a'),u=URL.createObjectURL(new Blob([JSON.stringify({courses,rps},null,2)],{type:'application/json'}));a.href=u;a.download='academic-curriculum-center-backup.json';a.click();URL.revokeObjectURL(u)}render();
-</script></body></html>
+const seedCourses=[
+  {
+    "id": "accounting-for-small-medium-enterprise",
+    "name": "ACCOUNTING FOR SMALL MEDIUM ENTERPRISE",
+    "semester": "6",
+    "curriculum": "OBE",
+    "leader": "RIRIN SARI DEWI",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "RIRIN SARI DEWI",
+      "LISTIA AULIA INDY",
+      "YAYAH SYAHRIYAH"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "ai-automation-in-accounting",
+    "name": "AI & AUTOMATION IN ACCOUNTING",
+    "semester": "7",
+    "curriculum": "OBE",
+    "leader": "AHMAD SYUHERI",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "AHMAD SYUHERI",
+      "MUCHAMAD RIZKY FAUZI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "akuntansi-biaya",
+    "name": "AKUNTANSI BIAYA",
+    "semester": "3 & 4",
+    "curriculum": "KKNI &OBE",
+    "leader": "RIRIN SARI DEWI",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "IRNA MAYA SARI",
+      "LAMSAH",
+      "RIRIN SARI DEWI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "akuntansi-instrumen-keuangan",
+    "name": "AKUNTANSI INSTRUMEN KEUANGAN",
+    "semester": "4",
+    "curriculum": "OBE",
+    "leader": "LISTIA AULIA INDY",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "LISTIA AULIA INDY",
+      "RUPIANNA TAMBUNAN"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "akuntansi-internasional",
+    "name": "AKUNTANSI INTERNASIONAL",
+    "semester": "6",
+    "curriculum": "OBE",
+    "leader": "DWI FITRIANINGSIH",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "DWI FITRIANINGSIH",
+      "LAMSAH",
+      "LISTIA AULIA INDY",
+      "RIRIN SARI DEWI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "akuntansi-keprilakuan",
+    "name": "AKUNTANSI KEPRILAKUAN",
+    "semester": "5",
+    "curriculum": "OBE",
+    "leader": "IRNA MAYA SARI",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "IRNA MAYA SARI",
+      "TIYAS PUJI UTAMI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "akuntansi-keuangan-1",
+    "name": "AKUNTANSI KEUANGAN 1",
+    "semester": "3",
+    "curriculum": "KKNI",
+    "leader": "RICKA HIDAYATI",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "ARIF WAHYU NUR KHOLID",
+      "ERIMINA HALAWA",
+      "INGGA MAULANA",
+      "RICKA HIDAYATI",
+      "RUPIANNA TAMBUNAN",
+      "YAYAH SYAHRIYAH"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "akuntansi-keuangan-lanjutan",
+    "name": "AKUNTANSI KEUANGAN LANJUTAN",
+    "semester": "5",
+    "curriculum": "OBE",
+    "leader": "RISMAWATI",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "RISMAWATI",
+      "DWI FITRIANINGSIH",
+      "LAMSAH"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "akuntansi-keuangan-lanjutan-1",
+    "name": "AKUNTANSI KEUANGAN LANJUTAN 1",
+    "semester": "5",
+    "curriculum": "KKNI",
+    "leader": "LAMSAH",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "RISMAWATI",
+      "LAMSAH",
+      "DWI FITRIANINGSIH"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "akuntansi-keuangan-lanjutan-2",
+    "name": "AKUNTANSI KEUANGAN LANJUTAN 2",
+    "semester": "6",
+    "curriculum": "KKNI",
+    "leader": "RUPIANNA TAMBUNAN",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "RUPIANNA TAMBUNAN",
+      "RISMAWATI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "akuntansi-keuangan-menengah",
+    "name": "AKUNTANSI KEUANGAN MENENGAH",
+    "semester": "3",
+    "curriculum": "OBE",
+    "leader": "RISMAWATI",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "RISMAWATI",
+      "RUPIANNA TAMBUNAN",
+      "ARIF WAHYU NUR KHOLID",
+      "LAMSAH"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "akuntansi-lingkungan",
+    "name": "AKUNTANSI LINGKUNGAN",
+    "semester": "5",
+    "curriculum": "KKNI",
+    "leader": "ACHMAD KHUSNUL IMAN",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "ARIF WAHYU NUR KHOLID",
+      "ACHMAD KHUSNUL IMAN",
+      "MUCHAMAD RIZKY FAUZI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "akuntansi-manajemen",
+    "name": "AKUNTANSI MANAJEMEN",
+    "semester": "4 & 6",
+    "curriculum": "KKNI & OBE",
+    "leader": "IRNA MAYA SARI",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "RAHADIAN",
+      "IRNA MAYA SARI",
+      "AYU SEPTIANA PUTRI",
+      "ARIFATUN NASIHAH",
+      "NISTRI KUSUMAWARDANI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "akuntansi-perbankan",
+    "name": "AKUNTANSI PERBANKAN",
+    "semester": "5",
+    "curriculum": "OBE",
+    "leader": "MUCHAMAD RIZKY FAUZI",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "MUCHAMAD RIZKY FAUZI",
+      "LISTIA AULIA INDY",
+      "YAYAH SYAHRIYAH",
+      "SHALLY KHOMILAH",
+      "RISMAWATI",
+      "RICKA HIDAYATI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "akuntansi-perpajakan",
+    "name": "AKUNTANSI PERPAJAKAN",
+    "semester": "5",
+    "curriculum": "KKNI & OBE",
+    "leader": "AHMAD SYUHERI",
+    "kbk": "PAJAK",
+    "lecturers": [
+      "KARINA ELSANI",
+      "ERIMINA HALAWA",
+      "ARIFATUN NASIHAH",
+      "AHMAD SYUHERI",
+      "KAHFI FIKRIANOOR"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "akuntansi-perusahaan-jasa-dan-dagang",
+    "name": "AKUNTANSI PERUSAHAAN JASA DAN DAGANG",
+    "semester": "1",
+    "curriculum": "OBE",
+    "leader": "RUPIANNA TAMBUNAN",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "RUPIANNA TAMBUNAN",
+      "VANI VAULIYANTI",
+      "INGGA MAULANA",
+      "RICKA HIDAYATI",
+      "LISTIA AULIA INDY",
+      "RIRIN SARI DEWI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "akuntansi-perusahaan-manufaktur",
+    "name": "AKUNTANSI PERUSAHAAN MANUFAKTUR",
+    "semester": "2",
+    "curriculum": "OBE",
+    "leader": "LISTIA AULIA INDY",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "RISMAWATI",
+      "IRNA MAYA SARI",
+      "RIRIN SARI DEWI",
+      "LISTIA AULIA INDY",
+      "RICKA HIDAYATI",
+      "VANI VAULIYANTI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "akuntansi-sektor-publik",
+    "name": "AKUNTANSI SEKTOR PUBLIK",
+    "semester": "5",
+    "curriculum": "KKNI & OBE",
+    "leader": "FADLI NURYASIN",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "AYU SEPTIANA PUTRI",
+      "FADLI NURYASIN"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "analisis-keputusan-bisnis",
+    "name": "ANALISIS KEPUTUSAN BISNIS",
+    "semester": "5",
+    "curriculum": "OBE",
+    "leader": "DIDIK SETIAWAN",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "DIDIK SETIAWAN",
+      "RAHADIAN",
+      "INGGA MAULANA"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "analisis-laporan-keuangan",
+    "name": "ANALISIS LAPORAN KEUANGAN",
+    "semester": "7",
+    "curriculum": "KKNI & OBE",
+    "leader": "DWI FITRIANINGSIH",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "RIRIN SARI DEWI",
+      "LISTIA AULIA INDY",
+      "DWI FITRIANINGSIH"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "analytics-and-big-data",
+    "name": "ANALYTICS AND BIG DATA",
+    "semester": "4",
+    "curriculum": "OBE",
+    "leader": "ACHMAD KHUSNUL IMAN",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "ACHMAD KHUSNUL IMAN",
+      "RAHADIAN",
+      "AHMAD SYUHERI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "audit-internal",
+    "name": "AUDIT INTERNAL",
+    "semester": "5",
+    "curriculum": "KKNI & OBE",
+    "leader": "AKHMAD NOFIATA",
+    "kbk": "AUDIT",
+    "lecturers": [
+      "EKO PUJIYONO",
+      "INDAH KRISTIANTI",
+      "AKHMAD NOFIATA",
+      "RAHADIAN"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "audit-investigasi-dan-forensik",
+    "name": "AUDIT INVESTIGASI DAN FORENSIK",
+    "semester": "6",
+    "curriculum": "KKNI",
+    "leader": "INDAH KRISTIANTI",
+    "kbk": "AUDIT",
+    "lecturers": [
+      "INDAH KRISTIANTI",
+      "EKO PUJIYONO"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "audit-perpajakan",
+    "name": "AUDIT PERPAJAKAN",
+    "semester": "6",
+    "curriculum": "OBE",
+    "leader": "ERIMINA HALAWA",
+    "kbk": "PAJAK",
+    "lecturers": [
+      "ERIMINA HALAWA",
+      "AHMAD SYUHERI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "auditing-1",
+    "name": "AUDITING 1",
+    "semester": "3",
+    "curriculum": "KKNI",
+    "leader": "SHALLY KHOMILAH",
+    "kbk": "AUDIT",
+    "lecturers": [
+      "SHALLY KHOMILAH",
+      "YUDHA EKA FEBRIAN",
+      "FADLI NURYASIN",
+      "EKO PUJIYONO",
+      "INDAH KRISTIANTI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "auditing-2",
+    "name": "AUDITING 2",
+    "semester": "4",
+    "curriculum": "KKNI",
+    "leader": "SHALLY KHOMILAH",
+    "kbk": "AUDIT",
+    "lecturers": [
+      "SHALLY KHOMILAH",
+      "AKHMAD NOFIATA",
+      "YUDHA EKA FEBRIAN",
+      "EKO PUJIYONO",
+      "INDAH KRISTIANTI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "auditing-dasar",
+    "name": "AUDITING DASAR",
+    "semester": "3",
+    "curriculum": "OBE",
+    "leader": "YUDHA EKA FEBRIAN",
+    "kbk": "AUDIT",
+    "lecturers": [
+      "YUDHA EKA FEBRIAN",
+      "INDAH KRISTIANTI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "auditing-lanjutan",
+    "name": "AUDITING LANJUTAN",
+    "semester": "4",
+    "curriculum": "OBE",
+    "leader": "INDAH KRISTIANTI",
+    "kbk": "AUDIT",
+    "lecturers": [
+      "EKO PUJIYONO",
+      "INDAH KRISTIANTI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "bank-dan-lembaga-keuangan-lainnya",
+    "name": "BANK DAN LEMBAGA KEUANGAN LAINNYA",
+    "semester": "6",
+    "curriculum": "KKNI",
+    "leader": "DIDIK SETIAWAN",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "DIDIK SETIAWAN",
+      "MUCHAMAD RIZKY FAUZI",
+      "YAYAH SYAHRIYAH"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "budgeting-forecasting-financial-modelling",
+    "name": "BUDGETING, FORECASTING & FINANCIAL MODELLING",
+    "semester": "7",
+    "curriculum": "OBE",
+    "leader": "TIYAS PUJI UTAMI",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "TIYAS PUJI UTAMI",
+      "INGGA MAULANA",
+      "NISTRI KUSUMAWARDANI",
+      "ARIF WAHYU NUR KHOLID"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "corporate-governance",
+    "name": "CORPORATE GOVERNANCE",
+    "semester": "8",
+    "curriculum": "KKNI",
+    "leader": "ACHMAD KHUSNUL IMAN",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "RUPIANNA TAMBUNAN",
+      "ACHMAD KHUSNUL IMAN"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "corporate-sosial-responsibility",
+    "name": "CORPORATE SOSIAL RESPONSIBILITY",
+    "semester": "7",
+    "curriculum": "KKNI & OBE",
+    "leader": "INGGA MAULANA",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "INGGA MAULANA",
+      "ACHMAD KHUSNUL IMAN"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "digital-business",
+    "name": "DIGITAL BUSINESS",
+    "semester": "2",
+    "curriculum": "OBE",
+    "leader": "AKHMAD NOFIATA",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "AKHMAD NOFIATA",
+      "MUCHAMAD RIZKY FAUZI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "economics",
+    "name": "ECONOMICS",
+    "semester": "1",
+    "curriculum": "OBE",
+    "leader": "ERIMINA HALAWA",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "YAYAH SYAHRIYAH",
+      "SHALLY KHOMILAH",
+      "ERIMINA HALAWA",
+      "VANI VAULIYANTI",
+      "AYU SEPTIANA PUTRI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "edp-audit",
+    "name": "EDP AUDIT",
+    "semester": "7 & 5",
+    "curriculum": "KKNI & OBE",
+    "leader": "SHALLY KHOMILAH",
+    "kbk": "AUDIT",
+    "lecturers": [
+      "SHALLY KHOMILAH",
+      "RAHADIAN",
+      "EKO PUJIYONO"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "ekonomi-syariah",
+    "name": "EKONOMI SYARIAH",
+    "semester": "4",
+    "curriculum": "KKNI",
+    "leader": "MUCHAMAD RIZKY FAUZI",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "MUCHAMAD RIZKY FAUZI",
+      "ACHMAD KHUSNUL IMAN"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "etika-bisnis-dan-profesi",
+    "name": "ETIKA BISNIS DAN PROFESI",
+    "semester": "6",
+    "curriculum": "KKNI",
+    "leader": "YUDHA EKA FEBRIAN",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "YUDHA EKA FEBRIAN",
+      "RAHADIAN"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "etika-profesi-akuntan",
+    "name": "ETIKA PROFESI AKUNTAN",
+    "semester": "8",
+    "curriculum": "OBE",
+    "leader": "AYU SEPTIANA PUTRI",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "AYU SEPTIANA PUTRI",
+      "RAHADIAN"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "hukum-bisnis-dan-regulasi",
+    "name": "HUKUM BISNIS DAN REGULASI",
+    "semester": "2",
+    "curriculum": "KKNI & OBE",
+    "leader": "INGGA MAULANA",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "YAYAH SYAHRIYAH",
+      "DIDIK SETIAWAN",
+      "INGGA MAULANA"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "humanisme-dan-konstruksi-etika-diri",
+    "name": "HUMANISME DAN KONSTRUKSI ETIKA DIRI",
+    "semester": "4",
+    "curriculum": "OBE",
+    "leader": "KARINA ELSANI",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "KARINA ELSANI",
+      "RAHADIAN"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "kewirausahaan",
+    "name": "KEWIRAUSAHAAN",
+    "semester": "5",
+    "curriculum": "OBE",
+    "leader": "FADLI NURYASIN",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "AKHMAD NOFIATA",
+      "FADLI NURYASIN",
+      "VANI VAULIYANTI",
+      "AHMAD SYUHERI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "komputer-akuntansi",
+    "name": "KOMPUTER AKUNTANSI",
+    "semester": "7 & 6",
+    "curriculum": "KKNI & OBE",
+    "leader": "YAYAH SYAHRIYAH",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "YAYAH SYAHRIYAH",
+      "RIRIN SARI DEWI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "komunikasi-bisnis",
+    "name": "KOMUNIKASI BISNIS",
+    "semester": "5",
+    "curriculum": "KKNI & OBE",
+    "leader": "YAYAH SYAHRIYAH",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "YUDHA EKA FEBRIAN",
+      "NISTRI KUSUMAWARDANI",
+      "YAYAH SYAHRIYAH"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "manajemen-biaya",
+    "name": "MANAJEMEN BIAYA",
+    "semester": "7",
+    "curriculum": "OBE",
+    "leader": "IRNA MAYA SARI",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "IRNA MAYA SARI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "manajemen-investasi",
+    "name": "MANAJEMEN INVESTASI",
+    "semester": "7 & 4",
+    "curriculum": "KKNI & OBE",
+    "leader": "MUCHAMAD RIZKY FAUZI",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "MUCHAMAD RIZKY FAUZI",
+      "ARIF WAHYU NUR KHOLID",
+      "YAYAH SYAHRIYAH"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "manajemen-keuangan",
+    "name": "MANAJEMEN KEUANGAN",
+    "semester": "6 & 3",
+    "curriculum": "KKNI & OBE",
+    "leader": "RICKA HIDAYATI",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "RIRIN SARI DEWI",
+      "KARINA ELSANI",
+      "DIDIK SETIAWAN",
+      "RICKA HIDAYATI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "manajemen-pajak",
+    "name": "MANAJEMEN PAJAK",
+    "semester": "5",
+    "curriculum": "OBE",
+    "leader": "KAHFI FIKRIANOOR",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "AHMAD SYUHERI",
+      "KAHFI FIKRIANOOR"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "manajemen-pemasaran",
+    "name": "MANAJEMEN PEMASARAN",
+    "semester": "3",
+    "curriculum": "KKNI & OBE",
+    "leader": "YUDHA EKA FEBRIAN",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "MUCHAMAD RIZKY FAUZI",
+      "AKHMAD NOFIATA",
+      "SHALLY KHOMILAH",
+      "YUDHA EKA FEBRIAN",
+      "FADLI NURYASIN"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "manajemen-risiko",
+    "name": "MANAJEMEN RISIKO",
+    "semester": "7",
+    "curriculum": "KKNI & OBE",
+    "leader": "RAHADIAN",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "ACHMAD KHUSNUL IMAN",
+      "KAHFI FIKRIANOOR",
+      "RAHADIAN"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "manajemen-stratejik",
+    "name": "MANAJEMEN STRATEJIK",
+    "semester": "7 & 6",
+    "curriculum": "KKNI & OBE",
+    "leader": "TIYAS PUJI UTAMI",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "TIYAS PUJI UTAMI",
+      "EKO PUJIYONO",
+      "YUDHA EKA FEBRIAN",
+      "RAHADIAN"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "matematika-ekonomi-dan-bisnis",
+    "name": "MATEMATIKA EKONOMI DAN BISNIS",
+    "semester": "1",
+    "curriculum": "KKNI & OBE",
+    "leader": "RISMAWATI",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "RISMAWATI",
+      "RAHADIAN"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "metodologi-penelitian",
+    "name": "METODOLOGI PENELITIAN",
+    "semester": "6 & 5",
+    "curriculum": "KKNI & OBE",
+    "leader": "TIYAS PUJI UTAMI",
+    "kbk": "ALL",
+    "lecturers": [
+      "TIYAS PUJI UTAMI",
+      "INGGA MAULANA",
+      "KAHFI FIKRIANOOR",
+      "DWI FITRIANINGSIH"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "pajak-dan-restribusi-daerah",
+    "name": "PAJAK DAN RESTRIBUSI DAERAH",
+    "semester": "6",
+    "curriculum": "KKNI",
+    "leader": "AHMAD SYUHERI",
+    "kbk": "PAJAK",
+    "lecturers": [],
+    "dataStatus": "Belum ada rincian dosen pada tab Data Dosen Pengampu",
+    "source": "Data KMK"
+  },
+  {
+    "id": "pelaporan-korporat",
+    "name": "PELAPORAN KORPORAT",
+    "semester": "6",
+    "curriculum": "OBE",
+    "leader": "RUPIANNA TAMBUNAN",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "RUPIANNA TAMBUNAN",
+      "KAHFI FIKRIANOOR"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "pengukuran-kinerja-strategi-dan-pengukuran-kinerja",
+    "name": "PENGUKURAN KINERJA/  STRATEGI DAN PENGUKURAN KINERJA",
+    "semester": "6 & 7",
+    "curriculum": "KKNI & OBE",
+    "leader": "IRNA MAYA SARI",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "IRNA MAYA SARI",
+      "TIYAS PUJI UTAMI",
+      "ARIFATUN NASIHAH",
+      "KAHFI FIKRIANOOR"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "perekonomian-indonesia",
+    "name": "PEREKONOMIAN INDONESIA",
+    "semester": "3",
+    "curriculum": "KKNI",
+    "leader": "AKHMAD NOFIATA",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "AKHMAD NOFIATA",
+      "FADLI NURYASIN"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "perilaku-organisasional",
+    "name": "PERILAKU ORGANISASIONAL",
+    "semester": "4",
+    "curriculum": "KKNI",
+    "leader": "RAHADIAN",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "VANI VAULIYANTI",
+      "RAHADIAN"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "perpajakan-1",
+    "name": "PERPAJAKAN 1",
+    "semester": "3",
+    "curriculum": "KKNI",
+    "leader": "ARIFATUN NASIHAH",
+    "kbk": "PAJAK",
+    "lecturers": [
+      "KARINA ELSANI",
+      "ERIMINA HALAWA",
+      "ARIFATUN NASIHAH",
+      "AHMAD SYUHERI",
+      "LISTIA AULIA INDY"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "perpajakan-2",
+    "name": "PERPAJAKAN 2",
+    "semester": "4",
+    "curriculum": "KKNI",
+    "leader": "KARINA ELSANI",
+    "kbk": "PAJAK",
+    "lecturers": [
+      "KARINA ELSANI",
+      "LISTIA AULIA INDY"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "perpajakan-dasar",
+    "name": "PERPAJAKAN DASAR",
+    "semester": "2",
+    "curriculum": "OBE",
+    "leader": "DIDIK SETIAWAN",
+    "kbk": "PAJAK",
+    "lecturers": [
+      "DIDIK SETIAWAN",
+      "KARINA ELSANI",
+      "ERIMINA HALAWA",
+      "AYU SEPTIANA PUTRI",
+      "AHMAD SYUHERI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "perpajakan-lanjutan",
+    "name": "PERPAJAKAN LANJUTAN",
+    "semester": "3",
+    "curriculum": "OBE",
+    "leader": "AYU SEPTIANA PUTRI",
+    "kbk": "PAJAK",
+    "lecturers": [
+      "DIDIK SETIAWAN",
+      "AYU SEPTIANA PUTRI",
+      "ARIFATUN NASIHAH",
+      "AHMAD SYUHERI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "praktik-pemeriksaan-akuntansi",
+    "name": "PRAKTIK PEMERIKSAAN AKUNTANSI",
+    "semester": "8",
+    "curriculum": "KKNI",
+    "leader": "EKO PUJIYONO",
+    "kbk": "AUDIT",
+    "lecturers": [
+      "EKO PUJIYONO",
+      "INDAH KRISTIANTI",
+      "SHALLY KHOMILAH"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "praktikum-audit-berbasis-teknologi-informasi",
+    "name": "PRAKTIKUM AUDIT BERBASIS TEKNOLOGI INFORMASI",
+    "semester": "7",
+    "curriculum": "OBE",
+    "leader": "EKO PUJIYONO",
+    "kbk": "AUDIT",
+    "lecturers": [
+      "EKO PUJIYONO",
+      "INDAH KRISTIANTI",
+      "SHALLY KHOMILAH"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "praktikum-perpajakan",
+    "name": "PRAKTIKUM PERPAJAKAN",
+    "semester": "7",
+    "curriculum": "OBE",
+    "leader": "ARIFATUN NASIHAH",
+    "kbk": "PAJAK",
+    "lecturers": [
+      "ARIFATUN NASIHAH",
+      "AYU SEPTIANA PUTRI",
+      "AHMAD SYUHERI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "principles-of-management-and-business",
+    "name": "PRINCIPLES OF MANAGEMENT AND BUSINESS",
+    "semester": "1",
+    "curriculum": "OBE",
+    "leader": "NISTRI KUSUMAWARDANI",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "AKHMAD NOFIATA",
+      "NISTRI KUSUMAWARDANI",
+      "SHALLY KHOMILAH",
+      "VANI VAULIYANTI",
+      "FADLI NURYASIN",
+      "LAMSAH"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "seminar-akuntansi-keuangan",
+    "name": "SEMINAR AKUNTANSI KEUANGAN",
+    "semester": "8",
+    "curriculum": "KKNI",
+    "leader": "ARIF WAHYU NUR KHOLID",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "ARIF WAHYU NUR KHOLID",
+      "DWI FITRIANINGSIH"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "seminar-pemeriksaan-akuntansi",
+    "name": "SEMINAR PEMERIKSAAN AKUNTANSI",
+    "semester": "8",
+    "curriculum": "KKNI",
+    "leader": "EKO PUJIYONO",
+    "kbk": "AUDIT",
+    "lecturers": [
+      "EKO PUJIYONO",
+      "SHALLY KHOMILAH"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "seminar-perpajakan",
+    "name": "SEMINAR PERPAJAKAN",
+    "semester": "8",
+    "curriculum": "KKNI",
+    "leader": "KAHFI FIKRIANOOR",
+    "kbk": "PAJAK",
+    "lecturers": [
+      "KAHFI FIKRIANOOR",
+      "AHMAD SYUHERI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "sistem-informasi-akuntansi",
+    "name": "SISTEM INFORMASI AKUNTANSI",
+    "semester": "3",
+    "curriculum": "KKNI & OBE",
+    "leader": "VANI VAULIYANTI",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "ACHMAD KHUSNUL IMAN",
+      "RIRIN SARI DEWI",
+      "VANI VAULIYANTI",
+      "DIDIK SETIAWAN",
+      "NISTRI KUSUMAWARDANI",
+      "DWI FITRIANINGSIH"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "sistem-pengendalian-manajemen",
+    "name": "SISTEM PENGENDALIAN MANAJEMEN",
+    "semester": "6",
+    "curriculum": "KKNI",
+    "leader": "NISTRI KUSUMAWARDANI",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "LAMSAH",
+      "ACHMAD KHUSNUL IMAN",
+      "FADLI NURYASIN",
+      "NISTRI KUSUMAWARDANI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "standar-akuntansi-keuangan",
+    "name": "STANDAR AKUNTANSI KEUANGAN",
+    "semester": "5",
+    "curriculum": "OBE",
+    "leader": "LAMSAH",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "ARIF WAHYU NUR KHOLID",
+      "RUPIANNA TAMBUNAN"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "statistik-deskriptif",
+    "name": "STATISTIK DESKRIPTIF",
+    "semester": "4",
+    "curriculum": "KKNI",
+    "leader": "ARIF WAHYU NUR KHOLID",
+    "kbk": "ALL",
+    "lecturers": [
+      "TIYAS PUJI UTAMI",
+      "ARIF WAHYU NUR KHOLID"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "statistik-inferensial",
+    "name": "STATISTIK INFERENSIAL",
+    "semester": "5",
+    "curriculum": "KKNI",
+    "leader": "INGGA MAULANA",
+    "kbk": "ALL",
+    "lecturers": [
+      "TIYAS PUJI UTAMI",
+      "INGGA MAULANA",
+      "ARIF WAHYU NUR KHOLID"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "statistika-bisnis",
+    "name": "STATISTIKA BISNIS",
+    "semester": "3",
+    "curriculum": "OBE",
+    "leader": "ARIF WAHYU NUR KHOLID",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "AYU SEPTIANA PUTRI",
+      "ARIF WAHYU NUR KHOLID"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "sustainability-accounting",
+    "name": "SUSTAINABILITY ACCOUNTING",
+    "semester": "7",
+    "curriculum": "KKNI & OBE",
+    "leader": "RUPIANNA TAMBUNAN",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "ARIF WAHYU NUR KHOLID",
+      "RUPIANNA TAMBUNAN"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "tata-kelola-risiko-dan-kepatuhan",
+    "name": "TATA KELOLA RISIKO DAN KEPATUHAN",
+    "semester": "6",
+    "curriculum": "OBE",
+    "leader": "INDAH KRISTIANTI",
+    "kbk": "AUDIT",
+    "lecturers": [
+      "INDAH KRISTIANTI",
+      "RAHADIAN"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "tax-planning",
+    "name": "TAX PLANNING",
+    "semester": "7",
+    "curriculum": "KKNI",
+    "leader": "ARIFATUN NASIHAH",
+    "kbk": "PAJAK",
+    "lecturers": [
+      "ARIFATUN NASIHAH",
+      "AHMAD SYUHERI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "teknologi-informasi-dasar",
+    "name": "TEKNOLOGI INFORMASI DASAR",
+    "semester": "1",
+    "curriculum": "OBE",
+    "leader": "VANI VAULIYANTI",
+    "kbk": "ALL",
+    "lecturers": [
+      "VANI VAULIYANTI",
+      "KARINA ELSANI",
+      "RICKA HIDAYATI",
+      "ERIMINA HALAWA"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "teori-akuntansi",
+    "name": "TEORI AKUNTANSI",
+    "semester": "5 & 4",
+    "curriculum": "KKNI & OBE",
+    "leader": "YAYAH SYAHRIYAH",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "YAYAH SYAHRIYAH",
+      "VANI VAULIYANTI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "teori-portofolio-dan-analisis-investasi",
+    "name": "TEORI PORTOFOLIO DAN ANALISIS INVESTASI",
+    "semester": "6",
+    "curriculum": "OBE",
+    "leader": "MUCHAMAD RIZKY FAUZI",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "MUCHAMAD RIZKY FAUZI",
+      "ARIF WAHYU NUR KHOLID"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "sistem-informasi-manajemen",
+    "name": "SISTEM INFORMASI MANAJEMEN",
+    "semester": "5 & 7",
+    "curriculum": "KKNI & OBE",
+    "leader": "FADLI NURYASIN",
+    "kbk": "MANAJEMEN",
+    "lecturers": [
+      "ACHMAD KHUSNUL IMAN",
+      "SHALLY KHOMILAH",
+      "FADLI NURYASIN",
+      "NISTRI KUSUMAWARDANI"
+    ],
+    "dataStatus": "Lengkap pada mapping dosen",
+    "source": "Data KMK + Data Dosen Pengampu"
+  },
+  {
+    "id": "akuntansi-keuangan-2",
+    "name": "AKUNTANSI KEUANGAN 2",
+    "semester": "4",
+    "curriculum": "KKNI",
+    "leader": "RISMAWATI",
+    "kbk": "KEUANGAN",
+    "lecturers": [
+      "RISMAWATI",
+      "RICKA HIDAYATI"
+    ],
+    "dataStatus": "Entri tambahan pada tab Data Dosen Pengampu; perlu verifikasi",
+    "source": "Data Dosen Pengampu (entri tambahan)"
+  },
+  {
+    "id": "pajak-dan-retribusi-daerah",
+    "name": "PAJAK DAN RETRIBUSI DAERAH",
+    "semester": "6",
+    "curriculum": "KKNI",
+    "leader": "AHMAD SYUHERI",
+    "kbk": "PAJAK",
+    "lecturers": [
+      "AHMAD SYUHERI",
+      "AYU SEPTIANA PUTRI"
+    ],
+    "dataStatus": "Entri tambahan pada tab Data Dosen Pengampu; perlu verifikasi",
+    "source": "Data Dosen Pengampu (entri tambahan)"
+  }
+];
+const KBK=["KEUANGAN","MANAJEMEN","PAJAK","AUDIT"];
+let storedCourses=JSON.parse(localStorage.getItem("acc_courses")||"null");
+let courses=storedCourses?seedCourses.map(seed=>({...seed,...(storedCourses.find(c=>c.id===seed.id)||{})})).concat(storedCourses.filter(c=>!seedCourses.some(seed=>seed.id===c.id))):seedCourses;
+let rps=JSON.parse(localStorage.getItem("acc_rps")||"{}");
+let page="dashboard", filters={q:"",kbk:"",semester:"",curriculum:""};
+function save(){localStorage.setItem("acc_courses",JSON.stringify(courses));localStorage.setItem("acc_rps",JSON.stringify(rps))}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function initials(s){return (s||"").split(/\s+/).slice(0,2).map(x=>x[0]||"").join("").toUpperCase()}
+function toast(t){let e=document.getElementById("toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),2600)}
+function go(p){page=p;document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===p));document.getElementById("sidebar").classList.remove("open");render()}
+document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
+document.getElementById("mobileMenu").onclick=()=>document.getElementById("sidebar").classList.toggle("open");
+document.getElementById("modalClose").onclick=closeModal;
+document.getElementById("modalBackdrop").addEventListener("click",e=>{if(e.target.id==="modalBackdrop")closeModal()});
+function openModal(title,body,buttons){document.getElementById("modalTitle").textContent=title;document.getElementById("modalBody").innerHTML=body;document.getElementById("modalFoot").innerHTML=buttons;document.getElementById("modalBackdrop").classList.add("show")}
+function closeModal(){document.getElementById("modalBackdrop").classList.remove("show")}
+function stat(label,value,icon,sub){return `<div class="stat"><div class="stat-top">${label}<span class="stat-icon">${icon}</span></div><strong>${value}</strong><small>${sub}</small></div>`}
+function header(eyebrow,title,desc,actions=""){return `<div class="welcome"><div><div class="eyebrow">${eyebrow}</div><h1>${title}</h1><p>${desc}</p></div><div class="actions">${actions}</div></div>`}
+function render(){
+const names={dashboard:"Dashboard",kbk:"Kelompok Bidang Keahlian",courses:"Kelompok Mata Kuliah",lecturers:"Data Dosen",rps:"RPS Development",about:"Panduan Sistem"};
+document.getElementById("crumb").textContent=names[page]||"Dashboard";
+const root=document.getElementById("content");
+if(page==="dashboard")root.innerHTML=dashboard();
+if(page==="kbk")root.innerHTML=kbkPage();
+if(page==="courses")root.innerHTML=coursesPage();
+if(page==="lecturers")root.innerHTML=lecturersPage();
+if(page==="rps")root.innerHTML=rpsPage();
+if(page==="about")root.innerHTML=aboutPage();
+}
+function dashboard(){
+let by=KBK.map(k=>({name:k,count:courses.filter(c=>c.kbk===k).length}));
+let shared=courses.filter(c=>c.kbk==="ALL").length, leaders=new Set(courses.map(c=>c.leader).filter(Boolean)).size;
+return `${header("ACADEMIC CURRICULUM CENTER","Selamat Datang di Pusat Kurikulum","Kelola bidang keahlian, kelompok mata kuliah, ketua KMK, dan pengembangan RPS dalam satu workspace.")}<div class="stats">${stat("TOTAL MATA KULIAH",courses.length,"▤","Data dari mapping KMK")}${stat("KELOMPOK BIDANG KEAHLIAN",4,"▦","Keuangan · Manajemen · Pajak · Audit")}${stat("MATA KULIAH LINTAS BIDANG",shared,"⇄","KBK ALL pada data sumber")}${stat("KETUA KMK",leaders,"♙","Ketua mata kuliah terdaftar")}</div>
+<div class="grid2"><div class="panel"><div class="panel-head"><div><h3>Distribusi Mata Kuliah per KBK</h3><p>Komposisi kelompok berdasarkan mapping kurikulum</p></div><span class="tag">OVERVIEW</span></div><div class="panel-body"><div class="kbk-list">${by.map(x=>`<div class="kbk-row"><span>${x.name}</span><div class="bar"><span style="width:${Math.max(3,x.count/Math.max(...by.map(y=>y.count))*100)}%"></span></div><b>${x.count}</b></div>`).join("")}<div class="kbk-row"><span>Lintas Bidang</span><div class="bar"><span style="width:${shared/Math.max(...by.map(y=>y.count))*100}%"></span></div><b>${shared}</b></div></div></div></div>
+<div class="panel"><div class="panel-head"><div><h3>Akses Cepat</h3><p>Langsung menuju pengelolaan data</p></div></div><div class="panel-body"><div class="quick"><button onclick="go('kbk')"><span class="qicon">▦</span><b>Kelompok Bidang</b><small>Lihat 4 bidang keahlian</small></button><button onclick="go('courses')"><span class="qicon">▤</span><b>Kelompok MK</b><small>Kelola daftar dan ketua KMK</small></button><button onclick="go('rps')"><span class="qicon">▧</span><b>RPS Development</b><small>Kelola progres pengembangan RPS</small></button><button onclick="exportData()"><span class="qicon">⇩</span><b>Ekspor Data</b><small>Unduh mapping sebagai JSON</small></button></div></div></div></div>
+<div class="panel" style="margin-top:16px"><div class="panel-head"><div><h3>Aktivitas Pengelolaan</h3><p>Ringkasan informasi kurikulum terbaru</p></div><button class="btn" onclick="go('courses')">Lihat semua mata kuliah →</button></div><div class="panel-body" style="display:flex;gap:24px;flex-wrap:wrap"><div><span class="sub">Kurikulum OBE</span><b>${courses.filter(c=>c.curriculum.toUpperCase().includes("OBE")).length} mata kuliah</b></div><div><span class="sub">Kurikulum KKNI</span><b>${courses.filter(c=>c.curriculum.toUpperCase().includes("KKNI")).length} mata kuliah</b></div><div><span class="sub">RPS mulai dikembangkan</span><b>${Object.keys(rps).length} mata kuliah</b></div><div><span class="sub">RPS selesai</span><b>${Object.values(rps).filter(x=>x.status==="Selesai").length} dokumen</b></div></div></div>`;
+}
+function kbkPage(){
+let details={"KEUANGAN":"Fokus pada akuntansi keuangan, pelaporan, investasi, dan instrumen keuangan.","MANAJEMEN":"Fokus pada akuntansi manajemen, strategi, tata kelola, dan pengambilan keputusan.","PAJAK":"Fokus pada perpajakan, perencanaan pajak, dan praktik administrasi perpajakan.","AUDIT":"Fokus pada pemeriksaan, audit, assurance, pengendalian, dan forensik."};
+return `${header("STRUKTUR AKADEMIK","Kelompok Bidang Keahlian","Empat bidang keahlian yang menjadi rumah pengelolaan mata kuliah program studi.")}<div class="card-grid">${KBK.map((k,i)=>{let n=courses.filter(c=>c.kbk===k).length;return `<div class="panel kbk-card"><div class="kbk-card-top"><span class="tag">${String(i+1).padStart(2,"0")} · KBK</span><span class="stat-icon">${["◈","⌘","％","◎"][i]}</span></div><h3>${k}</h3><p>${details[k]}</p><div class="kbk-meta"><span class="tag blue">${n} Mata Kuliah</span><span class="tag gray">${new Set(courses.filter(c=>c.kbk===k).map(c=>c.leader)).size} Ketua KMK</span></div><button class="btn" style="margin-top:16px" onclick="go('courses');setTimeout(()=>{let e=document.getElementById('filterKbk');if(e){e.value='${k}';applyFilters()}},0)">Lihat Mata Kuliah →</button></div>`}).join("")}</div><div class="panel" style="margin-top:16px"><div class="panel-head"><div><h3>Kelompok Mata Kuliah Lintas Bidang</h3><p>Mata kuliah dengan penanda KBK ALL pada spreadsheet sumber</p></div><span class="tag gold">${courses.filter(c=>c.kbk==="ALL").length} MK</span></div><div class="panel-body">${courses.filter(c=>c.kbk==="ALL").map(c=>`<span class="tag gray" style="margin:3px">${esc(c.name)}</span>`).join("")||"Belum ada data"}</div></div>`;
+}
+function coursesPage(){
+let rows=filtered();
+return `${header("DATABASE KURIKULUM","Kelompok Mata Kuliah","Daftar mata kuliah beserta KBK, semester, kurikulum, ketua KMK, dan dosen pengampu.",`<button class="btn" onclick="exportData()">⇩ Ekspor JSON</button><button class="btn primary" onclick="courseModal()">＋ Tambah Mata Kuliah</button>`)}
+<div class="toolbar"><input class="field search" id="searchCourse" placeholder="Cari nama mata kuliah atau ketua KMK..." value="${esc(filters.q)}" oninput="filters.q=this.value;refreshCourseTable()"><select class="field" id="filterKbk" onchange="filters.kbk=this.value;refreshCourseTable()"><option value="">Semua KBK</option>${KBK.map(k=>`<option ${filters.kbk===k?"selected":""}>${k}</option>`).join("")}<option value="ALL" ${filters.kbk==="ALL"?"selected":""}>Lintas Bidang (ALL)</option></select><select class="field" id="filterSem" onchange="filters.semester=this.value;refreshCourseTable()"><option value="">Semua Semester</option>${[1,2,3,4,5,6,7,8].map(k=>`<option ${filters.semester===String(k)?"selected":""}>${k}</option>`).join("")}</select><select class="field" id="filterCurr" onchange="filters.curriculum=this.value;refreshCourseTable()"><option value="">Semua Kurikulum</option><option>OBE</option><option>KKNI</option><option>KKNI & OBE</option></select></div>
+<div class="panel"><div class="panel-head"><div><h3>Database Kelompok Mata Kuliah</h3><p id="courseCount">Menampilkan ${rows.length} dari ${courses.length} mata kuliah</p></div><span class="tag">MAPPING KMK</span></div><div class="table-wrap" id="courseTable">${courseTable(rows)}</div></div>`;
+}
+function filtered(){return courses.filter(c=>(!filters.q||(c.name+" "+c.leader+" "+(c.lecturers||[]).join(" ")).toLowerCase().includes(filters.q.toLowerCase()))&&(!filters.kbk||c.kbk===filters.kbk)&&(!filters.semester||c.semester.split(/[&,]/).map(x=>x.trim()).includes(filters.semester))&&(!filters.curriculum||c.curriculum.toUpperCase().includes(filters.curriculum.toUpperCase())))}
+function courseTable(rows){return rows.length?`<table class="data-table"><thead><tr><th>Mata Kuliah</th><th>Semester</th><th>Kurikulum</th><th>Kelompok Bidang</th><th>Ketua KMK</th><th>Dosen Pengampu</th><th>Aksi</th></tr></thead><tbody>${rows.map(c=>`<tr><td><button class="textlink strong" onclick="courseDetail('${c.id}')">${esc(c.name)}</button><span class="sub">${esc(c.id)}</span></td><td>${esc(c.semester||"—")}</td><td><span class="tag ${c.curriculum.includes("KKNI")?"gold":"blue"}">${esc(c.curriculum||"—")}</span></td><td><span class="tag ${c.kbk==="ALL"?"gray":""}">${c.kbk==="ALL"?"Lintas Bidang":esc(c.kbk)}</span></td><td><b>${esc(c.leader||"Belum ditetapkan")}</b></td><td>${(c.lecturers||[]).length} dosen<span class="sub">${(c.lecturers||[]).slice(0,2).map(n=>`<button class="textlink" onclick="lecturerDetailByName('${esc(n)}')">${esc(n)}</button>`).join(", ")}${(c.lecturers||[]).length>2?" …":""}</span></td><td><button class="btn" onclick="courseDetail('${c.id}')">Detail</button> <button class="btn" onclick="courseModal('${c.id}')">Edit</button></td></tr>`).join("")}</tbody></table>`:`<div class="empty"><strong>Data tidak ditemukan</strong>Coba ubah kata kunci atau filter pencarian.</div>`}
+function refreshCourseTable(){let r=filtered();document.getElementById("courseTable").innerHTML=courseTable(r);document.getElementById("courseCount").textContent=`Menampilkan ${r.length} dari ${courses.length} mata kuliah`}
+function applyFilters(){filters.kbk=document.getElementById("filterKbk")?.value||"";refreshCourseTable()}
+function courseModal(id){
+let c=courses.find(x=>x.id===id)||{id:"",name:"",semester:"",curriculum:"OBE",kbk:"KEUANGAN",leader:"",lecturers:[]};
+openModal(id?"Edit Mata Kuliah":"Tambah Mata Kuliah",`<form id="courseForm"><div class="form-grid">
+<div class="form-group full"><label>Nama Mata Kuliah</label><input class="field" name="name" required value="${esc(c.name)}"></div>
+<div class="form-group"><label>Kelompok Bidang Keahlian</label><select class="field" name="kbk">${[...KBK,"ALL"].map(k=>`<option ${c.kbk===k?"selected":""} value="${k}">${k==="ALL"?"Lintas Bidang (ALL)":k}</option>`).join("")}</select></div>
+<div class="form-group"><label>Semester</label><input class="field" name="semester" placeholder="Contoh: 3 atau 3 & 4" value="${esc(c.semester)}"></div>
+<div class="form-group"><label>Kurikulum</label><select class="field" name="curriculum">${["OBE","KKNI","KKNI & OBE","KKNI &OBE"].map(k=>`<option ${c.curriculum===k?"selected":""}>${k}</option>`).join("")}</select></div>
+<div class="form-group"><label>Ketua KMK</label><input class="field" name="leader" required value="${esc(c.leader)}" placeholder="Nama ketua mata kuliah"></div>
+<div class="form-group full"><label>Dosen Pengampu (pisahkan dengan koma)</label><textarea class="field" name="lecturers">${esc((c.lecturers||[]).join(", "))}</textarea></div>
+</div></form>`,`${id?'<button class="btn danger" onclick="deleteCourse(\''+id+'\')">Hapus</button>':''}<button class="btn" onclick="closeModal()">Batal</button><button class="btn primary" onclick="saveCourse('${id}')">Simpan Data</button>`);
+}
+function saveCourse(id){let f=document.getElementById("courseForm");if(!f.reportValidity())return;let d=new FormData(f),name=d.get("name").trim(),newId=name.toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");let x={id:newId,name,semester:d.get("semester").trim(),curriculum:d.get("curriculum"),kbk:d.get("kbk"),leader:d.get("leader").trim(),lecturers:d.get("lecturers").split(",").map(x=>x.trim()).filter(Boolean)};if(id){courses=courses.map(c=>c.id===id?x:c);if(id!==newId&&rps[id]){rps[newId]=rps[id];delete rps[id]}}else{if(courses.some(c=>c.id===newId)){toast("Mata kuliah sudah terdaftar");return}courses.push(x)}save();closeModal();render();toast("Data mata kuliah tersimpan")}
+function deleteCourse(id){if(!confirm("Hapus mata kuliah ini dari database lokal?"))return;courses=courses.filter(c=>c.id!==id);save();closeModal();render();toast("Mata kuliah dihapus")}
+
+function lecturerList(){
+const names=[...new Set(courses.flatMap(c=>c.lecturers||[]))].sort((a,b)=>a.localeCompare(b));
+return names.map(name=>({name,courses:courses.filter(c=>(c.lecturers||[]).includes(name))}));
+}
+function lecturersPage(){
+const rows=lecturerList().filter(x=>!filters.q||x.name.toLowerCase().includes(filters.q.toLowerCase()));
+return `${header("DATABASE DOSEN","Data Dosen Pengampu","Klik nama dosen untuk melihat seluruh mata kuliah yang terhubung pada mapping saat ini.")}
+<div class="data-note">Catatan sinkronisasi: workbook memuat 81 mata kuliah pada Data KMK dan 83 entri pada Data Dosen Pengampu. Dua entri tambahan dipertahankan sebagai perlu verifikasi; satu nama mata kuliah utama belum memiliki rincian dosen yang cocok. Data ini masih dapat dilengkapi kemudian.</div>
+<div class="toolbar"><input class="field search" placeholder="Cari nama dosen..." value="${esc(filters.q)}" oninput="filters.q=this.value;refreshLecturers()"></div>
+<div class="stats">${stat("TOTAL DOSEN",lecturerList().length,"♙","Dosen unik pada data mapping")}${stat("TOTAL MK",courses.length,"▤","Termasuk entri tambahan yang perlu verifikasi")}${stat("MK TANPA RINCIAN DOSEN",courses.filter(c=>!c.lecturers||!c.lecturers.length).length,"!","Perlu dilengkapi")}${stat("ENTRI PERLU VERIFIKASI",courses.filter(c=>c.dataStatus&&c.dataStatus.toLowerCase().includes("verifikasi")).length,"!","Dari ketidaksesuaian workbook")}</div>
+<div class="panel"><div class="panel-head"><div><h3>Daftar Dosen</h3><p id="lecturerCount">Menampilkan ${rows.length} dosen</p></div></div><div class="panel-body"><div class="card-grid" id="lecturerGrid">${lecturerCards(rows)}</div></div></div>`;
+}
+function lecturerCards(rows){return rows.map(x=>`<button class="panel kbk-card" style="text-align:left;cursor:pointer" onclick="lecturerDetailByName('${esc(x.name)}')"><div class="person"><div class="person-dot">${initials(x.name)}</div><div><b>${esc(x.name)}</b><small>${x.courses.length} mata kuliah terhubung</small></div></div><div class="kbk-meta">${x.courses.slice(0,3).map(c=>`<span class="tag gray">${esc(c.name)}</span>`).join("")}${x.courses.length>3?`<span class="tag blue">+${x.courses.length-3} lainnya</span>`:""}</div></button>`).join("")||`<div class="empty">Dosen tidak ditemukan.</div>`}
+function refreshLecturers(){let rows=lecturerList().filter(x=>!filters.q||x.name.toLowerCase().includes(filters.q.toLowerCase()));document.getElementById("lecturerGrid").innerHTML=lecturerCards(rows);document.getElementById("lecturerCount").textContent=`Menampilkan ${rows.length} dosen`}
+function lecturerDetailByName(name){
+const rows=courses.filter(c=>(c.lecturers||[]).includes(name));
+openModal("Profil Dosen Pengampu",`<div class="person" style="margin-bottom:16px"><div class="person-dot" style="width:48px;height:48px;font-size:14px">${initials(name)}</div><div><b style="font-size:14px">${esc(name)}</b><small>${rows.length} mata kuliah berdasarkan mapping</small></div></div>
+<div class="panel-head" style="padding:10px 0"><b>Daftar Mata Kuliah</b><span class="tag">${rows.length} MK</span></div>
+${rows.map(c=>`<button class="detail-row" onclick="courseDetail('${c.id}')"><span><b>${esc(c.name)}</b><small>${esc(c.kbk==="ALL"?"Lintas Bidang":c.kbk)} · Semester ${esc(c.semester||"—")} · ${esc(c.curriculum||"—")}</small></span><span>Detail →</span></button>`).join("")||`<div class="empty">Belum ada mata kuliah pada mapping untuk dosen ini.</div>`}`,`<button class="btn" onclick="closeModal()">Tutup</button>`);
+}
+function courseDetail(id){
+const c=courses.find(x=>x.id===id);if(!c)return;
+openModal("Detail Mata Kuliah",`<div class="detail-title">${esc(c.name)}</div>
+<div class="detail-meta"><span class="tag">${esc(c.kbk==="ALL"?"Lintas Bidang":c.kbk)}</span><span class="tag gray">Semester ${esc(c.semester||"—")}</span><span class="tag blue">${esc(c.curriculum||"—")}</span></div>
+<div class="detail-section"><small>Ketua Kelompok Mata Kuliah</small><button class="textlink strong" onclick="lecturerDetailByName('${esc(c.leader)}')">${esc(c.leader||"Belum ditetapkan")}</button></div>
+<div class="detail-section"><small>Dosen Pengampu (${(c.lecturers||[]).length})</small>
+${(c.lecturers||[]).map(n=>`<button class="detail-row" onclick="lecturerDetailByName('${esc(n)}')"><span class="person"><span class="person-dot">${initials(n)}</span><b>${esc(n)}</b></span><span>Profil →</span></button>`).join("")||`<p class="muted">Belum ada rincian dosen pengampu yang cocok dengan entri ini di tab Data Dosen Pengampu.</p>`}
+</div>
+<div class="detail-section"><small>Status data mapping</small><p class="muted">${esc(c.dataStatus||"Data dari mapping utama")}</p></div>`,
+`<button class="btn" onclick="closeModal()">Tutup</button><button class="btn primary" onclick="closeModal();courseModal('${c.id}')">Edit Data</button>`);
+}
+
+function rpsPage(){
+let rows=filteredRps();
+return `${header("PENGEMBANGAN DOKUMEN PEMBELAJARAN","RPS Development","Pantau proses penyusunan Rencana Pembelajaran Semester oleh ketua KMK.",`<button class="btn" onclick="exportData()">⇩ Ekspor Data</button>`)}
+<div class="stats">${stat("TOTAL MATA KULIAH",courses.length,"▤","Target pengembangan RPS")}${stat("BELUM DIMULAI",courses.filter(c=>!rps[c.id]||rps[c.id].status==="Belum Dimulai").length,"○","Menunggu proses")}${stat("DALAM PROSES",Object.values(rps).filter(x=>x.status==="Dalam Proses").length,"◷","Sedang dikembangkan")}${stat("SELESAI",Object.values(rps).filter(x=>x.status==="Selesai").length,"✓","RPS ditandai selesai")}</div>
+<div class="toolbar"><input class="field search" id="rpsSearch" placeholder="Cari mata kuliah atau ketua KMK..." value="${esc(filters.q)}" oninput="filters.q=this.value;refreshRps()"><select class="field" id="rpsStatus" onchange="filters.rpsStatus=this.value;refreshRps()"><option value="">Semua Status</option>${["Belum Dimulai","Dalam Proses","Review","Selesai"].map(s=>`<option ${filters.rpsStatus===s?"selected":""}>${s}</option>`).join("")}</select><select class="field" id="rpsKbk" onchange="filters.rpsKbk=this.value;refreshRps()"><option value="">Semua KBK</option>${KBK.map(k=>`<option ${filters.rpsKbk===k?"selected":""}>${k}</option>`).join("")}</select></div>
+<div class="panel"><div class="panel-head"><div><h3>Monitoring Pengembangan RPS</h3><p>Progress dan status dokumen untuk setiap mata kuliah</p></div><span class="tag">${rows.length} DOKUMEN</span></div><div class="panel-body" id="rpsList" style="display:grid;gap:10px">${rpsCards(rows)}</div></div>`;
+}
+function filteredRps(){return courses.filter(c=>(!filters.q||(c.name+" "+c.leader).toLowerCase().includes(filters.q.toLowerCase()))&&(!filters.rpsStatus||(rps[c.id]?.status||"Belum Dimulai")===filters.rpsStatus)&&(!filters.rpsKbk||c.kbk===filters.rpsKbk))}
+function rpsCards(rows){return rows.map(c=>{let x=rps[c.id]||{status:"Belum Dimulai",progress:0,link:"",notes:""};let color=x.status==="Selesai"?"":x.status==="Review"?"gold":"blue";return `<div class="panel rps-card"><div class="rps-card-top"><div><h4>${esc(c.name)}</h4><span class="muted">${esc(c.kbk==="ALL"?"Lintas Bidang":c.kbk)} · Semester ${esc(c.semester||"—")} · Ketua: ${esc(c.leader||"—")}</span></div><span class="tag ${color}">${esc(x.status)}</span></div><div class="rps-progress"><span style="width:${Number(x.progress)||0}%"></span></div><div class="rps-card-top" style="margin-top:6px"><small class="muted">Progress ${Number(x.progress)||0}% ${x.link?`· <a href="${esc(x.link)}" target="_blank" rel="noopener">Buka dokumen RPS ↗</a>`:""}</small><button class="btn" onclick="rpsModal('${c.id}')">Kelola RPS</button></div></div>`}).join("")||`<div class="empty">Tidak ada mata kuliah sesuai filter.</div>`}
+function refreshRps(){document.getElementById("rpsList").innerHTML=rpsCards(filteredRps())}
+function rpsModal(id){let c=courses.find(c=>c.id===id),x=rps[id]||{status:"Belum Dimulai",progress:0,link:"",notes:"",updated:""};openModal("Pengembangan RPS",`<div style="margin-bottom:16px"><b>${esc(c.name)}</b><span class="sub">${esc(c.kbk)} · Ketua KMK: ${esc(c.leader)}</span></div><form id="rpsForm"><div class="form-grid">
+<div class="form-group"><label>Status Pengembangan</label><select class="field" name="status">${["Belum Dimulai","Dalam Proses","Review","Selesai"].map(s=>`<option ${x.status===s?"selected":""}>${s}</option>`).join("")}</select></div>
+<div class="form-group"><label>Progress (%)</label><input class="field" type="number" min="0" max="100" name="progress" value="${Number(x.progress)||0}"></div>
+<div class="form-group full"><label>Link Dokumen RPS (Google Drive / repository)</label><input class="field" type="url" name="link" placeholder="https://..." value="${esc(x.link||"")}"></div>
+<div class="form-group full"><label>Catatan / Tindak Lanjut</label><textarea class="field" name="notes" placeholder="Catatan review, revisi, atau kebutuhan pengembangan...">${esc(x.notes||"")}</textarea></div>
+</div></form>`,`<button class="btn" onclick="closeModal()">Batal</button><button class="btn primary" onclick="saveRps('${id}')">Simpan Progress</button>`)}
+function saveRps(id){let f=document.getElementById("rpsForm");if(!f.reportValidity())return;let d=new FormData(f),p=Math.max(0,Math.min(100,Number(d.get("progress"))||0)),status=d.get("status");if(status==="Selesai")p=100;rps[id]={status,progress:p,link:d.get("link").trim(),notes:d.get("notes").trim(),updated:new Date().toISOString()};save();closeModal();render();toast("Progress RPS berhasil diperbarui")}
+function aboutPage(){return `${header("INFORMASI APLIKASI","Panduan Akademik Curriculum Center","Satu tempat untuk mengelola data kurikulum, koordinasi KMK, dan pengembangan RPS.")}<div class="panel"><div class="panel-body"><h3>Alur Penggunaan</h3><ol style="line-height:2.1;color:#536779"><li><b>Kelompok Bidang Keahlian:</b> lihat 4 KBK utama: Keuangan, Manajemen, Pajak, dan Audit.</li><li><b>Kelompok Mata Kuliah:</b> telusuri daftar mata kuliah, semester, kurikulum, ketua KMK, dan dosen pengampu.</li><li><b>Mata Kuliah lintas bidang:</b> mata kuliah dengan kode KBK ALL ditampilkan terpisah sebagai mata kuliah yang digunakan bersama.</li><li><b>RPS Development:</b> ketua KMK dapat memperbarui status, progress, tautan dokumen, serta catatan tindak lanjut RPS.</li></ol><hr style="border:0;border-top:1px solid var(--line);margin:20px 0"><h3>Catatan Data & Penyimpanan</h3><p style="color:var(--muted)">Data awal diimpor dari file MAPPING KMK PRODI AKUNTANSI.xlsx. Perubahan yang dilakukan pada halaman ini disimpan di penyimpanan browser perangkat (localStorage). Artinya, data belum tersinkron otomatis antar pengguna/perangkat dan belum menggunakan autentikasi atau database server.</p><p style="color:var(--muted)">Sebelum digunakan secara operasional oleh seluruh dosen, sistem perlu dilanjutkan dengan backend/database, login berbasis peran (admin prodi, koordinator KBK, ketua KMK), histori perubahan, dan penyimpanan dokumen terpusat.</p><button class="btn primary" onclick="exportData()">Unduh Backup Data JSON</button></div></div>`}
+function exportData(){let blob=new Blob([JSON.stringify({exportedAt:new Date().toISOString(),courses,rps},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="academic-curriculum-center-backup.json";a.click();URL.revokeObjectURL(a.href);toast("Backup JSON diunduh")}
+render();
+</script>
+</body></html>
