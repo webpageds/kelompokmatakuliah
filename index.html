@@ -72,6 +72,19 @@ body{background:radial-gradient(ellipse at 86% 0%,rgba(14,138,131,.07),transpare
  .content{padding-top:23px}
 }
 
+/* Template library */
+.template-grid{align-items:stretch}
+.template-card{padding:25px;display:flex;flex-direction:column;align-items:flex-start;min-height:270px}
+.template-icon{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;font-size:25px;margin-bottom:17px}
+.template-icon.kkni{background:#fff5dc;color:#9a741b}
+.template-icon.obe{background:#eaf2fb;color:#3d679a}
+.template-card h3{font-size:19px;margin:13px 0 7px;letter-spacing:-.02em}
+.template-card p{color:var(--muted);font-size:12px;line-height:1.75;margin:0 0 23px;max-width:460px}
+.template-open{margin-top:auto;text-decoration:none;display:inline-flex;align-items:center;gap:10px}
+.template-open span{font-size:16px}
+.template-note{margin-top:16px}
+.template-note p{color:var(--muted);font-size:11px;margin:6px 0 0;line-height:1.7}
+
 </style>
 </head>
 <body>
@@ -88,6 +101,7 @@ body{background:radial-gradient(ellipse at 86% 0%,rgba(14,138,131,.07),transpare
   <button data-page="courses"><span class="ico">▤</span>Kelompok Mata Kuliah</button>
   <button data-page="lecturers"><span class="ico">♙</span>Data Dosen</button>
   <button data-page="rps"><span class="ico">▧</span>RPS Development</button>
+  <button data-page="templates"><span class="ico">▣</span>Template</button>
  </nav>
  <div class="nav-label">PREFERENSI</div>
  <nav class="nav">
@@ -1374,7 +1388,7 @@ function closeModal(){document.getElementById("modalBackdrop").classList.remove(
 function stat(label,value,icon,sub){return `<div class="stat"><div class="stat-top">${label}<span class="stat-icon">${icon}</span></div><strong>${value}</strong><small>${sub}</small></div>`}
 function header(eyebrow,title,desc,actions=""){return `<div class="welcome"><div><div class="eyebrow">${eyebrow}</div><h1>${title}</h1><p>${desc}</p></div><div class="actions">${actions}</div></div>`}
 function render(){
-const names={dashboard:"Dashboard",kbk:"Kelompok Bidang Keahlian",courses:"Kelompok Mata Kuliah",lecturers:"Data Dosen",rps:"RPS Development",about:"Panduan Sistem"};
+const names={dashboard:"Dashboard",kbk:"Kelompok Bidang Keahlian",courses:"Kelompok Mata Kuliah",lecturers:"Data Dosen",rps:"RPS Development",templates:"Template",about:"Panduan Sistem"};
 document.getElementById("crumb").textContent=names[page]||"Dashboard";
 const root=document.getElementById("content");
 if(page==="dashboard")root.innerHTML=dashboard();
@@ -1382,6 +1396,7 @@ if(page==="kbk")root.innerHTML=kbkPage();
 if(page==="courses")root.innerHTML=coursesPage();
 if(page==="lecturers")root.innerHTML=lecturersPage();
 if(page==="rps")root.innerHTML=rpsPage();
+if(page==="templates")root.innerHTML=templatesPage();
 if(page==="about")root.innerHTML=aboutPage();
 }
 function dashboard(){
@@ -1469,6 +1484,26 @@ function rpsModal(id){let c=courses.find(c=>c.id===id),x=rps[id]||{status:"Belum
 <div class="form-group full"><label>Catatan / Tindak Lanjut</label><textarea class="field" name="notes" placeholder="Catatan review, revisi, atau kebutuhan pengembangan...">${esc(x.notes||"")}</textarea></div>
 </div></form>`,`<button class="btn" onclick="closeModal()">Batal</button><button class="btn primary" onclick="saveRps('${id}')">Simpan Progress</button>`)}
 function saveRps(id){let f=document.getElementById("rpsForm");if(!f.reportValidity())return;let d=new FormData(f),p=Math.max(0,Math.min(100,Number(d.get("progress"))||0)),status=d.get("status");if(status==="Selesai")p=100;rps[id]={status,progress:p,link:d.get("link").trim(),notes:d.get("notes").trim(),updated:new Date().toISOString()};save();closeModal();render();toast("Progress RPS berhasil diperbarui")}
+function templatesPage(){
+return `${header("PUSAT DOKUMEN AKADEMIK","Template RPS","Pilih format dokumen Rencana Pembelajaran Semester sesuai kurikulum yang digunakan. Folder template akan terbuka langsung di Google Drive.")}
+<div class="card-grid template-grid">
+ <article class="panel template-card">
+  <div class="template-icon kkni">▤</div>
+  <span class="tag gold">KURIKULUM KKNI</span>
+  <h3>Template RPS KKNI</h3>
+  <p>Folder template RPS dengan format KKNI untuk digunakan oleh ketua Kelompok Mata Kuliah dan dosen pengampu.</p>
+  <a class="btn primary template-open" href="https://drive.google.com/drive/folders/1jr0HO87cC47UugXWx2m65eChi19NkyQo?usp=drive_link" target="_blank" rel="noopener noreferrer">Buka Template KKNI <span aria-hidden="true">↗</span></a>
+ </article>
+ <article class="panel template-card">
+  <div class="template-icon obe">▧</div>
+  <span class="tag blue">OUTCOME-BASED EDUCATION</span>
+  <h3>Template RPS OBE</h3>
+  <p>Folder template RPS berbasis Outcome-Based Education (OBE) untuk mendukung penyusunan dokumen pembelajaran.</p>
+  <a class="btn primary template-open" href="https://drive.google.com/drive/folders/11twZSq7d37b1DVqmArQxsGZFQePSp2Hy?usp=drive_link" target="_blank" rel="noopener noreferrer">Buka Template OBE <span aria-hidden="true">↗</span></a>
+ </article>
+</div>
+<div class="panel template-note"><div class="panel-body"><b>Informasi penggunaan</b><p>Gunakan template sesuai kurikulum mata kuliah. Pastikan akses Google Drive tersedia pada akun yang digunakan. File di dalam folder dikelola melalui Google Drive.</p></div></div>`;
+}
 function aboutPage(){return `${header("INFORMASI APLIKASI","Panduan Akademik Curriculum Center","Satu tempat untuk mengelola data kurikulum, koordinasi KMK, dan pengembangan RPS.")}<div class="panel"><div class="panel-body"><h3>Alur Penggunaan</h3><ol style="line-height:2.1;color:#536779"><li><b>Kelompok Bidang Keahlian:</b> lihat 4 KBK utama: Keuangan, Manajemen, Pajak, dan Audit.</li><li><b>Kelompok Mata Kuliah:</b> telusuri daftar mata kuliah, semester, kurikulum, ketua KMK, dan dosen pengampu.</li><li><b>Mata Kuliah lintas bidang:</b> mata kuliah dengan kode KBK ALL ditampilkan terpisah sebagai mata kuliah yang digunakan bersama.</li><li><b>RPS Development:</b> ketua KMK dapat memperbarui status, progress, tautan dokumen, serta catatan tindak lanjut RPS.</li></ol><hr style="border:0;border-top:1px solid var(--line);margin:20px 0"><h3>Catatan Data & Penyimpanan</h3><p style="color:var(--muted)">Data awal diimpor dari file MAPPING KMK PRODI AKUNTANSI.xlsx. Perubahan yang dilakukan pada halaman ini disimpan di penyimpanan browser perangkat (localStorage). Artinya, data belum tersinkron otomatis antar pengguna/perangkat dan belum menggunakan autentikasi atau database server.</p><p style="color:var(--muted)">Sebelum digunakan secara operasional oleh seluruh dosen, sistem perlu dilanjutkan dengan backend/database, login berbasis peran (admin prodi, koordinator KBK, ketua KMK), histori perubahan, dan penyimpanan dokumen terpusat.</p><button class="btn primary" onclick="exportData()">Unduh Backup Data JSON</button></div></div>`}
 function exportData(){let blob=new Blob([JSON.stringify({exportedAt:new Date().toISOString(),courses,rps},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="academic-curriculum-center-backup.json";a.click();URL.revokeObjectURL(a.href);toast("Backup JSON diunduh")}
 render();
