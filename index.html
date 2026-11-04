@@ -85,10 +85,24 @@ body{background:radial-gradient(ellipse at 86% 0%,rgba(14,138,131,.07),transpare
 .template-note{margin-top:16px}
 .template-note p{color:var(--muted);font-size:11px;margin:6px 0 0;line-height:1.7}
 
+
+#appShell{display:none}.auth-screen{min-height:100vh;padding:28px;display:grid;place-items:center;background:radial-gradient(circle at 12% 12%,rgba(14,138,131,.16),transparent 30%),radial-gradient(circle at 90% 85%,rgba(224,184,92,.18),transparent 28%),linear-gradient(145deg,#eef4f8,#f8fafc)}
+.auth-card{width:min(920px,100%);background:#fff;border:1px solid #e5ebf2;border-radius:26px;overflow:hidden;box-shadow:0 30px 90px rgba(16,36,58,.14);display:grid;grid-template-columns:1.05fr .95fr}
+.auth-visual{padding:48px;background:linear-gradient(155deg,#10243a,#17435a);color:#fff;display:flex;flex-direction:column;justify-content:space-between;min-height:530px}
+.auth-mark{width:76px;height:76px;border-radius:20px;background:#fff;padding:8px;display:grid;place-items:center;box-shadow:0 12px 28px #0002}.auth-mark img{width:100%;height:100%;object-fit:contain}
+.auth-copy h1{font-size:34px;line-height:1.15;letter-spacing:-.04em;margin:20px 0 12px}.auth-copy p{color:#c3d1dc;line-height:1.8;max-width:420px}.auth-foot{font-size:11px;color:#a8bdcb}
+.auth-actions{padding:44px 38px;display:flex;flex-direction:column;justify-content:center}.auth-actions h2{font-size:24px;margin:0 0 8px;color:var(--navy)}.auth-actions>p{color:var(--muted);font-size:12px;line-height:1.7;margin:0 0 24px}
+.role-choice{display:flex;gap:12px;align-items:center;width:100%;padding:17px;border:1px solid var(--line);border-radius:14px;background:#fff;text-align:left;margin:8px 0;transition:.18s}.role-choice:hover{border-color:#8bc6c0;background:#f6fbfa;transform:translateY(-1px)}
+.role-choice .role-icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:#eaf5f3;color:var(--teal);font-size:20px}.role-choice strong{display:block;font-size:13px;color:var(--ink)}.role-choice small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.auth-form{display:grid;gap:13px}.auth-form label{font-size:11px;font-weight:800;color:#536779}.auth-form input{width:100%;margin-top:6px}.auth-error{padding:10px 12px;border-radius:9px;background:#fff0f0;color:#a42c2c;font-size:11px;display:none}
+.auth-note{font-size:10px;color:var(--muted);line-height:1.7;margin-top:14px}.auth-back{background:transparent;color:var(--teal);font-size:12px;font-weight:800;padding:8px 0;text-align:left;margin-bottom:15px}#loginScreen{display:none}
+#sessionEmail{font-size:11px;color:var(--muted);max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#logoutBtn{padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font-size:11px;font-weight:800}.sync-indicator{font-size:10px;color:#08766f;background:#eaf5f3;padding:6px 9px;border-radius:20px;font-weight:800}
+@media(max-width:760px){.auth-screen{padding:14px}.auth-card{grid-template-columns:1fr;border-radius:20px}.auth-visual{min-height:245px;padding:25px}.auth-mark{width:55px;height:55px}.auth-copy h1{font-size:25px;margin:12px 0 7px}.auth-copy p{font-size:11px;margin:0}.auth-foot{margin-top:18px}.auth-actions{padding:28px 23px}.auth-actions h2{font-size:21px}.top-right{gap:6px}.sync-indicator{display:none}#sessionEmail{max-width:95px}}
+
 </style>
 </head>
 <body>
-<div class="app">
+<div class="app" id="appShell">
 <aside class="sidebar" id="sidebar">
  <div class="brand"><div class="brand-icon"><img src="./logonyah.png" alt="Logo Program Studi Akuntansi"></div><div><strong>ACADEMIC CURRICULUM</strong><small>Center · Accounting Program</small></div></div>
  <div class="nav-label">WORKSPACE</div>
@@ -110,12 +124,17 @@ body{background:radial-gradient(ellipse at 86% 0%,rgba(14,138,131,.07),transpare
  <div class="sidebar-footer">Program Studi Akuntansi<br><b>Universitas Pamulang · Serang</b><br><span style="opacity:.7">Academic Curriculum Center v1.0</span></div>
 </aside>
 <main class="main">
- <header class="topbar"><div style="display:flex;align-items:center;gap:12px"><button class="mobile-menu" id="mobileMenu">☰</button><div class="crumb">Workspace / <b id="crumb">Dashboard</b></div></div><div class="top-right"><span class="pill">CURRICULUM MANAGEMENT</span><div class="avatar">AC</div></div></header>
+ <header class="topbar"><div style="display:flex;align-items:center;gap:12px"><button class="mobile-menu" id="mobileMenu">☰</button><div class="crumb">Workspace / <b id="crumb">Dashboard</b></div></div><div class="top-right"><span class="sync-indicator" id="syncStatus">● ONLINE DATABASE</span><span id="sessionEmail"></span><span class="pill" id="rolePill">CURRICULUM MANAGEMENT</span><div class="avatar" id="userAvatar">AC</div><button id="logoutBtn" onclick="logout()">Keluar</button></div></header>
  <section class="content" id="content"></section>
 </main>
 </div>
 <div class="modal-backdrop" id="modalBackdrop"><div class="modal"><div class="modal-head"><h3 id="modalTitle">Form</h3><button class="close" id="modalClose">✕</button></div><div class="modal-body" id="modalBody"></div><div class="modal-foot" id="modalFoot"></div></div></div>
 <div class="toast" id="toast"></div>
+
+<section class="auth-screen" id="welcomeScreen"><div class="auth-card"><div class="auth-visual"><div class="auth-mark"><img src="./logonyah.png" alt="Logo Program Studi Akuntansi"></div><div class="auth-copy"><div class="eyebrow" style="color:#e0b85c">ACADEMIC WORKSPACE</div><h1>Selamat Datang di<br>Academic Curriculum Center</h1><p>Platform terpusat untuk pengelolaan kurikulum, kelompok mata kuliah, data dosen, dan pengembangan RPS Program Studi Akuntansi.</p></div><div class="auth-foot">Universitas Pamulang · PSDKU Serang<br>Secure access · Real-time academic data</div></div><div class="auth-actions"><div class="eyebrow">MULAI MENGGUNAKAN SISTEM</div><h2>Masuk ke workspace</h2><p>Pilih jenis akun untuk melanjutkan. Setiap pengguna memiliki hak akses sesuai perannya.</p><button class="role-choice" onclick="showLogin('admin')"><span class="role-icon">♙</span><span><strong>Login sebagai Admin</strong><small>Kelola dan perbarui seluruh data akademik</small></span><span style="margin-left:auto;color:var(--teal)">→</span></button><button class="role-choice" onclick="showLogin('lecturer')"><span class="role-icon">▤</span><span><strong>Login sebagai Dosen</strong><small>Akses informasi akademik secara read-only</small></span><span style="margin-left:auto;color:var(--teal)">→</span></button><div class="auth-note">Akses memerlukan akun yang telah dibuat oleh pengelola sistem. Tidak tersedia pendaftaran akun publik.</div><div class="auth-note" id="configWarning" style="color:#9a6a12"></div></div></div></section>
+<section class="auth-screen" id="loginScreen"><div class="auth-card"><div class="auth-visual"><div class="auth-mark"><img src="./logonyah.png" alt="Logo Program Studi Akuntansi"></div><div class="auth-copy"><div class="eyebrow" style="color:#e0b85c">SECURE SIGN IN</div><h1 id="loginHeading">Login Admin</h1><p id="loginDescription">Masuk untuk mengelola database akademik secara terpusat.</p></div><div class="auth-foot">Academic Curriculum Center · Universitas Pamulang</div></div><div class="auth-actions"><button class="auth-back" onclick="showWelcome()">← Kembali ke halaman awal</button><h2>Masuk dengan akun</h2><p>Gunakan email dan password yang telah didaftarkan oleh admin.</p><form class="auth-form" id="loginForm" onsubmit="event.preventDefault();login()"><div><label>Email</label><input class="field" id="loginEmail" type="email" autocomplete="username" required placeholder="nama@kampus.ac.id"></div><div><label>Password</label><input class="field" id="loginPassword" type="password" autocomplete="current-password" required placeholder="Masukkan password"></div><div class="auth-error" id="loginError"></div><button class="btn primary" id="loginSubmit" type="submit" style="padding:12px">Masuk ke Sistem →</button></form><div class="auth-note">Hak akses ditentukan oleh role akun pada Supabase. Memilih jenis login tidak dapat menaikkan hak akses akun.</div></div></div></section>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./config.js"></script>
 <script>
 const seedCourses=[
   {
@@ -1374,7 +1393,40 @@ let storedCourses=JSON.parse(localStorage.getItem("acc_courses")||"null");
 let courses=storedCourses?seedCourses.map(seed=>({...seed,...(storedCourses.find(c=>c.id===seed.id)||{})})).concat(storedCourses.filter(c=>!seedCourses.some(seed=>seed.id===c.id))):seedCourses;
 let rps=JSON.parse(localStorage.getItem("acc_rps")||"{}");
 let page="dashboard", filters={q:"",kbk:"",semester:"",curriculum:""};
-function save(){localStorage.setItem("acc_courses",JSON.stringify(courses));localStorage.setItem("acc_rps",JSON.stringify(rps))}
+let supabaseClient=null,currentUser=null,userRole=null,dbReady=false,activeLoginRole="admin",syncQueue=Promise.resolve(),liveChannel=null;
+const clientInstanceId=(()=>{try{let id=sessionStorage.getItem("acc_client_instance");if(!id){id=crypto.randomUUID();sessionStorage.setItem("acc_client_instance",id)}return id}catch(e){return "browser-"+Math.random().toString(36).slice(2)}})();
+function isAdmin(){return userRole==="admin"}
+function save(){
+ localStorage.setItem("acc_courses",JSON.stringify(courses));localStorage.setItem("acc_rps",JSON.stringify(rps));
+ if(dbReady&&isAdmin()&&supabaseClient&&currentUser){
+  const snapshot={id:"main",courses:JSON.parse(JSON.stringify(courses)),rps:JSON.parse(JSON.stringify(rps)),updated_by:currentUser.id,origin_id:clientInstanceId,updated_at:new Date().toISOString()};
+  syncQueue=syncQueue.then(async()=>{const {error}=await supabaseClient.from("curriculum_state").upsert(snapshot,{onConflict:"id"});if(error){console.error(error);toast("Gagal sinkronisasi: "+error.message)}else setSyncStatus("Tersinkron otomatis")}).catch(e=>{console.error(e);toast("Sinkronisasi gagal")});
+ }
+}
+function setSyncStatus(message){const el=document.getElementById("syncStatus");if(el)el.textContent="● "+message}
+function applyRemoteState(row){if(!row)return;courses=Array.isArray(row.courses)?row.courses:seedCourses;rps=row.rps&&typeof row.rps==="object"?row.rps:{};localStorage.setItem("acc_courses",JSON.stringify(courses));localStorage.setItem("acc_rps",JSON.stringify(rps));render();setSyncStatus("Data terbaru diterima")}
+async function loadCloudData(){
+ const {data,error}=await supabaseClient.from("curriculum_state").select("*").eq("id","main").maybeSingle();if(error)throw error;
+ if(data){applyRemoteState(data);dbReady=true;return}
+ if(isAdmin()){const {error:insertError}=await supabaseClient.from("curriculum_state").insert({id:"main",courses,rps,updated_by:currentUser.id,origin_id:clientInstanceId});if(insertError)throw insertError;dbReady=true;setSyncStatus("Data awal berhasil dimigrasikan")}
+ else{dbReady=true;setSyncStatus("Menunggu inisialisasi admin")}
+}
+function startRealtime(){
+ if(liveChannel)supabaseClient.removeChannel(liveChannel);
+ liveChannel=supabaseClient.channel("academic-curriculum-live").on("postgres_changes",{event:"*",schema:"public",table:"curriculum_state",filter:"id=eq.main"},payload=>{const row=payload.new;if(row&&row.origin_id!==clientInstanceId)applyRemoteState(row)}).subscribe(status=>{if(status==="SUBSCRIBED")setSyncStatus("Live · tersinkron")});
+}
+function showWelcome(){document.getElementById("welcomeScreen").style.display="grid";document.getElementById("loginScreen").style.display="none";document.getElementById("appShell").style.display="none"}
+function showLogin(role){activeLoginRole=role;document.getElementById("welcomeScreen").style.display="none";document.getElementById("loginScreen").style.display="grid";document.getElementById("loginHeading").textContent=role==="admin"?"Login sebagai Admin":"Login sebagai Dosen";document.getElementById("loginDescription").textContent=role==="admin"?"Masuk untuk mengelola dan memperbarui seluruh data akademik.":"Masuk untuk melihat informasi akademik secara read-only.";document.getElementById("loginError").style.display="none";document.getElementById("loginForm").reset()}
+async function activateSession(session){
+ const role=session?.user?.app_metadata?.role;
+ if(!["admin","lecturer"].includes(role)||(activeLoginRole&&role!==activeLoginRole)){await supabaseClient.auth.signOut();const e=document.getElementById("loginError");if(e){e.textContent="Role akun tidak sesuai dengan pilihan login atau belum ditetapkan admin.";e.style.display="block"}showWelcome();return}
+ currentUser=session.user;userRole=role;document.getElementById("welcomeScreen").style.display="none";document.getElementById("loginScreen").style.display="none";document.getElementById("appShell").style.display="grid";
+ document.getElementById("sessionEmail").textContent=currentUser.email||"";document.getElementById("userAvatar").textContent=role==="admin"?"AD":"DS";document.getElementById("rolePill").textContent=role==="admin"?"ADMINISTRATOR":"DOSEN · READ ONLY";setSyncStatus("Menghubungkan database…");
+ try{await loadCloudData();startRealtime();render()}catch(error){console.error(error);setSyncStatus("Koneksi database bermasalah");toast("Database belum siap: "+error.message)}
+}
+async function login(){const email=document.getElementById("loginEmail").value.trim(),password=document.getElementById("loginPassword").value,button=document.getElementById("loginSubmit"),errorBox=document.getElementById("loginError");if(!supabaseClient){errorBox.textContent="Konfigurasi Supabase belum diisi. Lengkapi config.js terlebih dahulu.";errorBox.style.display="block";return}button.disabled=true;button.textContent="Memeriksa akun…";errorBox.style.display="none";const {error}=await supabaseClient.auth.signInWithPassword({email,password});button.disabled=false;button.textContent="Masuk ke Sistem →";if(error){errorBox.textContent=error.message;errorBox.style.display="block"}}
+async function logout(){if(liveChannel){await supabaseClient.removeChannel(liveChannel);liveChannel=null}dbReady=false;currentUser=null;userRole=null;await supabaseClient.auth.signOut();showWelcome()}
+async function bootApp(){const cfg=window.ACC_SUPABASE_CONFIG||{},configured=cfg.url&&cfg.anonKey&&!cfg.url.includes("YOUR-PROJECT")&&!cfg.anonKey.includes("YOUR_SUPABASE");if(!configured){document.getElementById("configWarning").textContent="Supabase belum dikonfigurasi. Isi URL dan publishable/anon key di config.js setelah membuat project Supabase.";showWelcome();return}if(!window.supabase?.createClient){document.getElementById("configWarning").textContent="Library Supabase gagal dimuat. Periksa koneksi internet.";showWelcome();return}supabaseClient=window.supabase.createClient(cfg.url,cfg.anonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});const {data:{session}}=await supabaseClient.auth.getSession();if(session){activeLoginRole=session.user.app_metadata?.role||"admin";await activateSession(session)}else showWelcome();supabaseClient.auth.onAuthStateChange(async(event,sessionNow)=>{if(event==="SIGNED_IN"&&sessionNow)await activateSession(sessionNow);if(event==="SIGNED_OUT"){dbReady=false;currentUser=null;userRole=null;showWelcome()}})}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function initials(s){return (s||"").split(/\s+/).slice(0,2).map(x=>x[0]||"").join("").toUpperCase()}
 function toast(t){let e=document.getElementById("toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),2600)}
@@ -1389,15 +1441,9 @@ function stat(label,value,icon,sub){return `<div class="stat"><div class="stat-t
 function header(eyebrow,title,desc,actions=""){return `<div class="welcome"><div><div class="eyebrow">${eyebrow}</div><h1>${title}</h1><p>${desc}</p></div><div class="actions">${actions}</div></div>`}
 function render(){
 const names={dashboard:"Dashboard",kbk:"Kelompok Bidang Keahlian",courses:"Kelompok Mata Kuliah",lecturers:"Data Dosen",rps:"RPS Development",templates:"Template",about:"Panduan Sistem"};
-document.getElementById("crumb").textContent=names[page]||"Dashboard";
-const root=document.getElementById("content");
-if(page==="dashboard")root.innerHTML=dashboard();
-if(page==="kbk")root.innerHTML=kbkPage();
-if(page==="courses")root.innerHTML=coursesPage();
-if(page==="lecturers")root.innerHTML=lecturersPage();
-if(page==="rps")root.innerHTML=rpsPage();
-if(page==="templates")root.innerHTML=templatesPage();
-if(page==="about")root.innerHTML=aboutPage();
+document.getElementById("crumb").textContent=names[page]||"Dashboard";const root=document.getElementById("content");
+if(page==="dashboard")root.innerHTML=dashboard();if(page==="kbk")root.innerHTML=kbkPage();if(page==="courses")root.innerHTML=coursesPage();if(page==="lecturers")root.innerHTML=lecturersPage();if(page==="rps")root.innerHTML=rpsPage();if(page==="templates")root.innerHTML=templatesPage();if(page==="about")root.innerHTML=aboutPage();
+if(!isAdmin())root.querySelectorAll("button").forEach(button=>{const action=button.getAttribute("onclick")||"",label=(button.textContent||"").trim().toLowerCase();if(/(courseModal|deleteCourse|rpsModal|saveCourse|saveRps|kbkModal|saveKbk|deleteKbk|lecturerModal|saveLecturer)/i.test(action)||/^(edit|tambah|hapus|kelola|simpan data|simpan progress)/.test(label))button.remove()});
 }
 function dashboard(){
 let by=KBK.map(k=>({name:k,count:courses.filter(c=>c.kbk===k).length}));
@@ -1421,7 +1467,7 @@ function filtered(){return courses.filter(c=>(!filters.q||(c.name+" "+c.leader+"
 function courseTable(rows){return rows.length?`<table class="data-table"><thead><tr><th>Mata Kuliah</th><th>Semester</th><th>Kurikulum</th><th>Kelompok Bidang</th><th>Ketua KMK</th><th>Dosen Pengampu</th><th>Aksi</th></tr></thead><tbody>${rows.map(c=>`<tr><td><button class="textlink strong" onclick="courseDetail('${c.id}')">${esc(c.name)}</button><span class="sub">${esc(c.id)}</span></td><td>${esc(c.semester||"—")}</td><td><span class="tag ${c.curriculum.includes("KKNI")?"gold":"blue"}">${esc(c.curriculum||"—")}</span></td><td><span class="tag ${c.kbk==="ALL"?"gray":""}">${c.kbk==="ALL"?"Lintas Bidang":esc(c.kbk)}</span></td><td><b>${esc(c.leader||"Belum ditetapkan")}</b></td><td>${(c.lecturers||[]).length} dosen<span class="sub">${(c.lecturers||[]).slice(0,2).map(n=>`<button class="textlink" onclick="lecturerDetailByName('${esc(n)}')">${esc(n)}</button>`).join(", ")}${(c.lecturers||[]).length>2?" …":""}</span></td><td><button class="btn" onclick="courseDetail('${c.id}')">Detail</button> <button class="btn" onclick="courseModal('${c.id}')">Edit</button></td></tr>`).join("")}</tbody></table>`:`<div class="empty"><strong>Data tidak ditemukan</strong>Coba ubah kata kunci atau filter pencarian.</div>`}
 function refreshCourseTable(){let r=filtered();document.getElementById("courseTable").innerHTML=courseTable(r);document.getElementById("courseCount").textContent=`Menampilkan ${r.length} dari ${courses.length} mata kuliah`}
 function applyFilters(){filters.kbk=document.getElementById("filterKbk")?.value||"";refreshCourseTable()}
-function courseModal(id){
+function courseModal(id){if(!isAdmin()){toast("Akses admin diperlukan");return}
 let c=courses.find(x=>x.id===id)||{id:"",name:"",semester:"",curriculum:"OBE",kbk:"KEUANGAN",leader:"",lecturers:[]};
 openModal(id?"Edit Mata Kuliah":"Tambah Mata Kuliah",`<form id="courseForm"><div class="form-grid">
 <div class="form-group full"><label>Nama Mata Kuliah</label><input class="field" name="name" required value="${esc(c.name)}"></div>
@@ -1432,8 +1478,8 @@ openModal(id?"Edit Mata Kuliah":"Tambah Mata Kuliah",`<form id="courseForm"><div
 <div class="form-group full"><label>Dosen Pengampu (pisahkan dengan koma)</label><textarea class="field" name="lecturers">${esc((c.lecturers||[]).join(", "))}</textarea></div>
 </div></form>`,`${id?'<button class="btn danger" onclick="deleteCourse(\''+id+'\')">Hapus</button>':''}<button class="btn" onclick="closeModal()">Batal</button><button class="btn primary" onclick="saveCourse('${id}')">Simpan Data</button>`);
 }
-function saveCourse(id){let f=document.getElementById("courseForm");if(!f.reportValidity())return;let d=new FormData(f),name=d.get("name").trim(),newId=name.toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");let x={id:newId,name,semester:d.get("semester").trim(),curriculum:d.get("curriculum"),kbk:d.get("kbk"),leader:d.get("leader").trim(),lecturers:d.get("lecturers").split(",").map(x=>x.trim()).filter(Boolean)};if(id){courses=courses.map(c=>c.id===id?x:c);if(id!==newId&&rps[id]){rps[newId]=rps[id];delete rps[id]}}else{if(courses.some(c=>c.id===newId)){toast("Mata kuliah sudah terdaftar");return}courses.push(x)}save();closeModal();render();toast("Data mata kuliah tersimpan")}
-function deleteCourse(id){if(!confirm("Hapus mata kuliah ini dari database lokal?"))return;courses=courses.filter(c=>c.id!==id);save();closeModal();render();toast("Mata kuliah dihapus")}
+function saveCourse(id){if(!isAdmin()){toast("Akses admin diperlukan");return}let f=document.getElementById("courseForm");if(!f.reportValidity())return;let d=new FormData(f),name=d.get("name").trim(),newId=name.toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");let x={id:newId,name,semester:d.get("semester").trim(),curriculum:d.get("curriculum"),kbk:d.get("kbk"),leader:d.get("leader").trim(),lecturers:d.get("lecturers").split(",").map(x=>x.trim()).filter(Boolean)};if(id){courses=courses.map(c=>c.id===id?x:c);if(id!==newId&&rps[id]){rps[newId]=rps[id];delete rps[id]}}else{if(courses.some(c=>c.id===newId)){toast("Mata kuliah sudah terdaftar");return}courses.push(x)}save();closeModal();render();toast("Data mata kuliah tersimpan")}
+function deleteCourse(id){if(!isAdmin()){toast("Akses admin diperlukan");return}if(!confirm("Hapus mata kuliah ini dari database lokal?"))return;courses=courses.filter(c=>c.id!==id);save();closeModal();render();toast("Mata kuliah dihapus")}
 
 function lecturerList(){
 const names=[...new Set(courses.flatMap(c=>c.lecturers||[]))].sort((a,b)=>a.localeCompare(b));
@@ -1477,13 +1523,13 @@ return `${header("PENGEMBANGAN DOKUMEN PEMBELAJARAN","RPS Development","Pantau p
 function filteredRps(){return courses.filter(c=>(!filters.q||(c.name+" "+c.leader).toLowerCase().includes(filters.q.toLowerCase()))&&(!filters.rpsStatus||(rps[c.id]?.status||"Belum Dimulai")===filters.rpsStatus)&&(!filters.rpsKbk||c.kbk===filters.rpsKbk))}
 function rpsCards(rows){return rows.map(c=>{let x=rps[c.id]||{status:"Belum Dimulai",progress:0,link:"",notes:""};let color=x.status==="Selesai"?"":x.status==="Review"?"gold":"blue";return `<div class="panel rps-card"><div class="rps-card-top"><div><h4>${esc(c.name)}</h4><span class="muted">${esc(c.kbk==="ALL"?"Lintas Bidang":c.kbk)} · Semester ${esc(c.semester||"—")} · Ketua: ${esc(c.leader||"—")}</span></div><span class="tag ${color}">${esc(x.status)}</span></div><div class="rps-progress"><span style="width:${Number(x.progress)||0}%"></span></div><div class="rps-card-top" style="margin-top:6px"><small class="muted">Progress ${Number(x.progress)||0}% ${x.link?`· <a href="${esc(x.link)}" target="_blank" rel="noopener">Buka dokumen RPS ↗</a>`:""}</small><button class="btn" onclick="rpsModal('${c.id}')">Kelola RPS</button></div></div>`}).join("")||`<div class="empty">Tidak ada mata kuliah sesuai filter.</div>`}
 function refreshRps(){document.getElementById("rpsList").innerHTML=rpsCards(filteredRps())}
-function rpsModal(id){let c=courses.find(c=>c.id===id),x=rps[id]||{status:"Belum Dimulai",progress:0,link:"",notes:"",updated:""};openModal("Pengembangan RPS",`<div style="margin-bottom:16px"><b>${esc(c.name)}</b><span class="sub">${esc(c.kbk)} · Ketua KMK: ${esc(c.leader)}</span></div><form id="rpsForm"><div class="form-grid">
+function rpsModal(id){if(!isAdmin()){toast("Akses admin diperlukan");return}let c=courses.find(c=>c.id===id),x=rps[id]||{status:"Belum Dimulai",progress:0,link:"",notes:"",updated:""};openModal("Pengembangan RPS",`<div style="margin-bottom:16px"><b>${esc(c.name)}</b><span class="sub">${esc(c.kbk)} · Ketua KMK: ${esc(c.leader)}</span></div><form id="rpsForm"><div class="form-grid">
 <div class="form-group"><label>Status Pengembangan</label><select class="field" name="status">${["Belum Dimulai","Dalam Proses","Review","Selesai"].map(s=>`<option ${x.status===s?"selected":""}>${s}</option>`).join("")}</select></div>
 <div class="form-group"><label>Progress (%)</label><input class="field" type="number" min="0" max="100" name="progress" value="${Number(x.progress)||0}"></div>
 <div class="form-group full"><label>Link Dokumen RPS (Google Drive / repository)</label><input class="field" type="url" name="link" placeholder="https://..." value="${esc(x.link||"")}"></div>
 <div class="form-group full"><label>Catatan / Tindak Lanjut</label><textarea class="field" name="notes" placeholder="Catatan review, revisi, atau kebutuhan pengembangan...">${esc(x.notes||"")}</textarea></div>
 </div></form>`,`<button class="btn" onclick="closeModal()">Batal</button><button class="btn primary" onclick="saveRps('${id}')">Simpan Progress</button>`)}
-function saveRps(id){let f=document.getElementById("rpsForm");if(!f.reportValidity())return;let d=new FormData(f),p=Math.max(0,Math.min(100,Number(d.get("progress"))||0)),status=d.get("status");if(status==="Selesai")p=100;rps[id]={status,progress:p,link:d.get("link").trim(),notes:d.get("notes").trim(),updated:new Date().toISOString()};save();closeModal();render();toast("Progress RPS berhasil diperbarui")}
+function saveRps(id){if(!isAdmin()){toast("Akses admin diperlukan");return}let f=document.getElementById("rpsForm");if(!f.reportValidity())return;let d=new FormData(f),p=Math.max(0,Math.min(100,Number(d.get("progress"))||0)),status=d.get("status");if(status==="Selesai")p=100;rps[id]={status,progress:p,link:d.get("link").trim(),notes:d.get("notes").trim(),updated:new Date().toISOString()};save();closeModal();render();toast("Progress RPS berhasil diperbarui")}
 function templatesPage(){
 return `${header("PUSAT DOKUMEN AKADEMIK","Template RPS","Pilih format dokumen Rencana Pembelajaran Semester sesuai kurikulum yang digunakan. Folder template akan terbuka langsung di Google Drive.")}
 <div class="card-grid template-grid">
@@ -1504,8 +1550,8 @@ return `${header("PUSAT DOKUMEN AKADEMIK","Template RPS","Pilih format dokumen R
 </div>
 <div class="panel template-note"><div class="panel-body"><b>Informasi penggunaan</b><p>Gunakan template sesuai kurikulum mata kuliah. Pastikan akses Google Drive tersedia pada akun yang digunakan. File di dalam folder dikelola melalui Google Drive.</p></div></div>`;
 }
-function aboutPage(){return `${header("INFORMASI APLIKASI","Panduan Akademik Curriculum Center","Satu tempat untuk mengelola data kurikulum, koordinasi KMK, dan pengembangan RPS.")}<div class="panel"><div class="panel-body"><h3>Alur Penggunaan</h3><ol style="line-height:2.1;color:#536779"><li><b>Kelompok Bidang Keahlian:</b> lihat 4 KBK utama: Keuangan, Manajemen, Pajak, dan Audit.</li><li><b>Kelompok Mata Kuliah:</b> telusuri daftar mata kuliah, semester, kurikulum, ketua KMK, dan dosen pengampu.</li><li><b>Mata Kuliah lintas bidang:</b> mata kuliah dengan kode KBK ALL ditampilkan terpisah sebagai mata kuliah yang digunakan bersama.</li><li><b>RPS Development:</b> ketua KMK dapat memperbarui status, progress, tautan dokumen, serta catatan tindak lanjut RPS.</li></ol><hr style="border:0;border-top:1px solid var(--line);margin:20px 0"><h3>Catatan Data & Penyimpanan</h3><p style="color:var(--muted)">Data awal diimpor dari file MAPPING KMK PRODI AKUNTANSI.xlsx. Perubahan yang dilakukan pada halaman ini disimpan di penyimpanan browser perangkat (localStorage). Artinya, data belum tersinkron otomatis antar pengguna/perangkat dan belum menggunakan autentikasi atau database server.</p><p style="color:var(--muted)">Sebelum digunakan secara operasional oleh seluruh dosen, sistem perlu dilanjutkan dengan backend/database, login berbasis peran (admin prodi, koordinator KBK, ketua KMK), histori perubahan, dan penyimpanan dokumen terpusat.</p><button class="btn primary" onclick="exportData()">Unduh Backup Data JSON</button></div></div>`}
+function aboutPage(){return `${header("INFORMASI APLIKASI","Panduan Academic Curriculum Center","Sistem akademik online dengan database terpusat dan sinkronisasi real-time.")}<div class="panel"><div class="panel-body"><h3>Alur Penggunaan</h3><ol style="line-height:2.1;color:#536779"><li><b>Admin:</b> mengelola data KBK, mata kuliah, dosen, dan pengembangan RPS.</li><li><b>Dosen:</b> melihat seluruh informasi akademik dengan akses read-only.</li><li><b>Sinkronisasi:</b> perubahan admin disimpan ke Supabase dan diteruskan ke perangkat lain secara real-time.</li><li><b>Template:</b> akses template RPS KKNI dan OBE melalui Google Drive.</li></ol><hr style="border:0;border-top:1px solid var(--line);margin:20px 0"><h3>Status Penyimpanan</h3><p style="color:var(--muted)">Database utama: Supabase PostgreSQL. Login menggunakan Supabase Auth. Hak akses edit dibatasi melalui Row Level Security (RLS), bukan sekadar menyembunyikan tombol di tampilan.</p><p style="color:var(--muted)">Backup dapat diunduh melalui tombol berikut. Data awal dari browser lama dimigrasikan ke database saat admin pertama kali masuk jika database masih kosong.</p><button class="btn primary" onclick="exportData()">Unduh Backup Data JSON</button></div></div>`}
 function exportData(){let blob=new Blob([JSON.stringify({exportedAt:new Date().toISOString(),courses,rps},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="academic-curriculum-center-backup.json";a.click();URL.revokeObjectURL(a.href);toast("Backup JSON diunduh")}
-render();
+bootApp();
 </script>
 </body></html>
