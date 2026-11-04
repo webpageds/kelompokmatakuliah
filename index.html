@@ -117,6 +117,11 @@ body{background:radial-gradient(ellipse at 86% 0%,rgba(14,138,131,.07),transpare
   <button data-page="rps"><span class="ico">▧</span>RPS Development</button>
   <button data-page="templates"><span class="ico">▣</span>Template</button>
  </nav>
+ <div class="nav-label">DOKUMEN PEMBELAJARAN</div>
+ <nav class="nav">
+  <button data-page="rpsuploads"><span class="ico">⬆</span>Upload RPS</button>
+  <button data-page="notifications" id="notificationNav"><span class="ico">♢</span>Notifikasi <span id="notificationCount" class="tag gold" style="margin-left:auto;display:none">0</span></button>
+ </nav>
  <div class="nav-label">PREFERENSI</div>
  <nav class="nav">
   <button data-page="about"><span class="ico">ⓘ</span>Panduan Sistem</button>
@@ -1422,11 +1427,72 @@ async function activateSession(session){
  if(!["admin","lecturer"].includes(role)||(activeLoginRole&&role!==activeLoginRole)){await supabaseClient.auth.signOut();const e=document.getElementById("loginError");if(e){e.textContent="Role akun tidak sesuai dengan pilihan login atau belum ditetapkan admin.";e.style.display="block"}showWelcome();return}
  currentUser=session.user;userRole=role;document.getElementById("welcomeScreen").style.display="none";document.getElementById("loginScreen").style.display="none";document.getElementById("appShell").style.display="grid";
  document.getElementById("sessionEmail").textContent=currentUser.email||"";document.getElementById("userAvatar").textContent=role==="admin"?"AD":"DS";document.getElementById("rolePill").textContent=role==="admin"?"ADMINISTRATOR":"DOSEN · READ ONLY";setSyncStatus("Menghubungkan database…");
- try{await loadCloudData();startRealtime();render()}catch(error){console.error(error);setSyncStatus("Koneksi database bermasalah");toast("Database belum siap: "+error.message)}
+ try{await loadCloudData();await loadRpsUploads();if(isAdmin())await loadUploadNotifications();startRealtime();startUploadRealtime();render()}catch(error){console.error(error);setSyncStatus("Koneksi database bermasalah");toast("Database belum siap: "+error.message)}
 }
 async function login(){const email=document.getElementById("loginEmail").value.trim(),password=document.getElementById("loginPassword").value,button=document.getElementById("loginSubmit"),errorBox=document.getElementById("loginError");if(!supabaseClient){errorBox.textContent="Konfigurasi Supabase belum diisi. Lengkapi config.js terlebih dahulu.";errorBox.style.display="block";return}button.disabled=true;button.textContent="Memeriksa akun…";errorBox.style.display="none";const {error}=await supabaseClient.auth.signInWithPassword({email,password});button.disabled=false;button.textContent="Masuk ke Sistem →";if(error){errorBox.textContent=error.message;errorBox.style.display="block"}}
-async function logout(){if(liveChannel){await supabaseClient.removeChannel(liveChannel);liveChannel=null}dbReady=false;currentUser=null;userRole=null;await supabaseClient.auth.signOut();showWelcome()}
+async function logout(){if(liveChannel){await supabaseClient.removeChannel(liveChannel);liveChannel=null}if(uploadChannel){await supabaseClient.removeChannel(uploadChannel);uploadChannel=null}dbReady=false;currentUser=null;userRole=null;await supabaseClient.auth.signOut();showWelcome()}
 async function bootApp(){const cfg=window.ACC_SUPABASE_CONFIG||{},configured=cfg.url&&cfg.anonKey&&!cfg.url.includes("YOUR-PROJECT")&&!cfg.anonKey.includes("YOUR_SUPABASE");if(!configured){document.getElementById("configWarning").textContent="Supabase belum dikonfigurasi. Isi URL dan publishable/anon key di config.js setelah membuat project Supabase.";showWelcome();return}if(!window.supabase?.createClient){document.getElementById("configWarning").textContent="Library Supabase gagal dimuat. Periksa koneksi internet.";showWelcome();return}supabaseClient=window.supabase.createClient(cfg.url,cfg.anonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});const {data:{session}}=await supabaseClient.auth.getSession();if(session){activeLoginRole=session.user.app_metadata?.role||"admin";await activateSession(session)}else showWelcome();supabaseClient.auth.onAuthStateChange(async(event,sessionNow)=>{if(event==="SIGNED_IN"&&sessionNow)await activateSession(sessionNow);if(event==="SIGNED_OUT"){dbReady=false;currentUser=null;userRole=null;showWelcome()}})}
+
+let rpsUploads=[],uploadNotifications=[],uploadChannel=null;
+const MAX_RPS_FILE_SIZE=15*1024*1024;
+const RPS_BUCKET="rps-documents";
+function fmtUploadDate(v){try{return new Date(v).toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"})}catch{return "—"}}
+function statusUploadTag(s){const c=s==="Disetujui"?"":s==="Perlu Revisi"?"gold":"blue";return '<span class="tag '+c+'">'+esc(s||"Menunggu Review")+'</span>'}
+async function loadRpsUploads(){const {data,error}=await supabaseClient.from("rps_documents").select("*").order("created_at",{ascending:false});if(error)throw error;rpsUploads=data||[]}
+async function loadUploadNotifications(){if(!isAdmin())return;const {data,error}=await supabaseClient.from("rps_notifications").select("*").order("created_at",{ascending:false}).limit(100);if(error)throw error;uploadNotifications=data||[]}
+async function refreshRpsUploads(){try{await loadRpsUploads();if(isAdmin())await loadUploadNotifications();render()}catch(e){console.error(e);toast("Gagal memuat dokumen: "+e.message)}}
+function startUploadRealtime(){if(uploadChannel)supabaseClient.removeChannel(uploadChannel);uploadChannel=supabaseClient.channel("rps-submissions-live").on("postgres_changes",{event:"*",schema:"public",table:"rps_documents"},async p=>{await loadRpsUploads();if(isAdmin())await loadUploadNotifications();if(p.eventType==="INSERT"&&isAdmin())toast("RPS baru diunggah oleh dosen");if(page==="rpsuploads"||page==="notifications")render()}).subscribe()}
+function rpsUploadsPage(){
+ if(isAdmin())return `${header("DOKUMEN PEMBELAJARAN","Dokumen RPS Masuk","Lihat seluruh RPS yang dikirim dosen dan lakukan pemeriksaan.",`<button class="btn" onclick="refreshRpsUploads()">↻ Muat ulang</button>`)}${rpsUploadTable(rpsUploads,true)}`;
+ const mine=rpsUploads.filter(x=>x.uploader_id===currentUser.id);
+ const opts=courses.map(c=>'<option value="'+esc(c.id)+'">'+esc(c.name)+' · Semester '+esc(c.semester||"—")+'</option>').join("");
+ return `${header("DOKUMEN PEMBELAJARAN","Upload RPS","Unggah RPS final dalam format PDF dan pantau hasil pemeriksaan Admin.")}
+ <div class="panel" style="margin-bottom:16px"><div class="panel-head"><div><h3>Upload RPS Selesai</h3><p>PDF maksimal 15 MB. Admin akan menerima notifikasi otomatis.</p></div><span class="tag blue">DOSEN</span></div><div class="panel-body">
+ <form id="rpsUploadForm" class="form-grid" onsubmit="event.preventDefault();submitRpsUpload()">
+ <div class="form-group full"><label>Mata Kuliah</label><select class="field" name="course_id" required><option value="">Pilih mata kuliah</option>${opts}</select></div>
+ <div class="form-group full"><label>File RPS (PDF, maksimal 15 MB)</label><input class="field" type="file" name="rps_file" accept=".pdf,application/pdf" required></div>
+ <div class="form-group full"><label>Catatan untuk Admin (opsional)</label><textarea class="field" name="notes" placeholder="Catatan tambahan..."></textarea></div>
+ <div class="form-group full"><button class="btn primary" id="rpsUploadSubmit" type="submit">⬆ Upload Dokumen RPS</button></div></form></div></div>
+ ${rpsUploadTable(mine,false)}`;
+}
+function rpsUploadTable(rows,admin){
+ if(!rows.length)return '<div class="panel"><div class="empty"><strong>Belum ada unggahan</strong>Dokumen RPS akan tampil di sini setelah diunggah.</div></div>';
+ return `<div class="panel"><div class="panel-head"><div><h3>${admin?"Seluruh Dokumen RPS":"Riwayat Upload Saya"}</h3><p>${rows.length} dokumen</p></div></div><div class="table-wrap"><table class="data-table"><thead><tr><th>Mata Kuliah</th><th>File</th><th>Pengunggah</th><th>Waktu</th><th>Status</th><th>File</th>${admin?"<th>Review</th>":""}</tr></thead><tbody>${rows.map(d=>{const c=courses.find(x=>x.id===d.course_id);return `<tr><td><b>${esc(c?.name||d.course_id)}</b></td><td>${esc(d.file_name)}</td><td>${esc(d.uploader_name||d.uploader_email||"Dosen")}</td><td>${fmtUploadDate(d.created_at)}</td><td>${statusUploadTag(d.status)}</td><td><button class="btn" onclick="openRpsUploadFile('${d.id}')">Buka PDF ↗</button></td>${admin?`<td><button class="btn" onclick="reviewRpsUpload('${d.id}')">Review</button></td>`:""}</tr>`}).join("")}</tbody></table></div></div>`;
+}
+async function openRpsUploadFile(id){const d=rpsUploads.find(x=>x.id===id);if(!d)return;const {data,error}=await supabaseClient.storage.from(RPS_BUCKET).createSignedUrl(d.storage_path,300);if(error){toast("Gagal membuka PDF: "+error.message);return}window.open(data.signedUrl,"_blank","noopener")}
+async function submitRpsUpload(){
+ if(!currentUser||userRole!=="lecturer")return;
+ const f=document.getElementById("rpsUploadForm");if(!f.reportValidity())return;
+ const file=f.elements.rps_file.files[0],courseId=f.elements.course_id.value,notes=f.elements.notes.value.trim();
+ if(!file)return;if(file.type!=="application/pdf"&&!file.name.toLowerCase().endsWith(".pdf")){toast("File harus PDF");return}
+ if(file.size>MAX_RPS_FILE_SIZE){toast("Ukuran file maksimal 15 MB");return}
+ if(!courses.some(c=>c.id===courseId)){toast("Pilih mata kuliah yang valid");return}
+ const btn=document.getElementById("rpsUploadSubmit");btn.disabled=true;btn.textContent="Mengunggah...";
+ const path=currentUser.id+"/"+courseId+"/"+Date.now()+"-"+file.name.normalize("NFKD").replace(/[^a-zA-Z0-9._-]+/g,"-").slice(-100);
+ try{
+  const {error:se}=await supabaseClient.storage.from(RPS_BUCKET).upload(path,file,{contentType:"application/pdf",upsert:false});if(se)throw se;
+  const {error:ie}=await supabaseClient.from("rps_documents").insert({course_id:courseId,file_name:file.name,storage_path:path,uploader_id:currentUser.id,uploader_email:currentUser.email,uploader_name:currentUser.user_metadata?.full_name||currentUser.user_metadata?.name||currentUser.email,notes,status:"Menunggu Review"});
+  if(ie){await supabaseClient.storage.from(RPS_BUCKET).remove([path]);throw ie}
+  await loadRpsUploads();f.reset();toast("RPS berhasil diunggah. Admin menerima notifikasi.");render();
+ }catch(e){console.error(e);toast("Upload gagal: "+e.message)}
+ finally{btn.disabled=false;btn.textContent="⬆ Upload Dokumen RPS"}
+}
+async function reviewRpsUpload(id){
+ if(!isAdmin())return;const d=rpsUploads.find(x=>x.id===id);if(!d)return;
+ const status=prompt("Status: Disetujui atau Perlu Revisi",d.status||"Menunggu Review");if(!status)return;
+ if(!["Disetujui","Perlu Revisi","Menunggu Review"].includes(status.trim())){toast("Status tidak valid");return}
+ const note=prompt("Catatan review untuk dosen (opsional):",d.admin_notes||"");
+ const {error}=await supabaseClient.from("rps_documents").update({status:status.trim(),admin_notes:note||"",reviewed_at:new Date().toISOString(),reviewed_by:currentUser.id}).eq("id",id);
+ if(error){toast("Review gagal: "+error.message);return}await loadRpsUploads();render();toast("Hasil review tersimpan");
+}
+function notificationsPage(){
+ const unread=uploadNotifications.filter(n=>!n.is_read).length;
+ return `${header("PEMBERITAHUAN SISTEM","Notifikasi Upload RPS","Pantau unggahan terbaru dari dosen.",`<button class="btn" onclick="markRpsNotificationsRead()">Tandai semua dibaca</button>`)}
+ <div class="stats">${stat("TOTAL NOTIFIKASI",uploadNotifications.length,"♢","Riwayat unggahan")}${stat("BELUM DIBACA",unread,"●","Perlu diperiksa")}${stat("DOKUMEN MASUK",rpsUploads.length,"▧","Total unggahan")}${stat("MENUNGGU REVIEW",rpsUploads.filter(x=>x.status==="Menunggu Review").length,"◷","Perlu pemeriksaan")}</div>
+ <div class="panel"><div class="panel-head"><h3>Aktivitas Unggahan</h3><button class="btn" onclick="refreshRpsUploads()">↻ Muat ulang</button></div><div class="panel-body" style="display:grid;gap:10px">${uploadNotifications.map(n=>`<div class="detail-row"><span><b>${esc(n.title)}</b><small>${esc(n.message)} · ${fmtUploadDate(n.created_at)}</small></span><span>${n.is_read?"Dibaca":"Baru"}</span></div>`).join("")||'<div class="empty">Belum ada notifikasi.</div>'}</div></div>`;
+}
+async function markRpsNotificationsRead(){const {error}=await supabaseClient.from("rps_notifications").update({is_read:true}).eq("is_read",false);if(error){toast("Gagal: "+error.message);return}await loadUploadNotifications();render()}
+
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function initials(s){return (s||"").split(/\s+/).slice(0,2).map(x=>x[0]||"").join("").toUpperCase()}
 function toast(t){let e=document.getElementById("toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),2600)}
@@ -1440,10 +1506,10 @@ function closeModal(){document.getElementById("modalBackdrop").classList.remove(
 function stat(label,value,icon,sub){return `<div class="stat"><div class="stat-top">${label}<span class="stat-icon">${icon}</span></div><strong>${value}</strong><small>${sub}</small></div>`}
 function header(eyebrow,title,desc,actions=""){return `<div class="welcome"><div><div class="eyebrow">${eyebrow}</div><h1>${title}</h1><p>${desc}</p></div><div class="actions">${actions}</div></div>`}
 function render(){
-const names={dashboard:"Dashboard",kbk:"Kelompok Bidang Keahlian",courses:"Kelompok Mata Kuliah",lecturers:"Data Dosen",rps:"RPS Development",templates:"Template",about:"Panduan Sistem"};
+const names={dashboard:"Dashboard",rpsuploads:isAdmin()?"Dokumen RPS Masuk":"Upload RPS",notifications:"Notifikasi",kbk:"Kelompok Bidang Keahlian",courses:"Kelompok Mata Kuliah",lecturers:"Data Dosen",rps:"RPS Development",templates:"Template",about:"Panduan Sistem"};
 document.getElementById("crumb").textContent=names[page]||"Dashboard";const root=document.getElementById("content");
-if(page==="dashboard")root.innerHTML=dashboard();if(page==="kbk")root.innerHTML=kbkPage();if(page==="courses")root.innerHTML=coursesPage();if(page==="lecturers")root.innerHTML=lecturersPage();if(page==="rps")root.innerHTML=rpsPage();if(page==="templates")root.innerHTML=templatesPage();if(page==="about")root.innerHTML=aboutPage();
-if(!isAdmin())root.querySelectorAll("button").forEach(button=>{const action=button.getAttribute("onclick")||"",label=(button.textContent||"").trim().toLowerCase();if(/(courseModal|deleteCourse|rpsModal|saveCourse|saveRps|kbkModal|saveKbk|deleteKbk|lecturerModal|saveLecturer)/i.test(action)||/^(edit|tambah|hapus|kelola|simpan data|simpan progress)/.test(label))button.remove()});
+if(page==="dashboard")root.innerHTML=dashboard();if(page==="rpsuploads")root.innerHTML=rpsUploadsPage();if(page==="notifications"&&isAdmin())root.innerHTML=notificationsPage();if(page==="kbk")root.innerHTML=kbkPage();if(page==="courses")root.innerHTML=coursesPage();if(page==="lecturers")root.innerHTML=lecturersPage();if(page==="rps")root.innerHTML=rpsPage();if(page==="templates")root.innerHTML=templatesPage();if(page==="about")root.innerHTML=aboutPage();
+const ncount=document.getElementById("notificationCount");if(ncount&&isAdmin()){const unread=uploadNotifications.filter(n=>!n.is_read).length;ncount.textContent=unread;ncount.style.display=unread?"inline-block":"none"}const nn=document.getElementById("notificationNav");if(nn&&!isAdmin())nn.style.display="none";if(!isAdmin())root.querySelectorAll("button").forEach(button=>{const action=button.getAttribute("onclick")||"",label=(button.textContent||"").trim().toLowerCase();if(/(courseModal|deleteCourse|rpsModal|saveCourse|saveRps|kbkModal|saveKbk|deleteKbk|lecturerModal|saveLecturer)/i.test(action)||/^(edit|tambah|hapus|kelola|simpan data|simpan progress)/.test(label))button.remove()});
 }
 function dashboard(){
 let by=KBK.map(k=>({name:k,count:courses.filter(c=>c.kbk===k).length}));
