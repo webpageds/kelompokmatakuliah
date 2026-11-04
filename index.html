@@ -1510,7 +1510,7 @@ openModal("Detail Mata Kuliah",`<div class="detail-title">${esc(c.name)}</div>
 ${(c.lecturers||[]).map(n=>`<button class="detail-row" onclick="lecturerDetailByName('${esc(n)}')"><span class="person"><span class="person-dot">${initials(n)}</span><b>${esc(n)}</b></span><span>Profil →</span></button>`).join("")||`<p class="muted">Belum ada rincian dosen pengampu yang cocok dengan entri ini di tab Data Dosen Pengampu.</p>`}
 </div>
 <div class="detail-section"><small>Status data mapping</small><p class="muted">${esc(c.dataStatus||"Data dari mapping utama")}</p></div>`,
-`<button class="btn" onclick="closeModal()">Tutup</button><button class="btn primary" onclick="closeModal();courseModal('${c.id}')">Edit Data</button>`);
+`<button class="btn" onclick="closeModal()">Tutup</button><button class="btn primary" style="${isAdmin() ? 'display:block' : 'display:none'}" onclick="closeModal();courseModal('${c.id}')">Edit Data</button>`);
 }
 
 function rpsPage(){
