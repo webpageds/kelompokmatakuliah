@@ -33,3 +33,10 @@ When the cloud table is empty, the first admin login initializes it from the exi
 
 ## Deployment note
 The static frontend is hosted by GitHub Pages; authentication, database, and realtime are provided by Supabase. Supabase project setup, SQL execution, `config.js` configuration, account creation, role assignment, and Pages enablement are required before the live login can work.
+
+## Lecturer RPS submissions
+- Dosen dapat mengunggah RPS final dalam format PDF maksimal 15 MB dari menu **Upload RPS**.
+- File disimpan dalam bucket Supabase Storage privat `rps-documents`; metadata berada di `public.rps_documents`.
+- Admin mendapat notifikasi in-app dan dapat mengubah status menjadi **Disetujui** atau **Perlu Revisi**.
+- Dosen melihat riwayat unggahan sendiri beserta statusnya; Admin melihat seluruh unggahan.
+- Jalankan tambahan SQL pada bagian akhir `supabase/schema.sql` di Supabase SQL Editor sebelum memakai fitur ini.
