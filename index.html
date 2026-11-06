@@ -1437,33 +1437,50 @@ async function login(){const email=document.getElementById("loginEmail").value.t
 async function logout(){if(liveChannel){await supabaseClient.removeChannel(liveChannel);liveChannel=null}dbReady=false;currentUser=null;userRole=null;await supabaseClient.auth.signOut();showWelcome()}
 async function bootApp(){const cfg=window.ACC_SUPABASE_CONFIG||{},configured=cfg.url&&cfg.anonKey&&!cfg.url.includes("YOUR-PROJECT")&&!cfg.anonKey.includes("YOUR_SUPABASE");if(!configured){document.getElementById("configWarning").textContent="Supabase belum dikonfigurasi. Isi URL dan publishable/anon key di config.js setelah membuat project Supabase.";showWelcome();return}if(!window.supabase?.createClient){document.getElementById("configWarning").textContent="Library Supabase gagal dimuat. Periksa koneksi internet.";showWelcome();return}supabaseClient=window.supabase.createClient(cfg.url,cfg.anonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});const {data:{session}}=await supabaseClient.auth.getSession();if(session){activeLoginRole=session.user.app_metadata?.role||"admin";await activateSession(session)}else showWelcome();supabaseClient.auth.onAuthStateChange(async(event,sessionNow)=>{if(event==="SIGNED_IN"&&sessionNow)await activateSession(sessionNow);if(event==="SIGNED_OUT"){dbReady=false;currentUser=null;userRole=null;showWelcome()}})}
 
-let rpsUploads=[],uploadNotifications=[],uploadChannel=null;
+let rpsUploads=[],uploadNotifications=[];
 const MAX_RPS_FILE_SIZE=15*1024*1024;
 const RPS_BUCKET="rps-documents";
+const DRIVE_FOLDER_URL="https://drive.google.com/drive/folders/10ZyeVqwooNk0xERDuWqc04auCQyn6SBe?usp=sharing";
+const DRIVE_UPLOAD_ENDPOINT=(window.ACC_DRIVE_CONFIG||{}).uploadEndpoint||"";
+const TRACKING_KEY="acc_rps_drive_tracking_v1";
+function readDriveTracking(){try{return JSON.parse(localStorage.getItem(TRACKING_KEY)||"[]")}catch{return []}}
+function writeDriveTracking(rows){localStorage.setItem(TRACKING_KEY,JSON.stringify(rows))}
 function fmtUploadDate(v){try{return new Date(v).toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"})}catch{return "—"}}
 function statusUploadTag(s){const c=s==="Disetujui"?"":s==="Perlu Revisi"?"gold":"blue";return '<span class="tag '+c+'">'+esc(s||"Menunggu Review")+'</span>'}
-async function loadRpsUploads(){const {data,error}=await supabaseClient.from("rps_documents").select("*").order("created_at",{ascending:false});if(error)throw error;rpsUploads=data||[]}
-async function loadUploadNotifications(){if(!isAdmin())return;const {data,error}=await supabaseClient.from("rps_notifications").select("*").order("created_at",{ascending:false}).limit(100);if(error)throw error;uploadNotifications=data||[]}
-async function refreshRpsUploads(){try{await loadRpsUploads();if(isAdmin())await loadUploadNotifications();render()}catch(e){console.error(e);toast("Gagal memuat dokumen: "+e.message)}}
-function startUploadRealtime(){if(uploadChannel)supabaseClient.removeChannel(uploadChannel);uploadChannel=supabaseClient.channel("rps-submissions-live").on("postgres_changes",{event:"*",schema:"public",table:"rps_documents"},async p=>{await loadRpsUploads();if(isAdmin())await loadUploadNotifications();if(p.eventType==="INSERT"&&isAdmin())toast("RPS baru diunggah oleh dosen");if(page==="rpsuploads"||page==="notifications")render()}).subscribe()}
+async function loadRpsUploads(){
+ const rows=readDriveTracking();
+ // Admin sees entries recorded on this browser. For cross-device audit, configure the
+ // Google Apps Script endpoint to return the shared Drive folder inventory.
+ rpsUploads=rows.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+ if(DRIVE_UPLOAD_ENDPOINT){
+  try{
+   const res=await fetch(DRIVE_UPLOAD_ENDPOINT+"?action=list", {method:"GET",redirect:"follow"});
+   if(res.ok){const data=await res.json();if(Array.isArray(data.files)){rpsUploads=data.files;writeDriveTracking(data.files)}}
+  }catch(e){console.warn("Drive tracking endpoint unavailable",e)}
+ }
+}
+async function loadUploadNotifications(){uploadNotifications=rpsUploads.map(x=>({title:"RPS baru diunggah",message:(x.uploader_name||x.uploader_email||"Dosen")+" mengunggah "+(x.file_name||"dokumen RPS"),created_at:x.created_at,is_read:false}))}
+async function refreshRpsUploads(){await loadRpsUploads();await loadUploadNotifications();render()}
+function startUploadRealtime(){}
 function rpsUploadsPage(){
- if(isAdmin())return `${header("DOKUMEN PEMBELAJARAN","Dokumen RPS Masuk","Lihat seluruh RPS yang dikirim dosen dan lakukan pemeriksaan.",`<button class="btn" onclick="refreshRpsUploads()">↻ Muat ulang</button>`)}${rpsUploadTable(rpsUploads,true)}`;
+ if(isAdmin())return `${header("DOKUMEN PEMBELAJARAN","Dokumen RPS Masuk","Lihat status unggahan RPS dosen yang tercatat.",`<button class="btn" onclick="refreshRpsUploads()">↻ Muat ulang</button><a class="btn primary" href="${DRIVE_FOLDER_URL}" target="_blank" rel="noopener">Buka Folder Google Drive ↗</a>`)}${rpsUploadTable(rpsUploads,true)}`;
  const mine=rpsUploads.filter(x=>x.uploader_id===currentUser.id);
  const opts=courses.map(c=>'<option value="'+esc(c.id)+'">'+esc(c.name)+' · Semester '+esc(c.semester||"—")+'</option>').join("");
- return `${header("DOKUMEN PEMBELAJARAN","Upload RPS","Unggah RPS final dalam format PDF dan pantau hasil pemeriksaan Admin.")}
- <div class="panel" style="margin-bottom:16px"><div class="panel-head"><div><h3>Upload RPS Selesai</h3><p>PDF maksimal 15 MB. Admin akan menerima notifikasi otomatis.</p></div><span class="tag blue">DOSEN</span></div><div class="panel-body">
+ const driveReady=Boolean(DRIVE_UPLOAD_ENDPOINT);
+ return `${header("DOKUMEN PEMBELAJARAN","Upload RPS","Unggah PDF. Dokumen dikirim ke Google Drive setelah endpoint Drive dikonfigurasi.")}
+ <div class="panel" style="margin-bottom:16px"><div class="panel-head"><div><h3>Upload RPS ke Google Drive</h3><p>PDF maksimal 15 MB. Status keberhasilan upload akan dicatat.</p></div><span class="tag ${driveReady?"":"gold"}">${driveReady?"GOOGLE DRIVE AKTIF":"MENUNGGU KONFIGURASI DRIVE"}</span></div><div class="panel-body">
+ ${driveReady?"":'<div class="data-note">Upload otomatis ke Drive belum aktif. Admin perlu memasang URL Google Apps Script Web App pada ACC_DRIVE_CONFIG.uploadEndpoint di config.js. Tanpa endpoint, aplikasi tidak akan mengaku file sudah terunggah.</div>'}
  <form id="rpsUploadForm" class="form-grid" onsubmit="event.preventDefault();submitRpsUpload()">
  <div class="form-group full"><label>Mata Kuliah</label><select class="field" name="course_id" required><option value="">Pilih mata kuliah</option>${opts}</select></div>
  <div class="form-group full"><label>File RPS (PDF, maksimal 15 MB)</label><input class="field" type="file" name="rps_file" accept=".pdf,application/pdf" required></div>
  <div class="form-group full"><label>Catatan untuk Admin (opsional)</label><textarea class="field" name="notes" placeholder="Catatan tambahan..."></textarea></div>
- <div class="form-group full"><button class="btn primary" id="rpsUploadSubmit" type="submit">⬆ Upload Dokumen RPS</button></div></form></div></div>
+ <div class="form-group full"><button class="btn primary" id="rpsUploadSubmit" type="submit" ${driveReady?"":"disabled"}>⬆ Upload ke Google Drive</button><a class="textlink" href="${DRIVE_FOLDER_URL}" target="_blank" rel="noopener">Lihat folder tujuan ↗</a></div></form></div></div>
  ${rpsUploadTable(mine,false)}`;
 }
 function rpsUploadTable(rows,admin){
- if(!rows.length)return '<div class="panel"><div class="empty"><strong>Belum ada unggahan</strong>Dokumen RPS akan tampil di sini setelah diunggah.</div></div>';
- return `<div class="panel"><div class="panel-head"><div><h3>${admin?"Seluruh Dokumen RPS":"Riwayat Upload Saya"}</h3><p>${rows.length} dokumen</p></div></div><div class="table-wrap"><table class="data-table"><thead><tr><th>Mata Kuliah</th><th>File</th><th>Pengunggah</th><th>Waktu</th><th>Status</th><th>File</th>${admin?"<th>Review</th>":""}</tr></thead><tbody>${rows.map(d=>{const c=courses.find(x=>x.id===d.course_id);return `<tr><td><b>${esc(c?.name||d.course_id)}</b></td><td>${esc(d.file_name)}</td><td>${esc(d.uploader_name||d.uploader_email||"Dosen")}</td><td>${fmtUploadDate(d.created_at)}</td><td>${statusUploadTag(d.status)}</td><td><button class="btn" onclick="openRpsUploadFile('${d.id}')">Buka PDF ↗</button></td>${admin?`<td><button class="btn" onclick="reviewRpsUpload('${d.id}')">Review</button></td>`:""}</tr>`}).join("")}</tbody></table></div></div>`;
+ if(!rows.length)return '<div class="panel"><div class="empty"><strong>Belum ada unggahan tercatat</strong>Dokumen akan tampil di sini setelah Google Drive mengonfirmasi upload.</div></div>';
+ return `<div class="panel"><div class="panel-head"><div><h3>${admin?"Seluruh Dokumen RPS":"Riwayat Upload Saya"}</h3><p>${rows.length} dokumen tercatat</p></div></div><div class="table-wrap"><table class="data-table"><thead><tr><th>Mata Kuliah</th><th>File</th><th>Pengunggah</th><th>Waktu</th><th>Status</th><th>Google Drive</th></tr></thead><tbody>${rows.map(d=>{const c=courses.find(x=>x.id===d.course_id);return `<tr><td><b>${esc(c?.name||d.course_name||d.course_id)}</b></td><td>${esc(d.file_name)}</td><td>${esc(d.uploader_name||d.uploader_email||"Dosen")}</td><td>${fmtUploadDate(d.created_at)}</td><td>${statusUploadTag(d.status||"Menunggu Review")}</td><td>${d.webViewLink?'<a class="btn" href="'+esc(d.webViewLink)+'" target="_blank" rel="noopener">Buka PDF ↗</a>':(d.file_url?'<a class="btn" href="'+esc(d.file_url)+'" target="_blank" rel="noopener">Buka PDF ↗</a>':'<a class="btn" href="'+DRIVE_FOLDER_URL+'" target="_blank" rel="noopener">Buka Folder ↗</a>')}</td></tr>`}).join("")}</tbody></table></div></div>`;
 }
-async function openRpsUploadFile(id){const d=rpsUploads.find(x=>x.id===id);if(!d)return;const {data,error}=await supabaseClient.storage.from(RPS_BUCKET).createSignedUrl(d.storage_path,300);if(error){toast("Gagal membuka PDF: "+error.message);return}window.open(data.signedUrl,"_blank","noopener")}
 async function submitRpsUpload(){
  if(!currentUser||userRole!=="lecturer")return;
  const f=document.getElementById("rpsUploadForm");if(!f.reportValidity())return;
@@ -1471,31 +1488,34 @@ async function submitRpsUpload(){
  if(!file)return;if(file.type!=="application/pdf"&&!file.name.toLowerCase().endsWith(".pdf")){toast("File harus PDF");return}
  if(file.size>MAX_RPS_FILE_SIZE){toast("Ukuran file maksimal 15 MB");return}
  if(!courses.some(c=>c.id===courseId)){toast("Pilih mata kuliah yang valid");return}
- const btn=document.getElementById("rpsUploadSubmit");btn.disabled=true;btn.textContent="Mengunggah...";
- const path=currentUser.id+"/"+courseId+"/"+Date.now()+"-"+file.name.normalize("NFKD").replace(/[^a-zA-Z0-9._-]+/g,"-").slice(-100);
+ if(!DRIVE_UPLOAD_ENDPOINT){toast("Upload Drive belum dikonfigurasi. Hubungi admin.");return}
+ const btn=document.getElementById("rpsUploadSubmit");btn.disabled=true;btn.textContent="Mengunggah ke Google Drive…";
  try{
-  const {error:se}=await supabaseClient.storage.from(RPS_BUCKET).upload(path,file,{contentType:"application/pdf",upsert:false});if(se)throw se;
-  const {error:ie}=await supabaseClient.from("rps_documents").insert({course_id:courseId,file_name:file.name,storage_path:path,uploader_id:currentUser.id,uploader_email:currentUser.email,uploader_name:currentUser.user_metadata?.full_name||currentUser.user_metadata?.name||currentUser.email,notes,status:"Menunggu Review"});
-  if(ie){await supabaseClient.storage.from(RPS_BUCKET).remove([path]);throw ie}
-  await loadRpsUploads();f.reset();toast("RPS berhasil diunggah. Admin menerima notifikasi.");render();
+  const payload={file_name:file.name,course_id:courseId,course_name:courses.find(c=>c.id===courseId)?.name||courseId,uploader_id:currentUser.id,uploader_email:currentUser.email,uploader_name:currentUser.user_metadata?.full_name||currentUser.user_metadata?.name||currentUser.email,notes,mime_type:file.type||"application/pdf",file_base64:await new Promise((resolve,reject)=>{const fr=new FileReader();fr.onload=()=>resolve(String(fr.result).split(",")[1]);fr.onerror=()=>reject(new Error("Gagal membaca file"));fr.readAsDataURL(file)})};
+  const response=await fetch(DRIVE_UPLOAD_ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload),redirect:"follow"});
+  if(!response.ok)throw new Error("Endpoint Drive mengembalikan HTTP "+response.status);
+  const result=await response.json();
+  if(!result.success)throw new Error(result.error||"Google Drive tidak mengonfirmasi upload");
+  const row={id:result.id||("drive-"+Date.now()),...payload,file_base64:undefined,webViewLink:result.webViewLink||result.url||"",created_at:result.created_at||new Date().toISOString(),status:"Menunggu Review",drive_file_id:result.id||""};
+  const rows=readDriveTracking().filter(x=>x.id!==row.id);rows.unshift(row);writeDriveTracking(rows);
+  await loadRpsUploads();await loadUploadNotifications();f.reset();render();toast("RPS berhasil diunggah ke Google Drive. Admin mendapat notifikasi.");
  }catch(e){console.error(e);toast("Upload gagal: "+e.message)}
- finally{btn.disabled=false;btn.textContent="⬆ Upload Dokumen RPS"}
+ finally{btn.disabled=false;btn.textContent="⬆ Upload ke Google Drive"}
 }
+async function openRpsUploadFile(id){const d=rpsUploads.find(x=>x.id===id);if(d?.webViewLink)window.open(d.webViewLink,"_blank","noopener");else window.open(DRIVE_FOLDER_URL,"_blank","noopener")}
 async function reviewRpsUpload(id){
- if(!isAdmin())return;const d=rpsUploads.find(x=>x.id===id);if(!d)return;
+ if(!isAdmin())return;const rows=readDriveTracking(),d=rows.find(x=>x.id===id);if(!d)return;
  const status=prompt("Status: Disetujui atau Perlu Revisi",d.status||"Menunggu Review");if(!status)return;
  if(!["Disetujui","Perlu Revisi","Menunggu Review"].includes(status.trim())){toast("Status tidak valid");return}
- const note=prompt("Catatan review untuk dosen (opsional):",d.admin_notes||"");
- const {error}=await supabaseClient.from("rps_documents").update({status:status.trim(),admin_notes:note||"",reviewed_at:new Date().toISOString(),reviewed_by:currentUser.id}).eq("id",id);
- if(error){toast("Review gagal: "+error.message);return}await loadRpsUploads();render();toast("Hasil review tersimpan");
+ d.status=status.trim();d.admin_notes=prompt("Catatan review untuk dosen (opsional):",d.admin_notes||"")||"";d.reviewed_at=new Date().toISOString();
+ writeDriveTracking(rows);await refreshRpsUploads();toast("Status review disimpan pada perangkat ini");
 }
 function notificationsPage(){
- const unread=uploadNotifications.filter(n=>!n.is_read).length;
- return `${header("PEMBERITAHUAN SISTEM","Notifikasi Upload RPS","Pantau unggahan terbaru dari dosen.",`<button class="btn" onclick="markRpsNotificationsRead()">Tandai semua dibaca</button>`)}
- <div class="stats">${stat("TOTAL NOTIFIKASI",uploadNotifications.length,"♢","Riwayat unggahan")}${stat("BELUM DIBACA",unread,"●","Perlu diperiksa")}${stat("DOKUMEN MASUK",rpsUploads.length,"▧","Total unggahan")}${stat("MENUNGGU REVIEW",rpsUploads.filter(x=>x.status==="Menunggu Review").length,"◷","Perlu pemeriksaan")}</div>
- <div class="panel"><div class="panel-head"><h3>Aktivitas Unggahan</h3><button class="btn" onclick="refreshRpsUploads()">↻ Muat ulang</button></div><div class="panel-body" style="display:grid;gap:10px">${uploadNotifications.map(n=>`<div class="detail-row"><span><b>${esc(n.title)}</b><small>${esc(n.message)} · ${fmtUploadDate(n.created_at)}</small></span><span>${n.is_read?"Dibaca":"Baru"}</span></div>`).join("")||'<div class="empty">Belum ada notifikasi.</div>'}</div></div>`;
+ return `${header("PEMBERITAHUAN SISTEM","Notifikasi Upload RPS","Pantau unggahan terbaru dari dosen.",`<button class="btn" onclick="refreshRpsUploads()">↻ Muat ulang</button>`)}
+ <div class="stats">${stat("TOTAL NOTIFIKASI",uploadNotifications.length,"♢","Riwayat unggahan")}${stat("BELUM DIBACA",uploadNotifications.length,"●","Perlu diperiksa")}${stat("DOKUMEN MASUK",rpsUploads.length,"▧","Total unggahan")}${stat("MENUNGGU REVIEW",rpsUploads.filter(x=>x.status!=="Disetujui"&&x.status!=="Perlu Revisi").length,"◷","Perlu pemeriksaan")}</div>
+ <div class="panel"><div class="panel-head"><h3>Aktivitas Unggahan</h3><a class="btn" href="${DRIVE_FOLDER_URL}" target="_blank" rel="noopener">Buka Google Drive ↗</a></div><div class="panel-body" style="display:grid;gap:10px">${uploadNotifications.map(n=>`<div class="detail-row"><span><b>${esc(n.title)}</b><small>${esc(n.message)} · ${fmtUploadDate(n.created_at)}</small></span><span>Baru</span></div>`).join("")||'<div class="empty">Belum ada notifikasi.</div>'}</div></div>`;
 }
-async function markRpsNotificationsRead(){const {error}=await supabaseClient.from("rps_notifications").update({is_read:true}).eq("is_read",false);if(error){toast("Gagal: "+error.message);return}await loadUploadNotifications();render()}
+async function markRpsNotificationsRead(){toast("Notifikasi sudah ditampilkan");}
 
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function initials(s){return (s||"").split(/\s+/).slice(0,2).map(x=>x[0]||"").join("").toUpperCase()}
