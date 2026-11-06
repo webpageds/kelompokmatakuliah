@@ -1453,7 +1453,7 @@ async function loadRpsUploads(){
  if(DRIVE_UPLOAD_ENDPOINT){
   try{
    const res=await fetch(DRIVE_UPLOAD_ENDPOINT+"?action=list",{method:"GET",redirect:"follow"});
-   if(res.ok){const data=await res.json();if(data.success&&Array.isArray(data.files)){rpsUploads=data.files;writeDriveTracking(data.files)}}
+   const data=await res.json();if(res.ok&&data.success&&Array.isArray(data.files)){rpsUploads=data.files;writeDriveTracking(data.files)}else if(!res.ok||data.success===false)throw new Error(data.error||("HTTP "+res.status));
   }catch(e){console.warn("Drive tracking endpoint unavailable",e)}
  }
 }
@@ -1492,9 +1492,8 @@ async function submitRpsUpload(){
  try{
   const payload={file_name:file.name,course_id:courseId,course_name:courses.find(c=>c.id===courseId)?.name||courseId,uploader_id:currentUser.id,uploader_email:currentUser.email,uploader_name:currentUser.user_metadata?.full_name||currentUser.user_metadata?.name||currentUser.email,notes,mime_type:file.type||"application/pdf",file_base64:await new Promise((resolve,reject)=>{const fr=new FileReader();fr.onload=()=>resolve(String(fr.result).split(",")[1]);fr.onerror=()=>reject(new Error("Gagal membaca file"));fr.readAsDataURL(file)})};
   const response=await fetch(DRIVE_UPLOAD_ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload),redirect:"follow"});
-  if(!response.ok)throw new Error("Endpoint Drive mengembalikan HTTP "+response.status);
   const result=await response.json();
-  if(!result.success)throw new Error(result.error||"Google Drive tidak mengonfirmasi upload");
+  if(!response.ok||!result.success)throw new Error(result.error||("Endpoint Drive mengembalikan HTTP "+response.status));
   const row={id:result.id||("drive-"+Date.now()),...payload,file_base64:undefined,webViewLink:result.webViewLink||result.url||"",created_at:result.created_at||new Date().toISOString(),status:"Menunggu Review",drive_file_id:result.id||""};
   const rows=readDriveTracking().filter(x=>x.id!==row.id);rows.unshift(row);writeDriveTracking(rows);
   await loadRpsUploads();await loadUploadNotifications();f.reset();render();toast("RPS berhasil diunggah ke Google Drive. Admin mendapat notifikasi.");
