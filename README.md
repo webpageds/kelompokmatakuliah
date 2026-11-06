@@ -49,3 +49,11 @@ The script stores upload tracking metadata in Apps Script Properties and saves t
 
 ## Deployment
 The frontend is hosted as a static GitHub Pages site. Supabase provides Auth and the curriculum database. Google Apps Script handles RPS file uploads and tracking.
+
+
+## Admin verification and file naming
+- Uploaded files are named from the selected course name, preserving the source file extension.
+- Admin review statuses: Menunggu Review, Sedang Diverifikasi, Disetujui, Perlu Revisi, and Tidak Disetujui.
+- Review notes and reviewer/time are stored by the Apps Script service, so lecturer accounts see updated status when they refresh/synchronize.
+- Admin can move a rejected/unwanted upload to Google Drive Trash; the record is removed from the shared tracking list.
+- After changing `google-drive/Code.gs`, update the Apps Script deployment to a new version (Manage deployments > Edit > New version > Deploy). The /exec URL can remain the same when updating the existing deployment.
