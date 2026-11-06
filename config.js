@@ -12,5 +12,5 @@ window.ACC_SUPABASE_CONFIG = {
  * Apps Script validates the upload payload and is intended for public callers.
  */
 window.ACC_DRIVE_CONFIG = {
-  uploadEndpoint: ""
+  uploadEndpoint: "https://script.google.com/macros/s/AKfycbxpTEwHQT-qRiiyZmpoP8nnUkOCsZxSzyThW0-MUC2BFG25caUNKX1QOihXs281ihWPZA/exec"
 };
