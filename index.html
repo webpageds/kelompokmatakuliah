@@ -1441,7 +1441,7 @@ let rpsUploads=[],uploadNotifications=[];
 const MAX_RPS_FILE_SIZE=15*1024*1024;
 const RPS_BUCKET="rps-documents";
 const DRIVE_FOLDER_URL="https://drive.google.com/drive/folders/10ZyeVqwooNk0xERDuWqc04auCQyn6SBe?usp=sharing";
-const DRIVE_UPLOAD_ENDPOINT=(window.ACC_DRIVE_CONFIG||{}).uploadEndpoint||"";
+const DRIVE_UPLOAD_ENDPOINT=String((window.ACC_DRIVE_CONFIG||{}).uploadEndpoint||"").trim();
 const TRACKING_KEY="acc_rps_drive_tracking_v1";
 function readDriveTracking(){try{return JSON.parse(localStorage.getItem(TRACKING_KEY)||"[]")}catch{return []}}
 function writeDriveTracking(rows){localStorage.setItem(TRACKING_KEY,JSON.stringify(rows))}
@@ -1466,12 +1466,12 @@ function rpsUploadsPage(){
  const mine=rpsUploads.filter(x=>x.uploader_id===currentUser.id);
  const opts=courses.map(c=>'<option value="'+esc(c.id)+'">'+esc(c.name)+' · Semester '+esc(c.semester||"—")+'</option>').join("");
  const driveReady=Boolean(DRIVE_UPLOAD_ENDPOINT);
- return `${header("DOKUMEN PEMBELAJARAN","Upload RPS","Unggah PDF. Dokumen dikirim ke Google Drive setelah endpoint Drive dikonfigurasi.")}
- <div class="panel" style="margin-bottom:16px"><div class="panel-head"><div><h3>Upload RPS ke Google Drive</h3><p>PDF maksimal 15 MB. Status keberhasilan upload akan dicatat.</p></div><span class="tag ${driveReady?"":"gold"}">${driveReady?"GOOGLE DRIVE AKTIF":"MENUNGGU KONFIGURASI DRIVE"}</span></div><div class="panel-body">
- ${driveReady?"":'<div class="data-note">Upload otomatis ke Drive belum aktif. Admin perlu memasang URL Google Apps Script Web App pada ACC_DRIVE_CONFIG.uploadEndpoint di config.js. Tanpa endpoint, aplikasi tidak akan mengaku file sudah terunggah.</div>'}
+ return `${header("DOKUMEN PEMBELAJARAN","Upload RPS","Unggah dokumen ke Google Drive. Berbagai format file didukung, maksimal 15 MB per file.")}
+ <div class="panel" style="margin-bottom:16px"><div class="panel-head"><div><h3>Upload RPS ke Google Drive</h3><p>Dokumen maksimal 15 MB. PDF, Word, Excel, PowerPoint, gambar, dan format lainnya didukung.</p></div><span class="tag ${driveReady?"":"gold"}">${driveReady?"GOOGLE DRIVE TERHUBUNG":"MENUNGGU KONFIGURASI DRIVE"}</span></div><div class="panel-body">
+ ${driveReady?"":'<div class="data-note">Koneksi Drive belum terbaca. Muat ulang halaman. Bila pesan ini tetap muncul, admin perlu memeriksa konfigurasi Web App di config.js.</div>'}
  <form id="rpsUploadForm" class="form-grid" onsubmit="event.preventDefault();submitRpsUpload()">
  <div class="form-group full"><label>Mata Kuliah</label><select class="field" name="course_id" required><option value="">Pilih mata kuliah</option>${opts}</select></div>
- <div class="form-group full"><label>File RPS (PDF, maksimal 15 MB)</label><input class="field" type="file" name="rps_file" accept=".pdf,application/pdf" required></div>
+ <div class="form-group full"><label>File Dokumen (PDF, Word, Excel, PowerPoint, gambar, dan lainnya — maksimal 15 MB)</label><input class="field" type="file" name="rps_file" required></div>
  <div class="form-group full"><label>Catatan untuk Admin (opsional)</label><textarea class="field" name="notes" placeholder="Catatan tambahan..."></textarea></div>
  <div class="form-group full"><button class="btn primary" id="rpsUploadSubmit" type="submit" ${driveReady?"":"disabled"}>⬆ Upload ke Google Drive</button><a class="textlink" href="${DRIVE_FOLDER_URL}" target="_blank" rel="noopener">Lihat folder tujuan ↗</a></div></form></div></div>
  ${rpsUploadTable(mine,false)}`;
@@ -1484,7 +1484,7 @@ async function submitRpsUpload(){
  if(!currentUser||userRole!=="lecturer")return;
  const f=document.getElementById("rpsUploadForm");if(!f.reportValidity())return;
  const file=f.elements.rps_file.files[0],courseId=f.elements.course_id.value,notes=f.elements.notes.value.trim();
- if(!file)return;if(file.type!=="application/pdf"&&!file.name.toLowerCase().endsWith(".pdf")){toast("File harus PDF");return}
+ if(!file)return;
  if(file.size>MAX_RPS_FILE_SIZE){toast("Ukuran file maksimal 15 MB");return}
  if(!courses.some(c=>c.id===courseId)){toast("Pilih mata kuliah yang valid");return}
  if(!DRIVE_UPLOAD_ENDPOINT){toast("Upload Drive belum dikonfigurasi. Hubungi admin.");return}
