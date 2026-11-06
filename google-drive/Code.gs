@@ -1,62 +1,46 @@
 /**
- * Academic Curriculum Center — Google Drive RPS upload endpoint
- *
- * Deploy as Web App:
- *   Execute as: Me (the Drive owner)
- *   Who has access: Anyone (or your institution's approved audience)
- *
- * The endpoint writes PDF files into the configured folder and stores
- * upload tracking records in Script Properties. Do not put OAuth tokens,
- * service account keys, or private credentials in the frontend.
+ * Academic Curriculum Center — Google Drive document upload endpoint
+ * Deploy as Web App: Execute as Me; grant access to intended app users.
+ * Files are saved to the Academic Curriculum Center destination folder.
  */
 const FOLDER_ID = "10ZyeVqwooNk0xERDuWqc04auCQyn6SBe";
 const TRACKING_KEY = "ACC_RPS_DRIVE_UPLOADS";
+const MAX_FILE_BYTES = 15 * 1024 * 1024;
 
 function doPost(e) {
   try {
-    const payload = JSON.parse((e && e.postData && e.postData.contents) || "{}");
-    const required = ["file_name", "course_id", "uploader_id", "uploader_email", "file_base64"];
-    required.forEach(k => { if (!payload[k]) throw new Error("Field wajib tidak tersedia: " + k); });
-
-    if (payload.file_base64.length > 22 * 1024 * 1024) {
-      throw new Error("File terlalu besar untuk dikirim. Maksimal PDF 15 MB.");
-    }
-    const bytes = Utilities.base64Decode(payload.file_base64);
-    if (bytes.length > 15 * 1024 * 1024) throw new Error("Ukuran PDF maksimal 15 MB.");
-    const mime = payload.mime_type || "application/pdf";
-    if (mime !== "application/pdf") throw new Error("Hanya file PDF yang diperbolehkan.");
-
+    const p = JSON.parse((e && e.postData && e.postData.contents) || "{}");
+    ["file_name", "course_id", "uploader_id", "uploader_email", "file_base64"].forEach(k => {
+      if (!p[k]) throw new Error("Field wajib tidak tersedia: " + k);
+    });
+    const bytes = Utilities.base64Decode(p.file_base64);
+    if (bytes.length > MAX_FILE_BYTES) throw new Error("Ukuran file maksimal 15 MB.");
+    const mime = String(p.mime_type || "application/octet-stream").split(";")[0].trim();
+    const name = sanitizeFileName_(p.file_name);
     const folder = DriveApp.getFolderById(FOLDER_ID);
-    const safeName = String(payload.file_name).replace(/[\\/:*?"<>|]/g, "_").slice(0, 150);
     const stamp = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "yyyyMMdd-HHmmss");
-    const blob = Utilities.newBlob(bytes, mime, stamp + "_" + safeName);
-    const file = folder.createFile(blob);
+    const file = folder.createFile(Utilities.newBlob(bytes, mime, stamp + "_" + name));
     file.setDescription([
-      "Academic Curriculum Center RPS upload",
-      "Course: " + (payload.course_name || payload.course_id),
-      "Uploader: " + payload.uploader_email,
-      "Uploader ID: " + payload.uploader_id,
-      "Notes: " + (payload.notes || "")
+      "Academic Curriculum Center document upload",
+      "Course: " + (p.course_name || p.course_id),
+      "Uploader: " + p.uploader_email,
+      "Uploader ID: " + p.uploader_id,
+      "Notes: " + (p.notes || "")
     ].join("\n"));
 
-    const record = {
-      id: file.getId(),
-      drive_file_id: file.getId(),
-      file_name: safeName,
-      course_id: String(payload.course_id),
-      course_name: String(payload.course_name || payload.course_id),
-      uploader_id: String(payload.uploader_id),
-      uploader_email: String(payload.uploader_email),
-      uploader_name: String(payload.uploader_name || payload.uploader_email),
-      notes: String(payload.notes || ""),
-      status: "Menunggu Review",
-      created_at: new Date().toISOString(),
-      webViewLink: file.getUrl()
+    const row = {
+      id: file.getId(), drive_file_id: file.getId(), file_name: name,
+      mime_type: mime, course_id: String(p.course_id),
+      course_name: String(p.course_name || p.course_id),
+      uploader_id: String(p.uploader_id), uploader_email: String(p.uploader_email),
+      uploader_name: String(p.uploader_name || p.uploader_email),
+      notes: String(p.notes || ""), status: "Menunggu Review",
+      created_at: new Date().toISOString(), webViewLink: file.getUrl()
     };
-    const all = getRecords_();
-    all.unshift(record);
-    PropertiesService.getScriptProperties().setProperty(TRACKING_KEY, JSON.stringify(all));
-    return json_({ success: true, id: file.getId(), webViewLink: file.getUrl(), created_at: record.created_at });
+    const rows = getRecords_();
+    rows.unshift(row);
+    PropertiesService.getScriptProperties().setProperty(TRACKING_KEY, JSON.stringify(rows));
+    return json_({ success: true, id: file.getId(), webViewLink: file.getUrl(), created_at: row.created_at });
   } catch (err) {
     return json_({ success: false, error: String(err && err.message || err) });
   }
@@ -64,8 +48,7 @@ function doPost(e) {
 
 function doGet(e) {
   try {
-    const action = e && e.parameter && e.parameter.action;
-    if (action === "list") return json_({ success: true, files: getRecords_() });
+    if (e && e.parameter && e.parameter.action === "list") return json_({ success: true, files: getRecords_() });
     return json_({ success: true, message: "Academic Curriculum Center Drive endpoint ready." });
   } catch (err) {
     return json_({ success: false, error: String(err && err.message || err) });
@@ -77,8 +60,9 @@ function getRecords_() {
   if (!raw) return [];
   try { return JSON.parse(raw); } catch (_) { return []; }
 }
-
+function sanitizeFileName_(v) {
+  return String(v || "document").replace(/[\\/:*?"<>|]/g, "_").slice(0, 150);
+}
 function json_(obj) {
-  return ContentService.createTextOutput(JSON.stringify(obj))
-    .setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
