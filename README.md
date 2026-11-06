@@ -26,7 +26,7 @@ Online academic curriculum workspace for Program Studi Akuntansi, Universitas Pa
 6. Enable GitHub Pages for the `main` branch and repository root.
 
 ## Setup — Google Drive RPS uploads
-RPS PDF uploads no longer use Supabase Storage or the Supabase `rps_documents` table. They are sent to the Google Drive folder configured in `google-drive/Code.gs`.
+RPS document uploads (PDF, Word, Excel, PowerPoint, images, and other file types up to 15 MB) no longer use Supabase Storage or the Supabase `rps_documents` table. They are sent to the Google Drive folder configured in `google-drive/Code.gs`.
 
 1. Open https://script.google.com/ and create a new Apps Script project.
 2. Copy all contents of `google-drive/Code.gs` into the Apps Script editor.
@@ -38,7 +38,7 @@ RPS PDF uploads no longer use Supabase Storage or the Supabase `rps_documents` t
 8. Paste it into `window.ACC_DRIVE_CONFIG.uploadEndpoint` in `config.js` and commit the change.
 9. Ensure the Google account that deploys the script has Editor access to the destination folder.
 
-The script stores upload tracking metadata in Apps Script Properties and saves the actual PDF in the Google Drive folder. The app shows upload records and links returned by Drive. The endpoint's `?action=list` action is used to refresh tracking across devices.
+The script stores upload tracking metadata in Apps Script Properties and saves the actual file in the Google Drive folder. The app shows upload records and links returned by Drive. The endpoint's `?action=list` action is used to refresh tracking across devices.
 
 **Important:** The app does not mark an upload successful until the Apps Script endpoint returns `success: true`. Without the deployed endpoint URL in `config.js`, the upload button stays disabled rather than pretending the file was uploaded.
 
