@@ -1449,19 +1449,18 @@ function fmtUploadDate(v){try{return new Date(v).toLocaleString("id-ID",{dateSty
 function statusUploadTag(s){const c=s==="Disetujui"?"":s==="Perlu Revisi"?"gold":"blue";return '<span class="tag '+c+'">'+esc(s||"Menunggu Review")+'</span>'}
 async function loadRpsUploads(){
  const rows=readDriveTracking();
- // Admin sees entries recorded on this browser. For cross-device audit, configure the
- // Google Apps Script endpoint to return the shared Drive folder inventory.
  rpsUploads=rows.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
  if(DRIVE_UPLOAD_ENDPOINT){
   try{
-   const res=await fetch(DRIVE_UPLOAD_ENDPOINT+"?action=list", {method:"GET",redirect:"follow"});
-   if(res.ok){const data=await res.json();if(Array.isArray(data.files)){rpsUploads=data.files;writeDriveTracking(data.files)}}
+   const res=await fetch(DRIVE_UPLOAD_ENDPOINT+"?action=list",{method:"GET",redirect:"follow"});
+   if(res.ok){const data=await res.json();if(data.success&&Array.isArray(data.files)){rpsUploads=data.files;writeDriveTracking(data.files)}}
   }catch(e){console.warn("Drive tracking endpoint unavailable",e)}
  }
 }
 async function loadUploadNotifications(){uploadNotifications=rpsUploads.map(x=>({title:"RPS baru diunggah",message:(x.uploader_name||x.uploader_email||"Dosen")+" mengunggah "+(x.file_name||"dokumen RPS"),created_at:x.created_at,is_read:false}))}
 async function refreshRpsUploads(){await loadRpsUploads();await loadUploadNotifications();render()}
 function startUploadRealtime(){}
+
 function rpsUploadsPage(){
  if(isAdmin())return `${header("DOKUMEN PEMBELAJARAN","Dokumen RPS Masuk","Lihat status unggahan RPS dosen yang tercatat.",`<button class="btn" onclick="refreshRpsUploads()">↻ Muat ulang</button><a class="btn primary" href="${DRIVE_FOLDER_URL}" target="_blank" rel="noopener">Buka Folder Google Drive ↗</a>`)}${rpsUploadTable(rpsUploads,true)}`;
  const mine=rpsUploads.filter(x=>x.uploader_id===currentUser.id);
