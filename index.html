@@ -1464,7 +1464,7 @@ function rpsUploadsPage(){
  if(isAdmin())return `${header("DOKUMEN PEMBELAJARAN","Review Dokumen RPS","Periksa dokumen dosen, tetapkan hasil review, atau hapus unggahan yang tidak sesuai.",`<button class="btn" onclick="refreshRpsUploads()">↻ Sinkronkan</button><a class="btn primary" href="${DRIVE_FOLDER_URL}" target="_blank" rel="noopener">Folder Drive ↗</a>`)}${rpsUploadTable(rpsUploads,true)}`;
  const mine=rpsUploads.filter(x=>x.uploader_id===currentUser.id);
  const opts=courses.map(c=>'<option value="'+esc(c.id)+'">'+esc(c.name)+' · Semester '+esc(c.semester||"—")+'</option>').join("");
- return `${header("DOKUMEN PEMBELAJARAN","Upload RPS","Unggah dokumen ke Google Drive. Berbagai format file didukung, maksimal 15 MB per file.")}
+ return `${header("DOKUMEN PEMBELAJARAN","Upload RPS","Kirim dokumen pembelajaran dan pantau proses verifikasinya.")}
  <div class="panel" style="margin-bottom:16px"><div class="panel-head"><div><h3>Upload RPS ke Google Drive</h3><p>Nama file otomatis menggunakan nama mata kuliah yang dipilih.</p></div><span class="tag">GOOGLE DRIVE</span></div><div class="panel-body">
  <form id="rpsUploadForm" class="form-grid" onsubmit="event.preventDefault();submitRpsUpload()">
  <div class="form-group full"><label>Mata Kuliah</label><select class="field" name="course_id" required><option value="">Pilih mata kuliah</option>${opts}</select></div>
@@ -1490,7 +1490,7 @@ async function submitRpsUpload(){
   const ext=(file.name.match(/\\.[^.]+$/)||[""])[0];
   const base=course.name.normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").replace(/[^a-zA-Z0-9 _-]/g,"").trim().replace(/\\s+/g,"_");
   const payload={file_name:base+ext,original_file_name:file.name,course_id:course.id,course_name:course.name,uploader_id:currentUser.id,uploader_email:currentUser.email,uploader_name:currentUser.user_metadata?.full_name||currentUser.user_metadata?.name||currentUser.email,notes,mime_type:file.type||"application/octet-stream",file_base64:await new Promise((resolve,reject)=>{const fr=new FileReader();fr.onload=()=>resolve(String(fr.result).split(",")[1]);fr.onerror=()=>reject(new Error("Gagal membaca file"));fr.readAsDataURL(file)})};
-  const result=await driveApi("upload",payload);f.reset();await loadRpsUploads();render();toast("Dokumen berhasil diunggah dan tercatat di Google Drive.");
+  const result=await driveApi("upload",payload);f.reset();await loadRpsUploads();render();toast("Dokumen berhasil dikirim.");
  }catch(e){console.error(e);toast("Upload gagal: "+e.message)}
  finally{btn.dataset.uploading="0";btn.disabled=false;btn.classList.remove("uploading");btn.textContent="⬆ Upload File"}
 }
