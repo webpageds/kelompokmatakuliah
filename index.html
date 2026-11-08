@@ -1487,8 +1487,15 @@ async function submitRpsUpload(){
  if(btn.dataset.uploading==="1")return;
  btn.dataset.uploading="1";btn.disabled=true;btn.classList.add("uploading");btn.textContent="⏳ Sedang Mengunggah…";
  try{
-  const ext=(file.name.match(/\\.[^.]+$/)||[""])[0];
-  const base=course.name.normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").replace(/[^a-zA-Z0-9 _-]/g,"").trim().replace(/\\s+/g,"_");
+  const originalName = String(file.name || "dokumen.pdf");
+const ext = originalName.match(/\.[^.]+$/)?.[0] || "";
+
+const base = String(course.name || "RPS")
+  .normalize("NFD")
+  .replace(/[\u0300-\u036f]/g, "")
+  .replace(/[^a-zA-Z0-9 _-]/g, "")
+  .trim()
+  .replace(/\s+/g, "_") || "RPS";
   const payload={file_name:base+ext,original_file_name:file.name,course_id:course.id,course_name:course.name,uploader_id:currentUser.id,uploader_email:currentUser.email,uploader_name:currentUser.user_metadata?.full_name||currentUser.user_metadata?.name||currentUser.email,notes,mime_type:file.type||"application/octet-stream",file_base64:await new Promise((resolve,reject)=>{const fr=new FileReader();fr.onload=()=>resolve(String(fr.result).split(",")[1]);fr.onerror=()=>reject(new Error("Gagal membaca file"));fr.readAsDataURL(file)})};
   const result=await driveApi("upload",payload);f.reset();await loadRpsUploads();render();toast("Dokumen berhasil dikirim.");
  }catch(e){console.error(e);toast("Upload gagal: "+e.message)}
