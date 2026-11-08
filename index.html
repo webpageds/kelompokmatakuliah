@@ -1479,27 +1479,87 @@ function rpsUploadTable(rows,admin){
 }
 async function submitRpsUpload(){
  if(!currentUser||userRole!=="lecturer")return;
- const f=document.getElementById("rpsUploadForm");if(!f.reportValidity())return;
- const file=f.elements.rps_file.files[0],courseId=f.elements.course_id.value,notes=f.elements.notes.value.trim();
- if(!file)return;if(file.size>MAX_RPS_FILE_SIZE){toast("Ukuran file maksimal 15 MB");return}
- const course=courses.find(c=>c.id===courseId);if(!course){toast("Pilih mata kuliah yang valid");return}
- const btn=document.getElementById("rpsUploadSubmit");
- if(btn.dataset.uploading==="1")return;
- btn.dataset.uploading="1";btn.disabled=true;btn.classList.add("uploading");btn.textContent="⏳ Sedang Mengunggah…";
- try{
-  const originalName = String(file.name || "dokumen.pdf");
-const ext = originalName.match(/\.[^.]+$/)?.[0] || "";
+ const f=document.getElementById("rpsUploadForm");
+ if(!f||!f.reportValidity())return;
 
-const base = String(course.name || "RPS")
-  .normalize("NFD")
-  .replace(/[\u0300-\u036f]/g, "")
-  .replace(/[^a-zA-Z0-9 _-]/g, "")
-  .trim()
-  .replace(/\s+/g, "_") || "RPS";
-  const payload={file_name:base+ext,original_file_name:file.name,course_id:course.id,course_name:course.name,uploader_id:currentUser.id,uploader_email:currentUser.email,uploader_name:currentUser.user_metadata?.full_name||currentUser.user_metadata?.name||currentUser.email,notes,mime_type:file.type||"application/octet-stream",file_base64:await new Promise((resolve,reject)=>{const fr=new FileReader();fr.onload=()=>resolve(String(fr.result).split(",")[1]);fr.onerror=()=>reject(new Error("Gagal membaca file"));fr.readAsDataURL(file)})};
-  const result=await driveApi("upload",payload);f.reset();await loadRpsUploads();render();toast("Dokumen berhasil dikirim.");
- }catch(e){console.error(e);toast("Upload gagal: "+e.message)}
- finally{btn.dataset.uploading="0";btn.disabled=false;btn.classList.remove("uploading");btn.textContent="⬆ Upload File"}
+ const file=f.elements.rps_file.files[0];
+ const courseId=String(f.elements.course_id.value||"").trim();
+ const notes=String(f.elements.notes.value||"").trim();
+
+ if(!file){toast("Pilih file yang akan diunggah");return}
+ if(file.size>MAX_RPS_FILE_SIZE){toast("Ukuran file maksimal 15 MB");return}
+
+ const course=courses.find(c=>String(c.id)===courseId);
+ if(!course){toast("Pilih mata kuliah yang valid");return}
+
+ const btn=document.getElementById("rpsUploadSubmit");
+ if(!btn){toast("Tombol upload tidak ditemukan");return}
+ if(btn.dataset.uploading==="1")return;
+
+ btn.dataset.uploading="1";
+ btn.disabled=true;
+ btn.classList.add("uploading");
+ btn.textContent="⏳ Sedang Mengunggah…";
+
+ try{
+  const originalName=String(file.name||"dokumen");
+  const safeOriginalName=originalName.replace(/[\\/:*?"<>|]/g,"_").trim()||"dokumen";
+  const extensionMatch=safeOriginalName.match(/\.[^.]+$/);
+  const ext=extensionMatch?extensionMatch[0]:"";
+  const courseBase=String(course.name||"RPS")
+   .normalize("NFD")
+   .replace(/[\u0300-\u036f]/g,"")
+   .replace(/[^a-zA-Z0-9 _-]/g,"")
+   .trim()
+   .replace(/\s+/g,"_")||"RPS";
+
+  // File name is derived from the selected file, with a course prefix.
+  const fileName=(courseBase+"_"+safeOriginalName)
+   .replace(/[\\/:*?"<>|]/g,"_")
+   .slice(0,150);
+
+  if(!fileName){throw new Error("Nama file kosong. Pilih ulang file yang akan diunggah.");}
+
+  const base64=await new Promise((resolve,reject)=>{
+   const fr=new FileReader();
+   fr.onload=()=>resolve(String(fr.result||"").split(",")[1]||"");
+   fr.onerror=()=>reject(new Error("Gagal membaca file"));
+   fr.readAsDataURL(file);
+  });
+  if(!base64)throw new Error("Isi file tidak terbaca. Coba pilih ulang file.");
+
+  const payload={
+   file_name:fileName,
+   original_file_name:safeOriginalName,
+   course_id:String(course.id),
+   course_name:String(course.name||course.id),
+   uploader_id:String(currentUser.id||""),
+   uploader_email:String(currentUser.email||""),
+   uploader_name:String(currentUser.user_metadata?.full_name||currentUser.user_metadata?.name||currentUser.email||"Dosen"),
+   notes,
+   mime_type:file.type||"application/octet-stream",
+   file_base64:base64
+  };
+
+  const required=["file_name","course_id","uploader_id","uploader_email","file_base64"];
+  for(const key of required){
+   if(!String(payload[key]||"").trim())throw new Error("Data upload belum lengkap: "+key);
+  }
+
+  await driveApi("upload",payload);
+  f.reset();
+  await loadRpsUploads();
+  render();
+  toast("Dokumen berhasil dikirim.");
+ }catch(e){
+  console.error("Upload RPS gagal:",e);
+  toast("Upload gagal: "+(e?.message||String(e)));
+ }finally{
+  btn.dataset.uploading="0";
+  btn.disabled=false;
+  btn.classList.remove("uploading");
+  btn.textContent="⬆ Upload File";
+ }
 }
 async function openRpsUploadFile(id){const d=rpsUploads.find(x=>x.id===id);if(d?.webViewLink)window.open(d.webViewLink,"_blank","noopener");else window.open(DRIVE_FOLDER_URL,"_blank","noopener")}
 async function reviewRpsUpload(id){
